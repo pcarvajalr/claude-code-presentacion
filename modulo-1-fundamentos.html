@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1: Fundamentos y Configuración - Claude Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        nav .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav .breadcrumb a:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero * {
+            color: white !important;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            color: white;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+            color: white;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .objective-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .objective-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .objective-card p {
+            color: white;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 20px;
+        }
+
+        section:nth-child(even) {
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-1);
+        }
+
+        .content-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .content-card p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            margin-left: 2rem;
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        .content-card ul li,
+        .content-card ol li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Two-column layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-example .comment {
+            color: #94a3b8;
+        }
+
+        .code-example .keyword {
+            color: #c792ea;
+        }
+
+        .code-example .string {
+            color: #c3e88d;
+        }
+
+        .code-example .function {
+            color: #82aaff;
+        }
+
+        .code-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            padding-left: 5rem;
+            counter-increment: step-counter;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 2rem;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        /* Practice Box */
+        .practice-box {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .practice-box h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .practice-content {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tips Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 5px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .tip-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e0f2fe;
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Command List */
+        .command-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .command-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .command-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .command-name {
+            font-family: 'Courier New', monospace;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .command-description {
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Resources Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .resource-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .checklist-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .checklist-item:hover {
+            background: #e0e7ff;
+        }
+
+        .checklist-item::before {
+            content: '☑';
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .step {
+                padding-left: 1.5rem;
+            }
+
+            .step::before {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 1rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 20px;
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: var(--gradient-1);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-content {
+            padding: 2rem;
+        }
+
+        .modal-back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .modal-back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal-container {
+                max-height: 95vh;
+                border-radius: 15px;
+            }
+
+            .modal-header {
+                padding: 1rem 1.5rem;
+                border-radius: 15px 15px 0 0;
+            }
+
+            .modal-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Claude Code</div>
+            <div class="breadcrumb">
+                <a href="presentacion-claude-code.html">Inicio</a>
+                <span>›</span>
+                <span>Módulo 1</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="module-badge">📚 MÓDULO 1</div>
+            <h1>Fundamentos y Configuración</h1>
+            <p class="subtitle">Domina los conceptos básicos de Claude Code y prepara tu entorno de desarrollo</p>
+
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>🎯 Introducción</h3>
+                    <p>Familiarizarse con Claude Code y su interfaz</p>
+                </div>
+                <div class="objective-card">
+                    <h3>⚡ Comandos</h3>
+                    <p>Dominar comandos esenciales</p>
+                </div>
+                <div class="objective-card">
+                    <h3>🚀 Productividad</h3>
+                    <p>Aplicar mejores prácticas</p>
+                </div>
+                <div class="objective-card">
+                    <h3>📖 Actualización</h3>
+                    <p>Mantenerse al día</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introducción -->
+    <section id="introduccion">
+        <div class="container">
+            <h2 class="section-title">¿Qué es Claude Code?</h2>
+
+            <div class="content-card">
+                <h3>🤖 Introducción a Claude Code</h3>
+                <p>
+                    Claude Code es una herramienta de desarrollo asistida por inteligencia artificial creada por
+                    Anthropic.
+                    Es una interfaz de línea de comandos (CLI) que integra las capacidades de Claude AI directamente en
+                    tu
+                    flujo de trabajo de desarrollo.
+                </p>
+
+                <div class="info-box">
+                    <strong>💡 ¿Por qué Claude Code?</strong>
+                    <p>A diferencia de otros asistentes de IA, Claude Code está diseñado específicamente para integrarse
+                        profundamente en tu entorno de desarrollo, permitiendo automatización avanzada, personalización
+                        extrema
+                        y un flujo de trabajo verdaderamente colaborativo con la IA.</p>
+                </div>
+
+                <h3 class="section-subtitle">Ventajas de Claude Code</h3>
+                <div class="two-columns">
+                    <div>
+                        <h4>🎯 GitHub Copilot</h4>
+                        <ul>
+                            <li>Múltiples sesiones simultáneas</li>
+                            <li>Contexto más amplio del proyecto completo</li>
+                            <li>Capacidades de razonamiento más avanzadas</li>
+                            <li>Interacción conversacional más natural</li>
+                            <li>Personalización mediante agentes y hooks</li>
+                            <li>Integración con herramientas externas vía MCP</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🌟 Características Principales</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Descripción</th>
+                            <th>Uso Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Generación de Código</strong></td>
+                            <td>Crea código completo basado en descripciones</td>
+                            <td>Desarrollo rápido de features</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Refactorización</strong></td>
+                            <td>Mejora y optimiza código existente</td>
+                            <td>Mantenimiento de código legacy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Debugging</strong></td>
+                            <td>Identifica y soluciona errores</td>
+                            <td>Resolución de bugs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documentación</strong></td>
+                            <td>Genera documentación automática</td>
+                            <td>Documentar APIs y código</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Testing</strong></td>
+                            <td>Crea tests unitarios y de integración</td>
+                            <td>Asegurar calidad de código</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Code Review</strong></td>
+                            <td>Revisa código y sugiere mejoras</td>
+                            <td>Validación de calidad</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comandos Básicos -->
+    <section id="comandos">
+        <div class="container">
+            <h2 class="section-title">Comandos Básicos y Navegación</h2>
+
+            <div class="content-card">
+                <h3>⚡ Comandos Esenciales de Claude Code</h3>
+                <p>Domina estos comandos para trabajar eficientemente con Claude Code:</p>
+
+                <div class="command-list">
+                    <div class="command-item">
+                        <div class="command-name">claude</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Inicia una sesión interactiva de Claude Code en el directorio
+                            actual.
+                            <br><strong>Uso:</strong> Tu comando principal para comenzar a trabajar.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Iniciar en el directorio actual</span>
+                            <br>
+                            claude
+                            <br>
+                            <span class="comment"># Iniciar con un prompt específico</span>
+                            <br>
+                            claude <span class="string">"Crea un componente de login en React"</span>
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/help</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Muestra ayuda sobre comandos disponibles y cómo usar Claude
+                            Code.
+                            <br><strong>Uso:</strong> Cuando necesites recordar comandos o funcionalidades.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Dentro de una sesión de Claude:</span>
+                            <br>
+                            <span class="keyword">/help</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Ver ayuda sobre un comando específico</span>
+                            <br>
+                            <span class="keyword">/help</span> mcp
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/release-notes</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Muestra las notas de la última versión y nuevas
+                            funcionalidades. Actualiza la versión de Claude Code si es necesario.
+                            <br><strong>Uso:</strong> Para mantenerte actualizado con las últimas mejoras.
+                        </div>
+                        <div class="code-example">
+                            <span class="keyword">/doctor</span>
+                            <br><br>
+                            <span class="comment"># Ver últimas actualizaciones</span>
+                            <br>
+                            <span class="keyword">/release-notes</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Siempre revisa esto al actualizar Claude Code</span>
+
+                        </div>
+                        <div class="tip-box">
+                            <strong>🔄 Mantente Actualizado</strong>
+                            Es recomendable ejecutar /release-notes regularmente para conocer nuevas features,
+                            mejoras y cambios que pueden optimizar tu flujo de trabajo.
+                        </div>
+                    </div>
+
+
+                    <div class="command-item">
+                        <div class="command-name">/add-dir [directorio]</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Agrega archivos específicos al contexto de la conversación.
+                            <br><strong>Uso:</strong> Para que Claude tenga acceso a archivos específicos.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Agregar un archivo</span>
+                            <br>
+                            <span class="keyword">@</span> src/components/UserProfile.jsx                            
+                            <br>
+                            <br>
+                            <span class="comment"># Agregar toda una carpeta</span>
+                            <br>
+                            <span class="keyword">/add-dir</span> src/services/
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/remove [archivo]</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Remueve archivos del contexto actual.
+                            <br><strong>Uso:</strong> Para limpiar el contexto y enfocarte en archivos específicos.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Remover un archivo del contexto</span>
+                            <br>
+                            <span class="keyword">/remove</span> src/old/LegacyCode.js
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/review</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Solicita una revisión de código profesional analizando
+                            calidad, seguridad y mejores prácticas.
+                            <br><strong>Uso:</strong> Antes de crear pull requests o para validar cambios importantes.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Revisar código antes de hacer commit</span>
+                            <br>
+                            <span class="keyword">/review</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Claude analizará:</span>
+                            <span class="comment"># - Bugs potenciales y problemas de lógica</span>
+                            <span class="comment"># - Vulnerabilidades de seguridad</span>
+                            <span class="comment"># - Optimizaciones de rendimiento</span>
+                            <span class="comment"># - Mejores prácticas y patrones</span>
+                            <span class="comment"># - Código duplicado o redundante</span>
+                        </div>
+                        <div class="tip-box">
+                            <strong>💡 Tip para Equipos</strong>
+                            Ejecuta /review antes de cada PR para reducir el tiempo de revisión humana.
+                            Claude puede detectar problemas comunes y sugerir mejoras que aceleran el proceso de code
+                            review.
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/pr_comments</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Visualiza comentarios y feedback de pull requests directamente
+                            en Claude Code.
+                            <br><strong>Uso:</strong> Para consultar feedback de revisores sin salir de tu entorno de
+                            desarrollo.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Ver comentarios del PR actual</span>
+                            <br>
+                            <span class="keyword">/pr_comments</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Útil para:</span>
+                            <span class="comment"># - Revisar feedback de revisores</span>
+                            <span class="comment"># - Responder a sugerencias de cambios</span>
+                            <span class="comment"># - Rastrear conversaciones del PR</span>
+                            <span class="comment"># - Implementar cambios solicitados</span>
+                        </div>
+                        <div class="info-box">
+                            <strong>🔗 Integración con GitHub</strong>
+                            <p>Este comando requiere que el proyecto esté conectado a un repositorio de GitHub.
+                                Claude puede ayudarte a implementar los cambios sugeridos en los comentarios del PR.</p>
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/memory</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Edita archivos de memoria CLAUDE.md para documentar
+                            convenciones, decisiones y contexto del proyecto.
+                            <br><strong>Uso:</strong> Para mantener información persistente que Claude debe recordar
+                            entre sesiones.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Editar archivo de memoria del proyecto</span>
+                            <br>
+                            <span class="keyword">/memory</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Qué documentar:</span>
+                            <span class="comment"># - Estándares de código del equipo</span>
+                            <span class="comment"># - Arquitectura y patrones del proyecto</span>
+                            <span class="comment"># - Decisiones técnicas importantes</span>
+                            <span class="comment"># - Configuraciones específicas</span>
+                            <span class="comment"># - Convenciones de nomenclatura</span>
+                        </div>
+                        <div class="tip-box">
+                            <strong>📚 Memoria del Equipo</strong>
+                            Usa CLAUDE.md como documentación viva del proyecto. Por ejemplo:
+                            "Siempre usar TypeScript strict mode", "Seguir patrón Repository para acceso a datos",
+                            "Tests obligatorios para servicios críticos". Claude respetará estas reglas en todas las
+                            sesiones.
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/cost</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Muestra estadísticas de uso de tokens y estimación de costos
+                            de la sesión actual.
+                            <br><strong>Uso:</strong> Para monitorear consumo y optimizar el uso de Claude Code en el
+                            equipo.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Ver estadísticas de uso actual</span>
+                            <br>
+                            <span class="keyword">/cost</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Información mostrada:</span>
+                            <span class="comment"># - Tokens de entrada (prompt)</span>
+                            <span class="comment"># - Tokens de salida (respuesta)</span>
+                            <span class="comment"># - Total de tokens consumidos</span>
+                            <span class="comment"># - Estimación de costo</span>
+                            <span class="comment"># - Modelo utilizado</span>
+                        </div>
+                        <div class="info-box">
+                            <strong>💰 Gestión de Presupuesto</strong>
+                            <p>Revisa /cost regularmente para optimizar el uso de contexto. Si los costos son altos,
+                                considera usar /compact para reducir el historial o /clear para iniciar sesiones más
+                                ligeras.</p>
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/status</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Muestra información del sistema, conectividad y estado de
+                            Claude Code.
+                            <br><strong>Uso:</strong> Para diagnosticar problemas de conexión o verificar configuración.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Verificar estado del sistema</span>
+                            <br>
+                            <span class="keyword">/status</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Información mostrada:</span>
+                            <span class="comment"># - Estado de conexión a Anthropic API</span>
+                            <span class="comment"># - Versión de Claude Code</span>
+                            <span class="comment"># - Modelo activo</span>
+                            <span class="comment"># - Configuración de permisos</span>
+                            <span class="comment"># - Integraciones MCP activas</span>
+                        </div>
+                        <div class="tip-box">
+                            <strong>🔧 Troubleshooting</strong>
+                            Si Claude no responde o hay errores, ejecuta /status primero para identificar el problema.
+                            También útil para verificar que las integraciones (MCP, GitHub) estén funcionando
+                            correctamente.
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/permissions</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Visualiza y actualiza configuraciones de control de acceso
+                            para Claude Code con control granular sobre operaciones específicas.
+                            <br><strong>Uso:</strong> Para gestionar qué acciones puede realizar Claude en tu proyecto
+                            con 4 niveles de control: Allow, Ask, Deny y Workspace.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Ver y configurar permisos actuales</span>
+                            <br>
+                            <span class="keyword">/permissions</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Al ejecutar, Claude presenta opciones para cada operación:</span>
+                            <span class="comment"># - Allow: Aprobar automáticamente sin pedir confirmación</span>
+                            <span class="comment"># - Ask: Pedir confirmación cada vez que se ejecute</span>
+                            <span class="comment"># - Deny: Bloquear completamente la operación</span>
+                            <span class="comment"># - Workspace: Aplicar el permiso solo al proyecto actual</span>
+                        </div>
+                        <div style="margin-top: 1.5rem; text-align: center;">
+                            <button onclick="openPermissionsModal()" class="nav-button" style="cursor: pointer;">
+                                🔒 Ver Ejemplos Detallados de Configuración
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/rewind</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Rebobina la conversación y/o deshace cambios en el código
+                            realizados por Claude.
+                            <br><strong>Uso:</strong> Safety net cuando algo sale mal o quieres explorar alternativas.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Deshacer últimos cambios</span>
+                            <br>
+                            <span class="keyword">/rewind</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Casos de uso:</span>
+                            <span class="comment"># - Claude generó código incorrecto</span>
+                            <span class="comment"># - Quieres explorar otro enfoque</span>
+                            <span class="comment"># - Necesitas volver a un punto anterior</span>
+                            <span class="comment"># - Experimentos que no funcionaron</span>
+                        </div>
+                        <div class="tip-box">
+                            <strong>⏮️ Experimentación Segura</strong>
+                            Usa /rewind para experimentar sin miedo. Prueba diferentes soluciones y rebobina si no
+                            funcionan.
+                            Es más rápido que usar git reset o deshacer manualmente.
+                        </div>
+                    </div>
+
+                    <div class="command-item">
+                        <div class="command-name">/compact</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Compacta el historial de conversación manteniendo el contexto
+                            importante.
+                            <br><strong>Uso:</strong> Optimiza sesiones largas reduciendo tokens sin perder información
+                            relevante.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Compactar conversación actual</span>
+                            <br>
+                            <span class="keyword">/compact</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Con instrucciones específicas</span>
+                            <br>
+                            <span class="keyword">/compact</span> <span class="string">"mantén solo info sobre
+                                autenticación"</span>
+                            <br>
+                            <br>
+                            <span class="comment"># Claude resumirá el historial manteniendo:</span>
+                            <span class="comment"># - Decisiones técnicas clave</span>
+                            <span class="comment"># - Código actual relevante</span>
+                            <span class="comment"># - Contexto necesario para continuar</span>
+                        </div>
+                        <div class="info-box">
+                            <strong>⚡ Optimización de Rendimiento</strong>
+                            <p>Usa /compact cuando la conversación sea muy larga y las respuestas se vuelvan lentas.
+                                Reduce tokens consumidos y mejora el tiempo de respuesta sin perder el hilo de trabajo.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /resume -->
+                    <div class="command-item">
+                        <div class="command-name">/resume</div>
+                        <div class="command-description">
+                            <strong>Descripción:</strong> Reanuda una conversación anterior que fue pausada o cerrada.
+                            <br><strong>Uso:</strong> Para continuar trabajando en una tarea sin perder el contexto.
+                        </div>
+                        <div class="code-example">
+                            <span class="comment"># Reanudar una conversación</span>
+                            <br>
+                            <span class="keyword">/resume</span>
+                        </div>
+                        <div class="tip-box">                            
+                                Continuidad de Trabajo: Ideal para equipos que trabajan en multiples sesiones.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎹 Atajos de Teclado Útiles</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Atajo</th>
+                            <th>Acción</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Ctrl + C</code> (x2)</td>
+                            <td>Salir</td>
+                            <td>Presionar dos veces para salir de Claude Code</td>
+                        </tr>
+                        <tr>
+                            <td><code>Ctrl + D</code></td>
+                            <td>EOF / Salir</td>
+                            <td>Enviar señal de fin de archivo</td>
+                        </tr>
+                        <tr>
+                            <td><code>↑ / ↓</code></td>
+                            <td>Historial</td>
+                            <td>Navegar por comandos anteriores</td>
+                        </tr>
+                        <tr>
+                            <td><code>Tab</code></td>
+                            <td>Autocompletar</td>
+                            <td>Autocompletar comandos y rutas</td>
+                        </tr>
+                        <tr>
+                            <td><code>Ctrl + L</code></td>
+                            <td>Limpiar pantalla</td>
+                            <td>Limpiar la terminal (prompt, no el contexto)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>🗂️ Navegación del Entorno</h3>
+                <p>Entiende cómo Claude Code interactúa con tu proyecto:</p>
+
+                <div class="info-box">
+                    <strong>📍 Contexto de Trabajo</strong>
+                    <p>Claude Code siempre trabaja en el contexto del directorio donde lo ejecutas.
+                        Asegúrate de estar en la carpeta raíz de tu proyecto antes de iniciar una sesión.</p>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>💡</span>
+                        <span>Ejemplo de Flujo de Trabajo</span>
+                    </div>
+                    <span class="comment"># 1. Navegar a tu proyecto</span>
+                    <br>
+                    cd ~/proyectos/mi-app-laravel
+                    <br><br>
+
+                    <span class="comment"># 2. Iniciar Claude Code</span>
+                    <br>
+                    claude
+                    <br><br>
+
+                    <span class="comment"># 3. Dar contexto a Claude sobre tu proyecto</span>
+                    <br>
+                    <span class="string">"Analiza la estructura de este proyecto Laravel y dame un resumen"</span>
+                    <br><br>
+
+                    <span class="comment"># 4. Agregar archivos relevantes al contexto si es necesario</span>                    
+                    <br>
+                    <span class="keyword">/add-dir</span> routes
+                    <br><br>
+
+                    <span class="comment"># 5. Trabajar en tu tarea</span>
+                    <br>
+                    <span class="string">"Crea un endpoint API REST para gestionar productos"</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mejores Prácticas -->
+    <section id="mejores-practicas" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Mejores Prácticas y Productividad</h2>
+
+            <div class="content-card">
+                <h3>✨ Principios para Trabajar con Claude Code</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Sé Específico en tus Prompts</h4>
+                        <p>Cuanto más detallado y específico seas, mejores resultados obtendrás.</p>
+                        <div class="two-columns">
+                            <div>
+                                <strong style="color: #ef4444;">❌ Prompt Vago</strong>
+                                <div class="code-example">
+                                    <span class="string">"Crea un login"</span>
+                                </div>
+                            </div>
+                            <div>
+                                <strong style="color: #22c55e;">✅ Prompt Específico</strong>
+                                <div class="code-example">
+                                    <span class="string">"Crea un componente de login en Laravel Livewire con:
+                                        - Validación de email y password
+                                        - Manejo de errores
+                                        - Remember me checkbox
+                                        - Estilos con Tailwind CSS
+                                        - Tests unitarios"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Proporciona Contexto Adecuado</h4>
+                        <p>Agrega al contexto solo los archivos relevantes para tu tarea actual.</p>
+                        <div class="tip-box">
+                            <strong>⚠️ Evita Sobrecarga de Contexto</strong>
+                            No agregues todo el proyecto. Enfócate en los archivos específicos que Claude necesita
+                            para completar la tarea. Esto mejora la precisión y reduce el tiempo de respuesta.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Crea un plan</h4>
+                        <p>Antes de comenzar, es útil tener un plan claro de lo que necesitas hacer.</p>                        
+                    </div>
+
+                    <div class="step">
+                        <h4>Trabaja Iterativamente</h4>
+                        <p>Divide tareas grandes en pasos pequeños e iterativos.</p>
+                        <div class="code-example">
+                            <span class="comment"># Paso 1: Estructura base</span>
+                            <span class="string">"Crea la estructura base del componente Product"</span>
+
+                            <span class="comment"># Paso 2: Lógica</span>
+                            <span class="string">"Agrega la lógica de validación al formulario"</span>
+
+                            <span class="comment"># Paso 3: Estilos</span>
+                            <span class="string">"Aplica estilos responsive con Tailwind"</span>
+
+                            <span class="comment"># Paso 4: Tests</span>
+                            <span class="string">"Genera tests unitarios para este componente"</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Usa Comandos de Slash para Eficiencia</h4>
+                        <p>Aprovecha los slash commands para operaciones comunes.</p>
+                        <div class="code-example">
+                            <span class="comment"># Limpiar contexto entre tareas diferentes</span>
+                            <span class="keyword">/clear</span>
+
+                            <span class="comment"># Ver novedades después de actualizar</span>
+                            <span class="keyword">/release-notes</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Revisa y Valida el Código Generado</h4>
+                        <p>Siempre revisa el código que Claude genera. Es una herramienta poderosa, pero no infalible.
+                        </p>
+                        <div class="info-box">
+                            <strong>🔍 Checklist de Revisión</strong>
+                            <ul>
+                                <li>¿El código sigue las convenciones de tu proyecto?</li>
+                                <li>¿Hay manejo adecuado de errores?</li>
+                                <li>¿Está correctamente documentado?</li>
+                                <li>¿Los nombres de variables son descriptivos?</li>
+                                <li>¿Hay validaciones de seguridad necesarias?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Mantén Sesiones Organizadas</h4>
+                        <p>Usa /clear cuando cambies de tarea para evitar confusión de contexto.</p>
+                        <div class="tip-box">
+                            <strong>📋 Organización de Sesiones</strong>
+                            <ul>
+                                <li>Una sesión = Una tarea o feature específica</li>
+                                <li>Limpia el contexto al cambiar de módulo</li>
+                                <li>Documenta decisiones importantes tomadas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⚡ Tips de Productividad</h3>
+
+                <div class="two-columns">
+                    <div class="tip-box">
+                        <strong>🎯 Enfoque y Claridad</strong>
+                        <ul>
+                            <li>Define claramente el objetivo antes de empezar</li>
+                            <li>Divide tareas complejas en subtareas</li>
+                            <li>Documenta decisiones y cambios importantes</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>🔄 Iteración Rápida</strong>
+                        <ul>
+                            <li>Pide cambios incrementales</li>
+                            <li>Prueba frecuentemente</li>
+                            <li>Valida cada paso antes de continuar</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>📚 Aprendizaje Continuo</strong>
+                        <ul>
+                            <li>Pregunta "¿por qué?" para entender decisiones</li>
+                            <li>Pide explicaciones de código complejo</li>
+                            <li>Solicita alternativas</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>🛠️ Automatización</strong>
+                        <ul>
+                            <li>Identifica tareas repetitivas</li>
+                            <li>Crea templates para patrones comunes</li>
+                            <li>Prepara instrucciones reutilizables</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🚫 Errores Comunes a Evitar</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Error</th>
+                            <th>Problema</th>
+                            <th>Solución</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Prompts demasiado vagos</td>
+                            <td>Resultados imprecisos o incorrectos</td>
+                            <td>Sé específico: framework, estilo, requisitos</td>
+                        </tr>
+                        <tr>
+                            <td>Contexto sobrecargado</td>
+                            <td>Respuestas lentas o confusas</td>
+                            <td>Solo agrega archivos relevantes con @ ó /add-dir</td>
+                        </tr>
+                        <tr>
+                            <td>No revisar el código</td>
+                            <td>Bugs o malas prácticas no detectadas</td>
+                            <td>Siempre revisa y prueba el código generado</td>
+                        </tr>
+                        <tr>
+                            <td>Tareas muy grandes</td>
+                            <td>Resultados incompletos o errores</td>
+                            <td>Divide en pasos más pequeños</td>
+                        </tr>
+                        <tr>
+                            <td>No limpiar contexto</td>
+                            <td>Confusión entre tareas diferentes</td>
+                            <td>Usa /clear al cambiar de tarea</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mantenerse Actualizado -->
+    <section id="actualizacion">
+        <div class="container">
+            <h2 class="section-title">Mantenerse Actualizado</h2>
+
+            <div class="content-card">
+                <h3>🔄 Actualizaciones y Release Notes</h3>
+                <p>
+                    Claude Code está en constante evolución. Es fundamental mantenerse al día con las últimas
+                    actualizaciones para aprovechar nuevas funcionalidades y mejoras.
+                </p>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Actualizar Claude Code</h4>
+                        <p>Mantén tu instalación actualizada a la última versión:</p>
+                        <div class="code-example">
+                            <span class="comment"># Actualizar a la última versión</span>
+                            npm update -g @anthropic-ai/claude-code
+
+                            <span class="comment"># O reinstalar para asegurar última versión</span>
+                            npm install -g @anthropic-ai/claude-code@latest
+
+                            <span class="comment"># Verificar versión instalada</span>
+                            claude --version
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Revisar Release Notes</h4>
+                        <p>Después de cada actualización, revisa las notas de lanzamiento:</p>
+                        <div class="code-example">
+                            <span class="comment"># Ver notas de la versión actual</span>
+                            claude
+                            <span class="keyword">/release-notes</span>
+
+                            <span class="comment"># Esto te mostrará:</span>
+                            <span class="comment"># - Nuevas funcionalidades</span>
+                            <span class="comment"># - Mejoras de rendimiento</span>
+                            <span class="comment"># - Bugs corregidos</span>
+                            <span class="comment"># - Breaking changes (si los hay)</span>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Seguir Canales Oficiales</h4>
+                        <p>Mantente informado sobre actualizaciones:</p>
+                        <ul>
+                            <li>Blog oficial de Anthropic</li>
+                            <li>Documentación de Claude Code</li>
+                            <li>GitHub releases del repositorio</li>
+                            <li>Newsletter de Anthropic</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Probar Nuevas Features</h4>
+                        <p>Cuando hay actualizaciones, dedica tiempo a probar las nuevas funcionalidades:</p>
+                        <div class="practice-box">
+                            <h4>🧪 Ejercicio de Exploración</h4>
+                            <div class="practice-content">
+                                <p><strong>Cada vez que actualices:</strong></p>
+                                <ol>
+                                    <li>Lee las release notes completas</li>
+                                    <li>Identifica 2-3 nuevas features relevantes para tu trabajo</li>
+                                    <li>Crea un proyecto de prueba para experimentar</li>
+                                    <li>Documenta cómo pueden mejorar tu flujo de trabajo</li>
+                                    <li>Comparte hallazgos con tu equipo</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📖 Recursos de Aprendizaje Continuo</h3>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon">📚</div>
+                        <h4>Documentación Oficial</h4>
+                        <p>Guías completas y referencias de API</p>
+                        <a href="https://docs.claude.com/en/home" target="_blank">docs.claude.com/claude-code</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">💬</div>
+                        <h4>Noticias</h4>
+                        <p>Mantente al día con las últimas novedades</p>
+                        <a href="https://www.anthropic.com/news" target="_blank">anthropic.com/news</a>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-icon">🎥</div>
+                        <h4>Tutoriales</h4>
+                        <p>Videos y guías paso a paso</p>                        
+                        <a href="https://www.youtube.com/@adriaestevez" target="_blank">youtube.com/@adriaestevez</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resumen y Checklist -->
+    <section id="resumen">
+        <div class="container">
+            <h2 class="section-title">Resumen del Módulo 1</h2>
+
+            <div class="content-card">
+                <h3>✅ Lo que has aprendido</h3>
+                <div class="checklist">
+                    <div class="checklist-item">Qué es Claude Code y sus ventajas</div>
+                    <div class="checklist-item">Comandos básicos esenciales para trabajar eficientemente</div>
+                    <div class="checklist-item">Navegación y gestión del contexto de trabajo</div>
+                    <div class="checklist-item">Mejores prácticas para maximizar productividad</div>
+                    <div class="checklist-item">Cómo mantenerte actualizado con /release-notes</div>
+                    <div class="checklist-item">Flujos de trabajo efectivos con Claude Code</div>
+                    <div class="checklist-item">Errores comunes a evitar</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎯 Verificación de Conocimientos</h3>
+                <p>Antes de avanzar al Módulo 2, asegúrate de poder:</p>
+                <div class="checklist">
+                    <div class="checklist-item">Instalar y configurar Claude Code sin ayuda</div>
+                    <div class="checklist-item">Iniciar una sesión y ejecutar comandos básicos</div>
+                    <div class="checklist-item">Agregar y remover archivos del contexto</div>
+                    <div class="checklist-item">Escribir prompts claros y específicos</div>
+                    <div class="checklist-item">Organizar sesiones de trabajo efectivamente</div>
+                    <div class="checklist-item">Revisar y validar código generado</div>
+                    <div class="checklist-item">Actualizar Claude Code y revisar notas de lanzamiento</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navegación -->
+    <section id="navegacion" style="background: white;">
+        <div class="container">
+            <div class="nav-buttons">
+                <a href="presentacion-claude-code.html" class="nav-button secondary">
+                    ← Volver al Inicio
+                </a>
+                <a href="presentacion-claude-code.html#modulos" class="nav-button">
+                    Ir al Módulo 2 →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Capacitación Claude Code - Módulo 1: Fundamentos y Configuración</strong></p>
+            <p>Desarrollado para maximizar tu productividad con IA en desarrollo de software</p>
+            <p style="margin-top: 1rem; opacity: 0.7;">© 2025 - Material de Capacitación Interno</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.content-card, .practice-box, .step, .resource-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add active class to current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+        });
+
+        // Funciones para el modal de permisos
+        function openPermissionsModal() {
+            const modal = document.getElementById('permissionsModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevenir scroll de fondo
+        }
+
+        function closePermissionsModal() {
+            const modal = document.getElementById('permissionsModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restaurar scroll
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.getElementById('permissionsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePermissionsModal();
+            }
+        });
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('permissionsModal');
+                if (modal.classList.contains('active')) {
+                    closePermissionsModal();
+                }
+            }
+        });
+    </script>
+
+    <!-- Modal de Permisos -->
+    <div id="permissionsModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>📖 Guía Completa de Configuración de Permisos</h2>
+                <button class="modal-close" onclick="closePermissionsModal()">×</button>
+            </div>
+            <div class="modal-content">
+                <div class="code-example" style="margin-top: 1.5rem;">
+                    <div class="code-title">
+                        <span>💡</span>
+                        <span>Ejemplos de Configuración por Tipo de Operación</span>
+                    </div>
+                    <span class="comment"># 1. LECTURA DE ARCHIVOS</span>
+                    <br>
+                    <span class="comment"># Allow: Archivos de configuración comunes</span>
+                    <br>
+                    <span class="string">"Read(package.json)"</span>
+                    <br>
+                    <span class="string">"Read(tsconfig.json)"</span>
+                    <br>
+                    <span class="string">"Read(composer.json)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Deny: Archivos sensibles</span>
+                    <br>
+                    <span class="string">"Read(.env)"</span>
+                    <br>
+                    <span class="string">"Read(.env.*)"</span>
+                    <br>
+                    <span class="string">"Read(./secrets/**)"</span>
+                    <br>
+                    <span class="string">"Read(./credentials.json)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># 2. COMANDOS BASH</span>
+                    <br>
+                    <span class="comment"># Allow: Comandos de desarrollo seguros</span>
+                    <br>
+                    <span class="string">"Bash(git status)"</span>
+                    <br>
+                    <span class="string">"Bash(npm run lint)"</span>
+                    <br>
+                    <span class="string">"Bash(npm run test:*)"</span>
+                    <br>
+                    <span class="string">"Bash(composer install)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Ask: Operaciones que afectan repositorio</span>
+                    <br>
+                    <span class="string">"Bash(git push:*)"</span>
+                    <br>
+                    <span class="string">"Bash(git commit:*)"</span>
+                    <br>
+                    <span class="string">"Bash(npm publish)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Deny: Comandos destructivos o peligrosos</span>
+                    <br>
+                    <span class="string">"Bash(rm -rf:*)"</span>
+                    <br>
+                    <span class="string">"Bash(curl:*)"</span>
+                    <br>
+                    <span class="string">"Bash(sudo:*)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># 3. ESCRITURA/EDICIÓN DE ARCHIVOS</span>
+                    <br>
+                    <span class="comment"># Allow: Archivos de desarrollo</span>
+                    <br>
+                    <span class="string">"Edit(./src/**/*.ts)"</span>
+                    <br>
+                    <span class="string">"Edit(./tests/**)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Ask: Archivos de configuración importantes</span>
+                    <br>
+                    <span class="string">"Edit(package.json)"</span>
+                    <br>
+                    <span class="string">"Edit(.gitignore)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Deny: Archivos de producción/críticos</span>
+                    <br>
+                    <span class="string">"Edit(./production/**)"</span>
+                    <br>
+                    <span class="string">"Edit(./database/migrations/**)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># 4. ACCESO A RED/APIs</span>
+                    <br>
+                    <span class="comment"># Allow: Documentación oficial</span>
+                    <br>
+                    <span class="string">"WebFetch(domain:docs.anthropic.com)"</span>
+                    <br>
+                    <span class="string">"WebFetch(domain:developer.mozilla.org)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Ask: APIs externas</span>
+                    <br>
+                    <span class="string">"WebFetch(domain:api.github.com)"</span>
+                    <br>
+                    <br>
+                    <span class="comment"># Deny: Bloquear acceso general a red</span>
+                    <br>
+                    <span class="string">"WebFetch(*)"</span>
+                </div>
+
+                <div class="code-example" style="margin-top: 1.5rem;">
+                    <div class="code-title">
+                        <span>⚙️</span>
+                        <span>Configuración en .claude/settings.json</span>
+                    </div>
+                    <span class="comment"># Ejemplo de configuración completa para un proyecto Node.js</span>
+                    <br>
+                    {
+                    <br>
+                    &nbsp;&nbsp;<span class="string">"permissions"</span>: {
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"allow"</span>: [
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(npm run lint)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(npm run test:*)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(git status)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Read(package.json)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Read(./src/**/*.ts)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Edit(./src/**/*.ts)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Edit(./tests/**)"</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;],
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"ask"</span>: [
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(git push:*)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(git commit:*)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Edit(package.json)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(npm install:*)"</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;],
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"deny"</span>: [
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Read(.env)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Read(.env.*)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Read(./secrets/**)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(rm -rf:*)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Bash(curl:*)"</span>,
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Edit(./node_modules/**)"</span>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]
+                    <br>
+                    &nbsp;&nbsp;}
+                    <br>
+                    }
+                </div>
+
+                <div class="info-box" style="margin-top: 1.5rem;">
+                    <strong>🔒 Mejores Prácticas de Seguridad</strong>
+                    <p><strong>Principio de mínimo privilegio:</strong> Comienza con Deny por defecto y agrega Allow solo para lo
+                        necesario.</p>
+                    <p><strong>Protección de secretos:</strong> Siempre usa Deny para archivos <code>.env</code>, <code>secrets/</code>,
+                        <code>credentials.json</code>, etc.</p>
+                    <p><strong>Supervisión de operaciones críticas:</strong> Usa Ask para <code>git push</code>,
+                        <code>npm publish</code>, modificaciones de producción.</p>
+                    <p><strong>Workspace para equipos:</strong> Guarda <code>.claude/settings.json</code> en git para que todo el equipo
+                        use las mismas reglas de seguridad.</p>
+                    <p><strong>Wildcards con cuidado:</strong> <code>Bash(*)</code> o <code>WebFetch(*)</code> pueden ser peligrosos. Sé
+                        específico.</p>
+                </div>                
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="modal-back-button" onclick="closePermissionsModal()">
+                        ← Volver a Fundamentos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

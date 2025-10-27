@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2: Automatización con Hooks y Comandos - Claude Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        nav .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav .breadcrumb a:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero * {
+            color: white !important;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+            color: white;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+            color: white;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .objective-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .objective-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .objective-card p {
+            color: white;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 20px;
+        }
+
+        section:nth-child(even) {
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            font-weight: 600;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-1);
+        }
+
+        .content-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .content-card p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            margin-left: 2rem;
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        .content-card ul li,
+        .content-card ol li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Two-column layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-example .comment {
+            color: #94a3b8;
+        }
+
+        .code-example .keyword {
+            color: #c792ea;
+        }
+
+        .code-example .string {
+            color: #c3e88d;
+        }
+
+        .code-example .function {
+            color: #82aaff;
+        }
+
+        .code-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            padding-left: 5rem;
+            counter-increment: step-counter;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1.5rem;
+            top: 2rem;
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        /* Practice Box */
+        .practice-box {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .practice-box h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .practice-content {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Tips Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 5px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .tip-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e0f2fe;
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fef3c7;
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .checklist-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .checklist-item:hover {
+            background: #e0e7ff;
+        }
+
+        .checklist-item::before {
+            content: '☑';
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .step {
+                padding-left: 1.5rem;
+            }
+
+            .step::before {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 1rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Claude Code</div>
+            <div class="breadcrumb">
+                <a href="presentacion-claude-code.html">Inicio</a>
+                <span>›</span>
+                <span>Módulo 2</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="module-badge">⚙️ MÓDULO 2</div>
+            <h1>Automatización con Hooks y Comandos</h1>
+            <p class="subtitle">Potencia tu flujo de trabajo con automatizaciones inteligentes y comandos personalizados</p>
+
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>⚡ Hooks</h3>
+                    <p>Automatizar eventos del ciclo de desarrollo</p>
+                </div>
+                <div class="objective-card">
+                    <h3>💬 Comandos</h3>
+                    <p>Crear slash commands personalizados</p>
+                </div>
+                <div class="objective-card">
+                    <h3>🔧 Configuración</h3>
+                    <p>Configurar y compartir automatizaciones</p>
+                </div>
+                <div class="objective-card">
+                    <h3>🚀 Integración</h3>
+                    <p>Integrar en proyectos reales</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introducción a Hooks -->
+    <section id="hooks">
+        <div class="container">
+            <h2 class="section-title">Hooks: Automatización de Eventos</h2>
+
+            <div class="content-card">
+                <h3>🪝 ¿Qué son los Hooks en Claude Code?</h3>
+                <p>
+                    Los hooks son puntos de extensión que te permiten ejecutar código personalizado en respuesta a eventos
+                    específicos durante tu sesión de Claude Code. Son similares a los hooks de Git, pero aplicados al flujo
+                    de trabajo con IA.
+                </p>
+
+                <div class="info-box">
+                    <strong>💡 Concepto Clave</strong>
+                    <p>Un hook es un script o comando que se ejecuta automáticamente cuando ocurre un evento específico,
+                        permitiendo validar, transformar o enriquecer las interacciones con Claude.</p>
+                </div>
+
+                <h3 class="section-subtitle">Casos de Uso Comunes</h3>
+                <div class="two-columns">
+                    <div>
+                        <h4>🔍 Validación y Calidad</h4>
+                        <ul>
+                            <li>Ejecutar linter antes de aceptar cambios</li>
+                            <li>Validar estándares de código del equipo</li>
+                            <li>Verificar que los tests pasen</li>
+                            <li>Comprobar cobertura de código</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>🚀 Automatización de Flujo</h4>
+                        <ul>
+                            <li>Formatear código automáticamente</li>
+                            <li>Agregar contexto adicional al prompt</li>
+                            <li>Registrar métricas de uso</li>
+                            <li>Notificar al equipo de cambios</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📋 Tipos de Hooks Disponibles</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hook</th>
+                            <th>Cuándo se Ejecuta</th>
+                            <th>Uso Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>user-prompt-submit-hook</strong></td>
+                            <td>Antes de enviar un prompt a Claude</td>
+                            <td>Validar, modificar o enriquecer prompts del usuario</td>
+                        </tr>
+                        <tr>
+                            <td><strong>tool-use-hook</strong></td>
+                            <td>Antes de ejecutar una herramienta (Edit, Write, etc.)</td>
+                            <td>Validar operaciones, ejecutar linters, verificar permisos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pre-commit-hook</strong></td>
+                            <td>Antes de crear un commit con git</td>
+                            <td>Ejecutar tests, validar código, formatear archivos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>⚙️ Configuración de Hooks</h3>
+                <p>Los hooks se configuran en el archivo <code>.claude/settings.json</code> de tu proyecto:</p>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/settings.json</span>
+                    </div>
+                    {
+                    <br>&nbsp;&nbsp;<span class="string">"hooks"</span>: {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"user-prompt-submit-hook"</span>: {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"command"</span>: <span class="string">"node .claude/hooks/validate-prompt.js"</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"description"</span>: <span class="string">"Valida y enriquece prompts del usuario"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;},
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"tool-use-hook"</span>: {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"command"</span>: <span class="string">"npm run lint-staged"</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"description"</span>: <span class="string">"Ejecuta linter en archivos modificados"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br>&nbsp;&nbsp;}
+                    <br>}
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Importante</strong>
+                    <p>Los hooks se ejecutan en tu máquina local, tienen acceso completo al sistema de archivos y pueden
+                        bloquear operaciones. Asegúrate de revisar los scripts de hooks antes de ejecutarlos.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔄 Respuestas de Hooks</h3>
+                <p>Los hooks pueden devolver diferentes respuestas para controlar el flujo de Claude Code:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Respuesta</th>
+                            <th>Acción</th>
+                            <th>Ejemplo de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>allow</code></td>
+                            <td>Permite continuar sin modificaciones</td>
+                            <td>El código pasó todas las validaciones</td>
+                        </tr>
+                        <tr>
+                            <td><code>deny</code></td>
+                            <td>Bloquea la operación y muestra un mensaje</td>
+                            <td>El linter encontró errores críticos</td>
+                        </tr>
+                        <tr>
+                            <td><code>modify</code></td>
+                            <td>Modifica el input antes de continuar</td>
+                            <td>Agregar contexto adicional al prompt</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>💡</span>
+                        <span>Ejemplo de respuesta de hook</span>
+                    </div>
+                    <span class="comment">// Hook devuelve JSON con el resultado</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;<span class="string">"action"</span>: <span class="string">"allow"</span>,
+                    <br>&nbsp;&nbsp;<span class="string">"message"</span>: <span class="string">"✓ Código validado correctamente"</span>
+                    <br>}
+                    <br><br>
+                    <span class="comment">// Para denegar:</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;<span class="string">"action"</span>: <span class="string">"deny"</span>,
+                    <br>&nbsp;&nbsp;<span class="string">"message"</span>: <span class="string">"✗ Error: El linter encontró 5 problemas"</span>
+                    <br>}
+                    <br><br>
+                    <span class="comment">// Para modificar el prompt:</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;<span class="string">"action"</span>: <span class="string">"modify"</span>,
+                    <br>&nbsp;&nbsp;<span class="string">"modifiedInput"</span>: <span class="string">"[Contexto adicional]\n"</span> + originalPrompt
+                    <br>}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ejemplos Prácticos de Hooks -->
+    <section id="ejemplos-hooks">
+        <div class="container">
+            <h2 class="section-title">Ejemplos Prácticos de Hooks</h2>
+
+            <div class="content-card">
+                <h3>📝 Ejemplo 1: Hook de Validación de Linter</h3>
+                <p>Este hook ejecuta el linter antes de que Claude modifique archivos:</p>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Crear el script del hook</h4>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>📄</span>
+                                <span>.claude/hooks/lint-validator.js</span>
+                            </div>
+                            <span class="comment"># ./vendor/bin/pint --test</span><br><br>
+                            <span class="keyword">import</span> { execSync } <span class="keyword">from</span> <span class="string">'child_process'</span>;
+                            <br><span class="keyword">import</span> { join } <span class="keyword">from</span> <span class="string">'path'</span>;
+                            <br><span class="keyword">import</span> { cwd } <span class="keyword">from</span> <span class="string">'process'</span>;
+                            <br><br>
+                            <span class="keyword">try</span> {
+                            <br>&nbsp;&nbsp;<span class="comment">// Ruta al ejecutable de Pint (compatible con Windows)</span>
+                            <br>&nbsp;&nbsp;<span class="keyword">const</span> pintPath = join(cwd(), <span class="string">'vendor'</span>, <span class="string">'bin'</span>, <span class="string">'pint.bat'</span>);
+                            <br>&nbsp;&nbsp;
+                            <br>&nbsp;&nbsp;<span class="comment">// Ejecutar linter</span>
+                            <br>&nbsp;&nbsp;<span class="keyword">const</span> output = execSync(<span class="string">`"${pintPath}" --test`</span>, {
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;encoding: <span class="string">'utf-8'</span>,
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;stdio: [<span class="string">'pipe'</span>, <span class="string">'pipe'</span>, <span class="string">'pipe'</span>]
+                            <br>&nbsp;&nbsp;});
+                            <br>&nbsp;&nbsp;
+                            <br>&nbsp;&nbsp;<span class="comment">// Si pasa, permitir</span>
+                            <br>&nbsp;&nbsp;console.log(JSON.stringify({
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;action: <span class="string">"allow"</span>,
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;message: <span class="string">"✓ Linter: sin errores"</span>
+                            <br>&nbsp;&nbsp;}));
+                            <br>} <span class="keyword">catch</span> (error) {
+                            <br>&nbsp;&nbsp;<span class="comment">// Si falla, denegar y mostrar errores</span>
+                            <br>&nbsp;&nbsp;<span class="keyword">const</span> errorOutput = error.stdout || error.stderr || error.message;
+                            <br>&nbsp;&nbsp;
+                            <br>&nbsp;&nbsp;console.log(JSON.stringify({
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;action: <span class="string">"deny"</span>,
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;message: <span class="string">"✗ Linter: errores encontrados\n\n"</span> + errorOutput
+                            <br>&nbsp;&nbsp;}));
+                            <br>&nbsp;&nbsp;
+                            <br>&nbsp;&nbsp;process.exit(1);
+                            <br>}
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Configurar en settings.json</h4>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>⚙️</span>
+                                <span>.claude/settings.json</span>
+                            </div>
+                            {
+                            <br>&nbsp;&nbsp;<span class="string">"PreToolUse"</span>: [
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"matcher"</span>: <span class="string">"Edit|Write"</span>,
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"hooks"</span>: [
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"type"</span>: <span class="string">"command"</span>,
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"command"</span>: <span class="string">"node .claude/hooks/lint-validator.js"</span>
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                            <br>&nbsp;&nbsp;]
+                            <br>}
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Resultado en acción</h4>
+                        <p>Cuando Claude intente modificar código, el hook se ejecutará automáticamente:</p>
+                        <div class="info-box">
+                            <strong>✓ Escenario exitoso</strong>
+                            <p>Si el linter no encuentra errores, Claude continuará con la operación.</p>
+                        </div>
+                        <div class="warning-box">
+                            <strong>✗ Escenario con errores</strong>
+                            <p>Si el linter encuentra problemas, Claude bloqueará la operación y mostrará los errores,
+                                permitiéndote corregirlos primero.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🧪 Ejemplo 2: Hook de Tests Automáticos</h3>
+                <p>Este hook ejecuta tests antes de permitir cambios en archivos críticos:</p>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/hooks/test-runner.sh</span>
+                    </div>
+                    <span class="keyword">#!/bin/bash</span>
+                    <br><br>
+                    <span class="comment"># Ejecutar tests</span>
+                    <br><span class="function">npm</span> run test --silent
+                    <br><br>
+                    <span class="comment"># Capturar código de salida</span>
+                    <br><span class="keyword">if</span> [ $? -eq 0 ]; <span class="keyword">then</span>
+                    <br>&nbsp;&nbsp;<span class="comment"># Tests pasaron</span>
+                    <br>&nbsp;&nbsp;echo <span class="string">'{"action":"allow","message":"✓ Todos los tests pasaron"}'</span>
+                    <br><span class="keyword">else</span>
+                    <br>&nbsp;&nbsp;<span class="comment"># Tests fallaron</span>
+                    <br>&nbsp;&nbsp;echo <span class="string">'{"action":"deny","message":"✗ Tests fallidos. Corrige antes de continuar"}'</span>
+                    <br><span class="keyword">fi</span>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>⚙️</span>
+                        <span>Configuración en .claude/settings.json</span>
+                    </div>
+                    {
+                    <br>&nbsp;&nbsp;<span class="string">"hooks"</span>: {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"tool-use-hook"</span>: {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"command"</span>: <span class="string">"bash .claude/hooks/test-runner.sh"</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"description"</span>: <span class="string">"Ejecuta tests antes de modificar código"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br>&nbsp;&nbsp;}
+                    <br>}
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📋 Ejemplo 3: Hook para Enriquecer Prompts (Laravel)</h3>
+                <p>Este hook agrega contexto automático sobre estándares de Laravel a cada prompt:</p>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/hooks/laravel-context.js</span>
+                    </div>
+                    <span class="keyword">const</span> fs = <span class="function">require</span>(<span class="string">'fs'</span>);
+                    <br><br>
+                    <span class="comment">// Leer el prompt original desde stdin</span>
+                    <br><span class="keyword">const</span> stdin = fs.readFileSync(0, <span class="string">'utf-8'</span>);
+                    <br><span class="keyword">const</span> userPrompt = JSON.parse(stdin).prompt;
+                    <br><br>
+                    <span class="comment">// Contexto adicional sobre estándares Laravel</span>
+                    <br><span class="keyword">const</span> laravelContext = <span class="string">`
+                    [ESTÁNDARES DEL PROYECTO]
+                    - Usar PSR-12 para estilo de código
+                    - Implementar Repository Pattern para acceso a datos
+                    - Form Requests para validaciones
+                    - Recursos API para transformaciones
+                    - Tests Feature obligatorios para endpoints
+                    `</span>;
+                    <br><br>
+                    <span class="comment">// Combinar contexto con prompt original</span>
+                    <br><span class="keyword">const</span> enrichedPrompt = laravelContext + <span class="string">"\n\n"</span> + userPrompt;
+                    <br><br>
+                    <span class="comment">// Devolver prompt modificado</span>
+                    <br>console.log(JSON.stringify({
+                    <br>&nbsp;&nbsp;action: <span class="string">"modify"</span>,
+                    <br>&nbsp;&nbsp;modifiedInput: enrichedPrompt
+                    <br>}));
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Ventaja</strong>
+                    Cada vez que interactúes con Claude, automáticamente tendrá contexto sobre los estándares de tu proyecto
+                    Laravel, generando código que sigue tus convenciones desde el primer intento.
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h4>🧪 Ejercicio Práctico: Crear tu Primer Hook</h4>
+                <div class="practice-content">
+                    <p><strong>Desafío:</strong> Crea un hook que valide que los archivos modificados tienen
+                        documentación adecuada.</p>
+                    <ol>
+                        <li>Crea un script que verifique la presencia de docblocks en funciones PHP/Laravel</li>
+                        <li>Configura el hook en <code>.claude/settings.json</code></li>
+                        <li>Prueba que Claude no pueda modificar código sin documentación</li>
+                        <li>Si falta documentación, el hook debe denegar con un mensaje claro</li>
+                    </ol>
+                    <p><strong>Bonus:</strong> Haz que el hook sugiera documentación básica si falta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comandos Personalizados -->
+    <section id="comandos">
+        <div class="container">
+            <h2 class="section-title">Slash Commands Personalizados</h2>
+
+            <div class="content-card">
+                <h3>💬 ¿Qué son los Slash Commands?</h3>
+                <p>
+                    Los slash commands (comandos con /) son atajos personalizados que puedes crear para ejecutar tareas
+                    frecuentes con un simple comando. Son como macros que encapsulan instrucciones complejas en comandos
+                    simples.
+                </p>
+
+                <div class="info-box">
+                    <strong>💡 Concepto Clave</strong>
+                    <p>Un slash command es un archivo Markdown en <code>.claude/commands/</code> que contiene
+                        instrucciones para Claude. Cuando ejecutas el comando, Claude lee el archivo y sigue las
+                        instrucciones como si las hubieras escrito manualmente.</p>
+                </div>
+
+                <h3 class="section-subtitle">Beneficios de Comandos Personalizados</h3>
+                <div class="two-columns">
+                    <div>
+                        <h4>⚡ Productividad</h4>
+                        <ul>
+                            <li>Ejecutar tareas complejas con un comando</li>
+                            <li>Estandarizar procesos del equipo</li>
+                            <li>Reducir errores por prompts inconsistentes</li>
+                            <li>Documentar mejores prácticas</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>🤝 Colaboración</h4>
+                        <ul>
+                            <li>Compartir comandos con todo el equipo</li>
+                            <li>Onboarding más rápido de nuevos miembros</li>
+                            <li>Consistencia en el código generado</li>
+                            <li>Capturar conocimiento del equipo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📁 Estructura de Comandos</h3>
+                <p>Los comandos se crean como archivos Markdown en la carpeta <code>.claude/commands/</code>:</p>
+
+                <div class="code-example">
+                    <span class="comment"># Estructura del proyecto</span>
+                    <br>mi-proyecto/
+                    <br>├── .claude/
+                    <br>│   ├── commands/
+                    <br>│   │   ├── review-laravel.md
+                    <br>│   │   ├── generate-endpoint.md
+                    <br>│   │   └── deploy-staging.md
+                    <br>│   └── settings.json
+                    <br>├── src/
+                    <br>└── ...
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Convención de Nombres</strong>
+                    <p>El nombre del archivo determina el comando. <code>review-laravel.md</code> se convierte en
+                        <code>/review-laravel</code>. Usa kebab-case para nombres de archivos.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>✍️ Sintaxis de Comandos</h3>
+                <p>Los comandos son archivos Markdown con instrucciones para Claude:</p>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/commands/review-laravel.md</span>
+                    </div>
+                    <span class="comment"># Comando: /review-laravel</span>
+                    <br><span class="comment"># Descripción: Realiza code review enfocado en Laravel</span>
+                    <br><br>
+                    Analiza el código actual y realiza un code review enfocado en Laravel:
+                    <br><br>
+                    1. **Estilo y Estándares**
+                    <br>&nbsp;&nbsp;&nbsp;- Verifica cumplimiento de PSR-12
+                    <br>&nbsp;&nbsp;&nbsp;- Revisa nomenclatura según convenciones Laravel
+                    <br>&nbsp;&nbsp;&nbsp;- Valida estructura de directorios
+                    <br><br>
+                    2. **Patrones y Arquitectura**
+                    <br>&nbsp;&nbsp;&nbsp;- Revisa uso correcto de Repository Pattern
+                    <br>&nbsp;&nbsp;&nbsp;- Valida implementación de Form Requests
+                    <br>&nbsp;&nbsp;&nbsp;- Verifica uso de Resource Classes para APIs
+                    <br><br>
+                    3. **Seguridad**
+                    <br>&nbsp;&nbsp;&nbsp;- Detecta vulnerabilidades SQL Injection
+                    <br>&nbsp;&nbsp;&nbsp;- Revisa validación de entrada
+                    <br>&nbsp;&nbsp;&nbsp;- Verifica autorización con Policies/Gates
+                    <br><br>
+                    4. **Performance**
+                    <br>&nbsp;&nbsp;&nbsp;- Identifica N+1 queries
+                    <br>&nbsp;&nbsp;&nbsp;- Sugiere optimizaciones de carga
+                    <br>&nbsp;&nbsp;&nbsp;- Revisa uso de cache
+                    <br><br>
+                    Presenta los hallazgos organizados por severidad: Crítico, Alto, Medio, Bajo.
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Tip de Escritura</strong>
+                    Sé específico y detallado en tus comandos. Cuanto más clara sea la instrucción, mejores resultados
+                    obtendrás de Claude de forma consistente.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ejemplos de Comandos -->
+    <section id="ejemplos-comandos">
+        <div class="container">
+            <h2 class="section-title">Ejemplos de Comandos Personalizados</h2>
+
+            <div class="content-card">
+                <h3>🔧 Ejemplo 1: Comando para Generar API Endpoint</h3>
+                <p>Este comando genera un endpoint API completo siguiendo las mejores prácticas:</p>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/commands/generate-endpoint.md</span>
+                    </div>
+                    <span class="comment"># Comando: /generate-endpoint [nombre]</span>
+                    <br><span class="comment"># Ejemplo: /generate-endpoint Product</span>
+                    <br><br>
+                    Genera un endpoint API REST completo para la entidad especificada:
+                    <br><br>
+                    **1. Controller**
+                    <br>- Crear `app/Http/Controllers/Api/{Nombre}Controller.php`
+                    <br>- Implementar métodos: index, store, show, update, destroy
+                    <br>- Usar Resource Classes para respuestas
+                    <br>- Incluir manejo de errores apropiado
+                    <br><br>
+                    **2. Form Request**
+                    <br>- Crear `app/Http/Requests/{Nombre}Request.php`
+                    <br>- Definir reglas de validación
+                    <br>- Implementar método authorize() si es necesario
+                    <br><br>
+                    **3. Resource**
+                    <br>- Crear `app/Http/Resources/{Nombre}Resource.php`
+                    <br>- Transformar datos para respuesta API
+                    <br><br>
+                    **4. Routes**
+                    <br>- Agregar rutas en `routes/api.php`
+                    <br>- Usar apiResource() para CRUD completo
+                    <br>- Aplicar middleware de autenticación
+                    <br><br>
+                    **5. Tests**
+                    <br>- Crear `tests/Feature/{Nombre}ApiTest.php`
+                    <br>- Tests para cada endpoint (index, store, show, update, destroy)
+                    <br>- Casos de éxito y error
+                    <br>- Validación de autenticación y autorización
+                    <br><br>
+                    Genera todo el código siguiendo PSR-12 y convenciones de Laravel.
+                </div>
+
+                <div class="info-box">
+                    <strong>🎯 Uso del Comando</strong>
+                    <p>Con este comando, en lugar de pedir cada pieza individualmente, simplemente ejecutas
+                        <code>/generate-endpoint Product</code> y obtienes todo el boilerplate necesario para un endpoint
+                        completo y testeado.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🚀 Ejemplo 2: Comando de Deploy a Staging</h3>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/commands/deploy-staging.md</span>
+                    </div>
+                    <span class="comment"># Comando: /deploy-staging</span>
+                    <br><br>
+                    Prepara y ejecuta el proceso de deploy a staging:
+                    <br><br>
+                    **Pre-Deploy Checks:**
+                    <br>1. Verificar que todos los tests pasan
+                    <br>2. Revisar que no hay commits sin push
+                    <br>3. Validar que .env.staging está configurado
+                    <br>4. Comprobar versión en package.json/composer.json
+                    <br><br>
+                    **Deploy Steps:**
+                    <br>1. Ejecutar `npm run build:staging`
+                    <br>2. Ejecutar migraciones en modo dry-run
+                    <br>3. Crear tag de versión
+                    <br>4. Push a rama staging
+                    <br>5. Trigger deploy pipeline
+                    <br><br>
+                    **Post-Deploy:**
+                    <br>1. Verificar health check endpoint
+                    <br>2. Ejecutar smoke tests
+                    <br>3. Notificar al equipo en Slack
+                    <br><br>
+                    Si algún paso falla, detener el proceso y reportar el error.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🧹 Ejemplo 3: Comando de Refactorización</h3>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/commands/refactor-controller.md</span>
+                    </div>
+                    <span class="comment"># Comando: /refactor-controller [archivo]</span>
+                    <br><br>
+                    Refactoriza un controller Laravel aplicando mejores prácticas:
+                    <br><br>
+                    **Análisis:**
+                    <br>1. Identificar violaciones de Single Responsibility
+                    <br>2. Detectar lógica de negocio en el controller
+                    <br>3. Encontrar queries directas al modelo
+                    <br>4. Revisar validaciones inline
+                    <br><br>
+                    **Refactorización:**
+                    <br>1. **Extraer lógica a Services**
+                    <br>&nbsp;&nbsp;&nbsp;- Crear service class para lógica compleja
+                    <br>&nbsp;&nbsp;&nbsp;- Inyectar via constructor
+                    <br><br>
+                    2. **Implementar Repository Pattern**
+                    <br>&nbsp;&nbsp;&nbsp;- Crear repository para acceso a datos
+                    <br>&nbsp;&nbsp;&nbsp;- Abstraer queries complejas
+                    <br><br>
+                    3. **Form Requests**
+                    <br>&nbsp;&nbsp;&nbsp;- Mover validaciones a Form Requests
+                    <br>&nbsp;&nbsp;&nbsp;- Organizar reglas por operación
+                    <br><br>
+                    4. **Resource Classes**
+                    <br>&nbsp;&nbsp;&nbsp;- Crear Resources para transformar respuestas
+                    <br><br>
+                    **Testing:**
+                    <br>- Generar tests para el controller refactorizado
+                    <br>- Asegurar que el comportamiento se mantiene
+                    <br><br>
+                    Presentar diff antes de aplicar cambios.
+                </div>
+
+                <div class="tip-box">
+                    <strong>🎓 Aprendizaje</strong>
+                    Este tipo de comando no solo automatiza el trabajo, sino que también sirve como documentación viva de
+                    las mejores prácticas del equipo. Nuevos desarrolladores pueden aprender viendo cómo se refactoriza el
+                    código.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📊 Ejemplo 4: Comando de Documentación de API</h3>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/commands/document-api.md</span>
+                    </div>
+                    <span class="comment"># Comando: /document-api</span>
+                    <br><br>
+                    Genera documentación completa de la API REST:
+                    <br><br>
+                    **Análisis de Endpoints:**
+                    <br>1. Escanear todos los archivos en `routes/api.php`
+                    <br>2. Identificar controllers y métodos
+                    <br>3. Extraer validaciones de Form Requests
+                    <br>4. Detectar Resources usados para respuestas
+                    <br><br>
+                    **Generar Documentación:**
+                    <br>Para cada endpoint, documentar:
+                    <br>- URL y método HTTP
+                    <br>- Descripción de funcionalidad
+                    <br>- Parámetros requeridos y opcionales
+                    <br>- Reglas de validación
+                    <br>- Ejemplo de request body (JSON)
+                    <br>- Ejemplo de response (success y error)
+                    <br>- Códigos de estado HTTP posibles
+                    <br>- Autenticación requerida
+                    <br><br>
+                    **Formato de Salida:**
+                    <br>- Crear archivo `docs/api.md` en formato OpenAPI/Swagger
+                    <br>- Incluir tabla de contenidos
+                    <br>- Agrupar endpoints por recurso
+                    <br>- Agregar ejemplos de uso con curl
+                    <br><br>
+                    Actualizar automáticamente si la documentación ya existe.
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h4>🧪 Ejercicio Práctico: Crear Comandos para tu Proyecto</h4>
+                <div class="practice-content">
+                    <p><strong>Desafío:</strong> Crea 3 comandos personalizados para tareas comunes en tu proyecto.</p>
+                    <ol>
+                        <li>Identifica 3 tareas que repites frecuentemente</li>
+                        <li>Crea comandos .md en <code>.claude/commands/</code></li>
+                        <li>Prueba cada comando con Claude</li>
+                        <li>Refina las instrucciones basándote en los resultados</li>
+                        <li>Comparte los comandos con tu equipo via git</li>
+                    </ol>
+                    <p><strong>Sugerencias de comandos útiles:</strong></p>
+                    <ul>
+                        <li><code>/create-migration [tabla]</code> - Genera migración con campos comunes</li>
+                        <li><code>/add-feature-test [feature]</code> - Crea test completo para una feature</li>
+                        <li><code>/optimize-query [archivo]</code> - Analiza y optimiza consultas Eloquent</li>
+                        <li><code>/security-check</code> - Auditoría de seguridad del código</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mejores Prácticas -->
+    <section id="mejores-practicas">
+        <div class="container">
+            <h2 class="section-title">Mejores Prácticas</h2>
+
+            <div class="content-card">
+                <h3>✨ Cuándo Usar Hooks vs Comandos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Hooks</th>
+                            <th>Slash Commands</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ejecución</strong></td>
+                            <td>Automática en respuesta a eventos</td>
+                            <td>Manual cuando el usuario lo invoca</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Propósito</strong></td>
+                            <td>Validación, prevención, enriquecimiento</td>
+                            <td>Acelerar tareas comunes y repetitivas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Casos de Uso</strong></td>
+                            <td>Linters, tests, validaciones, seguridad</td>
+                            <td>Generación de código, documentación, deploys</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Control</strong></td>
+                            <td>Puede bloquear operaciones (deny)</td>
+                            <td>Solo ejecuta instrucciones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Visibilidad</strong></td>
+                            <td>Transparente para el usuario</td>
+                            <td>Explícito y visible</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>💡 Regla General</strong>
+                    <p>Usa <strong>hooks</strong> para hacer cumplir estándares y prevenir errores automáticamente.
+                        Usa <strong>comandos</strong> para encapsular tareas complejas que quieres ejecutar bajo demanda.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📋 Organización de Hooks y Comandos</h3>
+
+                <div class="steps">
+                    <div class="step">
+                        <h4>Estructura Recomendada</h4>
+                        <div class="code-example">
+                            .claude/
+                            <br>├── commands/
+                            <br>│   ├── development/
+                            <br>│   │   ├── generate-endpoint.md
+                            <br>│   │   ├── create-migration.md
+                            <br>│   │   └── add-test.md
+                            <br>│   ├── review/
+                            <br>│   │   ├── review-laravel.md
+                            <br>│   │   ├── security-check.md
+                            <br>│   │   └── performance-audit.md
+                            <br>│   └── deployment/
+                            <br>│       ├── deploy-staging.md
+                            <br>│       └── deploy-production.md
+                            <br>├── hooks/
+                            <br>│   ├── lint-validator.js
+                            <br>│   ├── test-runner.sh
+                            <br>│   └── laravel-context.js
+                            <br>└── settings.json
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Documentar tus Automatizaciones</h4>
+                        <p>Crea un README en <code>.claude/</code> explicando los comandos y hooks disponibles:</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>📄</span>
+                                <span>.claude/README.md</span>
+                            </div>
+                            # Claude Code - Automatizaciones del Proyecto
+                            <br><br>
+                            ## Hooks Configurados
+                            <br><br>
+                            ### tool-use-hook
+                            <br>Ejecuta linter y tests antes de modificar código.
+                            <br>- **Script**: `hooks/lint-validator.js`
+                            <br>- **Acción**: Bloquea si hay errores de lint
+                            <br><br>
+                            ## Comandos Disponibles
+                            <br><br>
+                            ### /generate-endpoint [nombre]
+                            <br>Genera endpoint API completo con controller, request, resource y tests.
+                            <br><br>
+                            ### /review-laravel
+                            <br>Code review enfocado en mejores prácticas de Laravel.
+                            <br><br>
+                            ### /deploy-staging
+                            <br>Ejecuta proceso completo de deploy a staging.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Versionado en Git</h4>
+                        <p>Incluye <code>.claude/</code> en tu repositorio para compartir con el equipo:</p>
+                        <div class="code-example">
+                            <span class="comment"># .gitignore - NO ignorar .claude/</span>
+                            <br>
+                            <br><span class="comment"># Incluir configuraciones compartidas</span>
+                            <br>!.claude/
+                            <br>!.claude/commands/
+                            <br>!.claude/hooks/
+                            <br>!.claude/settings.json
+                        </div>
+                        <div class="tip-box">
+                            <strong>🤝 Trabajo en Equipo</strong>
+                            Al versionar tus hooks y comandos en git, todo el equipo usa las mismas automatizaciones,
+                            asegurando consistencia y compartiendo mejores prácticas.
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>Testing de Hooks</h4>
+                        <p>Prueba tus hooks antes de activarlos:</p>
+                        <div class="code-example">
+                            <span class="comment"># Probar hook manualmente</span>
+                            <br>node .claude/hooks/lint-validator.js
+                            <br><br>
+                            <span class="comment"># Verificar salida JSON</span>
+                            <br>echo '{"prompt":"test"}' | node .claude/hooks/laravel-context.js
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⚠️ Consideraciones de Seguridad</h3>
+
+                <div class="warning-box">
+                    <strong>⚠️ Importante: Seguridad de Hooks</strong>
+                    <p>Los hooks ejecutan código en tu máquina local con tus permisos. Nunca ejecutes hooks de fuentes
+                        no confiables sin revisarlos primero.</p>
+                </div>
+
+                <div class="checklist">
+                    <div class="checklist-item">Revisar todos los scripts de hooks antes de activarlos</div>
+                    <div class="checklist-item">No ejecutar comandos destructivos sin confirmación</div>
+                    <div class="checklist-item">Limitar permisos de hooks usando configuración de permisos</div>
+                    <div class="checklist-item">Validar inputs en hooks que aceptan parámetros</div>
+                    <div class="checklist-item">No almacenar secretos/credenciales en hooks versionados</div>
+                    <div class="checklist-item">Usar variables de entorno para configuración sensible</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resumen -->
+    <section id="resumen">
+        <div class="container">
+            <h2 class="section-title">Resumen del Módulo 2</h2>
+
+            <div class="content-card">
+                <h3>✅ Lo que has aprendido</h3>
+                <div class="checklist">
+                    <div class="checklist-item">Qué son los hooks y cómo funcionan en Claude Code</div>
+                    <div class="checklist-item">Tipos de hooks disponibles y sus casos de uso</div>
+                    <div class="checklist-item">Configurar hooks en .claude/settings.json</div>
+                    <div class="checklist-item">Crear scripts de validación y automatización</div>
+                    <div class="checklist-item">Respuestas de hooks: allow, deny, modify</div>
+                    <div class="checklist-item">Crear slash commands personalizados</div>
+                    <div class="checklist-item">Estructura y sintaxis de comandos en Markdown</div>
+                    <div class="checklist-item">Organizar y documentar automatizaciones</div>
+                    <div class="checklist-item">Compartir configuraciones con el equipo</div>
+                    <div class="checklist-item">Mejores prácticas de seguridad</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎯 Verificación de Conocimientos</h3>
+                <p>Antes de avanzar al Módulo 3, asegúrate de poder:</p>
+                <div class="checklist">
+                    <div class="checklist-item">Crear un hook básico de validación</div>
+                    <div class="checklist-item">Configurar hooks en settings.json</div>
+                    <div class="checklist-item">Escribir un slash command personalizado</div>
+                    <div class="checklist-item">Organizar comandos por categorías</div>
+                    <div class="checklist-item">Documentar hooks y comandos para el equipo</div>
+                    <div class="checklist-item">Identificar cuándo usar hooks vs comandos</div>
+                    <div class="checklist-item">Testear hooks antes de activarlos</div>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h4>🚀 Proyecto Práctico del Módulo</h4>
+                <div class="practice-content">
+                    <p><strong>Desafío Final:</strong> Configura automatizaciones completas para un proyecto Laravel</p>
+                    <ol>
+                        <li><strong>Hooks:</strong>
+                            <ul>
+                                <li>Hook de linter (PSR-12)</li>
+                                <li>Hook de tests automáticos</li>
+                                <li>Hook para agregar contexto Laravel a prompts</li>
+                            </ul>
+                        </li>
+                        <li><strong>Comandos:</strong>
+                            <ul>
+                                <li>/generate-endpoint - Generar API endpoint completo</li>
+                                <li>/review-laravel - Code review con estándares Laravel</li>
+                                <li>/create-migration - Generar migración con schema</li>
+                                <li>/add-test - Crear test Feature para controlador</li>
+                            </ul>
+                        </li>
+                        <li><strong>Documentación:</strong>
+                            <ul>
+                                <li>README explicando hooks y comandos</li>
+                                <li>Ejemplos de uso para cada comando</li>
+                                <li>Guía de troubleshooting</li>
+                            </ul>
+                        </li>
+                        <li><strong>Compartir:</strong>
+                            <ul>
+                                <li>Versionar todo en git</li>
+                                <li>Presentar al equipo</li>
+                                <li>Recopilar feedback y mejorar</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p><strong>Resultado Esperado:</strong> Un entorno de Claude Code completamente automatizado que
+                        acelera el desarrollo y asegura la calidad del código.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navegación -->
+    <section id="navegacion" style="background: white;">
+        <div class="container">
+            <div class="nav-buttons">
+                <a href="modulo-1-fundamentos.html" class="nav-button secondary">
+                    ← Módulo 1: Fundamentos
+                </a>
+                <a href="presentacion-claude-code.html" class="nav-button secondary">
+                    Volver al Inicio
+                </a>
+                <a href="presentacion-claude-code.html#modulos" class="nav-button">
+                    Ir al Módulo 3 →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Capacitación Claude Code - Módulo 2: Automatización con Hooks y Comandos</strong></p>
+            <p>Desarrollado para maximizar tu productividad con IA en desarrollo de software</p>
+            <p style="margin-top: 1rem; opacity: 0.7;">© 2025 - Material de Capacitación Interno</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.content-card, .practice-box, .step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>

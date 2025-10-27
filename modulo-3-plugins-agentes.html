@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3: Plugins y Agentes Especializados - Claude Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        nav .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav .breadcrumb a:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            z-index: 1;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .objective-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .objective-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .objective-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        section:nth-child(even) {
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .content-card h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            color: #64748b;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .content-card ul, .content-card ol {
+            margin-left: 2rem;
+            color: #64748b;
+        }
+
+        .content-card li {
+            margin-bottom: 0.8rem;
+            line-height: 1.8;
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            line-height: 1.6;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .keyword {
+            color: #c792ea;
+            font-weight: bold;
+        }
+
+        .string {
+            color: #c3e88d;
+        }
+
+        .comment {
+            color: #697891;
+            font-style: italic;
+        }
+
+        .function {
+            color: #82aaff;
+        }
+
+        /* Steps */
+        .step {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--primary);
+            position: relative;
+            padding-left: 3.5rem;
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .step p {
+            color: #64748b;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Practice Box */
+        .practice-box {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            color: white;
+            box-shadow: 0 5px 20px rgba(67, 233, 123, 0.3);
+        }
+
+        .practice-box h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .practice-content {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .practice-content ol, .practice-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .practice-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Tip Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 5px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .tip-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e0f2fe;
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fef3c7;
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Agent Card */
+        .agent-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .agent-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-card .agent-description {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .agent-card .agent-skills {
+            margin-top: 1rem;
+        }
+
+        .agent-card .agent-skills ul {
+            margin-left: 1.5rem;
+        }
+
+        .agent-card .agent-skills li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .step {
+                padding-left: 1.5rem;
+            }
+
+            .step::before {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 1rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Workflow Timeline */
+        .workflow-timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .workflow-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-1);
+        }
+
+        .workflow-step {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-left: 3px solid transparent;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            left: -2.1rem;
+            top: 0;
+            width: 1.2rem;
+            height: 1.2rem;
+            background: white;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+        }
+
+        .workflow-step h5 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-step p {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Claude Code</div>
+            <div class="breadcrumb">
+                <a href="presentacion-claude-code.html">Inicio</a>
+                <span>›</span>
+                <span>Módulo 3</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="module-badge">🔌 MÓDULO 3</div>
+            <h1>Plugins y Agentes Especializados</h1>
+            <p class="subtitle">Potencia Claude Code con plugins del marketplace y agentes personalizados para Laravel</p>
+
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>🔍 Explorar Plugins</h3>
+                    <p>Descubre y usa plugins del marketplace</p>
+                </div>
+                <div class="objective-card">
+                    <h3>🤖 Crear Agentes</h3>
+                    <p>Desarrolla agentes especializados para Laravel</p>
+                </div>
+                <div class="objective-card">
+                    <h3>💼 Caso Práctico</h3>
+                    <p>Implementa un CRUD completo usando agentes</p>
+                </div>
+                <div class="objective-card">
+                    <h3>✅ Validar Código</h3>
+                    <p>Prueba y valida con agentes especializados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introducción a Plugins -->
+    <section id="plugins">
+        <div class="container">
+            <h2 class="section-title">Plugins: Extendiendo Claude Code</h2>
+
+            <div class="content-card">
+                <h3>📦 ¿Qué son los Plugins?</h3>
+                <p>Los plugins son extensiones que añaden funcionalidades adicionales a Claude Code. Desde revisores de código especializados hasta generadores de documentación, el marketplace de plugins ofrece herramientas creadas por la comunidad para mejorar tu flujo de trabajo.</p>
+
+                <div class="info-box">
+                    <strong>💡 Beneficios de usar plugins</strong>
+                    <ul>
+                        <li><strong>Especialización:</strong> Plugins diseñados para tareas específicas</li>
+                        <li><strong>Productividad:</strong> Automatiza tareas repetitivas con agentes pre-configurados</li>
+                        <li><strong>Estándares:</strong> Aplica mejores prácticas consistentemente en tu proyecto</li>
+                        <li><strong>Comunidad:</strong> Aprovecha el conocimiento colectivo de desarrolladores</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🛒 Explorando el Marketplace</h3>
+                <p>Para acceder al marketplace de plugins, usa el comando:</p>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>💻</span>
+                        <span>Terminal</span>
+                    </div>
+                    /plugins
+                </div>
+
+                <p>Este comando abre una interfaz donde puedes:</p>
+                <ul>
+                    <li>Explorar plugins disponibles por categoría</li>
+                    <li>Ver descripciones y valoraciones de cada plugin</li>
+                    <li>Instalar plugins con un solo clic</li>
+                    <li>Gestionar plugins instalados</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>💡 Plugins Recomendados para Laravel</strong>
+                    <ul>
+                        <li><strong>wshobson/agents:</strong> Colección de agentes especializados para diferentes tecnologías</li>
+                        <li><strong>code-reviewer:</strong> Revisa código con foco en mejores prácticas</li>
+                        <li><strong>enforcing-standards:</strong> Aplica estándares de código automáticamente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⚙️ Instalando Plugins</h3>
+                <p>Existen dos formas principales de instalar plugins:</p>
+
+                <div class="step" data-step="1">
+                    <h4>Desde el Marketplace</h4>
+                    <p>Usa el comando <code>/plugins</code> y selecciona el plugin que deseas instalar desde la interfaz.</p>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Desde la Línea de Comandos</h4>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>💻</span>
+                            <span>Terminal</span>
+                        </div>
+                        /plugin install code-reviewer
+                    </div>
+                    <p>Este comando instala el plugin directamente sin necesidad de abrir la interfaz del marketplace.</p>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Compatibilidad</strong>
+                    <p>Algunos plugins pueden requerir configuración adicional o depender de herramientas específicas instaladas en tu sistema. Revisa siempre la documentación del plugin antes de instalarlo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agentes Especializados -->
+    <section id="agentes">
+        <div class="container">
+            <h2 class="section-title">Agentes Especializados para Laravel</h2>
+
+            <div class="content-card">
+                <h3>🤖 ¿Qué son los Agentes?</h3>
+                <p>Los agentes son instancias especializadas de Claude Code configuradas con conocimientos específicos sobre un área de desarrollo. Piensa en ellos como "expertos virtuales" en diferentes aspectos de tu proyecto.</p>
+
+                <p>Para proyectos Laravel, podemos crear agentes especializados en:</p>
+                <ul>
+                    <li><strong>Frontend:</strong> Blade, Livewire, Alpine.js</li>
+                    <li><strong>Estilos:</strong> Tailwind CSS, diseño responsive</li>
+                    <li><strong>Patrones:</strong> Repository, Services, DTOs, Domain-Driven Design</li>
+                    <li><strong>Backend:</strong> Controllers, Models, Migrations, Eloquent</li>
+                    <li><strong>Revisión de Código:</strong> PSR-12, mejores prácticas Laravel</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>📋 Creando Agentes Personalizados</h3>
+                <p>Los agentes se definen en archivos dentro de <code>.claude/agents/</code>. Cada agente tiene:</p>
+                <ul>
+                    <li><strong>Nombre:</strong> Identificador único del agente</li>
+                    <li><strong>Descripción:</strong> Qué hace el agente y cuándo usarlo</li>
+                    <li><strong>Instrucciones:</strong> Conocimientos y reglas específicas</li>
+                    <li><strong>Herramientas:</strong> Qué puede hacer (leer, escribir, ejecutar comandos, etc.)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>📁 Estructura de Carpetas</strong>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>📂</span>
+                            <span>Estructura del Proyecto</span>
+                        </div>
+                        proyecto-laravel/
+                        <br>├── .claude/
+                        <br>│   ├── agents/
+                        <br>│   │   ├── frontend-agent.md
+                        <br>│   │   ├── styles-agent.md
+                        <br>│   │   ├── patterns-agent.md
+                        <br>│   │   ├── backend-agent.md
+                        <br>│   │   └── code-review-agent.md
+                        <br>│   └── settings.json
+                        <br>├── app/
+                        <br>└── ...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agente de Frontend -->
+            <div class="agent-card">
+                <h4>🎨 Agente de Frontend</h4>
+                <div class="agent-description">
+                    <p><strong>Especialidad:</strong> Componentes Blade, Livewire, vistas y componentes reutilizables</p>
+
+                    <div class="agent-skills">
+                        <strong>Conocimientos:</strong>
+                        <ul>
+                            <li>Sintaxis Blade y directivas (@foreach, @if, @auth, etc.)</li>
+                            <li>Componentes Blade y slots</li>
+                            <li>Livewire para interactividad</li>
+                            <li>Alpine.js para funcionalidad cliente</li>
+                            <li>Estructuras semánticas HTML5</li>
+                            <li>Accesibilidad (ARIA, roles, labels)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/agents/frontend-agent.md</span>
+                    </div>
+                    <span class="comment"># Frontend Agent - Laravel Specialist</span>
+                    <br><br>
+                    <span class="keyword">name:</span> <span class="string">"frontend-laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en desarrollo frontend para Laravel con Blade y Livewire"</span>
+                    <br><br>
+                    <span class="comment">## Instrucciones</span>
+                    <br><br>
+                    Eres un experto en desarrollo frontend para Laravel. Tu especialidad incluye:
+                    <br><br>
+                    <span class="keyword">### Blade Templates</span>
+                    <br>- Usa componentes Blade para código reutilizable
+                    <br>- Implementa layouts con @extends y @section
+                    <br>- Aprovecha directivas Blade (@foreach, @if, @auth, @guest, etc.)
+                    <br>- Escapa datos correctamente con {{ $var }} para seguridad XSS
+                    <br><br>
+                    <span class="keyword">### Componentes</span>
+                    <br>- Crea componentes con class-based o anonymous components
+                    <br>- Usa slots para contenido flexible
+                    <br>- Implementa atributos dinámicos con $attributes
+                    <br><br>
+                    <span class="keyword">### Livewire</span>
+                    <br>- Implementa componentes interactivos sin JavaScript complejo
+                    <br>- Usa wire:model para binding de datos
+                    <br>- Implementa validación en tiempo real
+                    <br>- Optimiza con wire:loading y wire:target
+                    <br><br>
+                    <span class="keyword">### Mejores Prácticas</span>
+                    <br>- HTML semántico y accesible
+                    <br>- Estructura clara y mantenible
+                    <br>- Separación de lógica de presentación
+                    <br>- Componentes pequeños y enfocados
+                </div>
+            </div>
+
+            <!-- Agente de Estilos -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <h4>🎨 Agente de Estilos</h4>
+                <div class="agent-description">
+                    <p><strong>Especialidad:</strong> Tailwind CSS, diseño responsive y componentes visuales</p>
+
+                    <div class="agent-skills">
+                        <strong>Conocimientos:</strong>
+                        <ul>
+                            <li>Utilidades de Tailwind CSS</li>
+                            <li>Diseño responsive (sm:, md:, lg:, xl:)</li>
+                            <li>Tema y personalización</li>
+                            <li>Componentes UI modernos</li>
+                            <li>Animaciones y transiciones</li>
+                            <li>Dark mode</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/agents/styles-agent.md</span>
+                    </div>
+                    <span class="comment"># Styles Agent - Tailwind CSS Specialist</span>
+                    <br><br>
+                    <span class="keyword">name:</span> <span class="string">"styles-tailwind"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en diseño y estilos con Tailwind CSS"</span>
+                    <br><br>
+                    <span class="comment">## Instrucciones</span>
+                    <br><br>
+                    Eres un experto en diseño frontend con Tailwind CSS. Tu enfoque es:
+                    <br><br>
+                    <span class="keyword">### Tailwind Utility-First</span>
+                    <br>- Usa clases de utilidad en lugar de CSS personalizado
+                    <br>- Aplica diseño mobile-first (sin prefijo para móvil, md: para tablet, lg: para desktop)
+                    <br>- Combina utilidades para crear diseños complejos
+                    <br><br>
+                    <span class="keyword">### Diseño Responsive</span>
+                    <br>- Mobile-first approach
+                    <br>- Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)
+                    <br>- Grid y Flexbox para layouts flexibles
+                    <br><br>
+                    <span class="keyword">### Componentes UI</span>
+                    <br>- Botones con estados (hover, focus, active, disabled)
+                    <br>- Formularios accesibles y atractivos
+                    <br>- Cards, modals, dropdowns
+                    <br>- Navegación responsive
+                    <br><br>
+                    <span class="keyword">### Mejores Prácticas</span>
+                    <br>- Espaciado consistente (escala de 4px: p-4, m-8, etc.)
+                    <br>- Paleta de colores coherente
+                    <br>- Animaciones sutiles y profesionales
+                    <br>- Accesibilidad visual (contraste, tamaño de texto)
+                </div>
+            </div>
+
+            <!-- Agente de Patrones -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <h4>🏗️ Agente de Patrones</h4>
+                <div class="agent-description">
+                    <p><strong>Especialidad:</strong> Arquitectura de software, patrones de diseño y organización de código</p>
+
+                    <div class="agent-skills">
+                        <strong>Conocimientos:</strong>
+                        <ul>
+                            <li>Repository Pattern</li>
+                            <li>Service Layer Pattern</li>
+                            <li>DTOs (Data Transfer Objects)</li>
+                            <li>Form Requests para validación</li>
+                            <li>Actions/Commands</li>
+                            <li>SOLID principles</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/agents/patterns-agent.md</span>
+                    </div>
+                    <span class="comment"># Patterns Agent - Laravel Architecture Specialist</span>
+                    <br><br>
+                    <span class="keyword">name:</span> <span class="string">"patterns-laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en patrones de diseño y arquitectura para Laravel"</span>
+                    <br><br>
+                    <span class="comment">## Instrucciones</span>
+                    <br><br>
+                    Eres un arquitecto de software experto en Laravel. Aplicas patrones de diseño para código mantenible y escalable:
+                    <br><br>
+                    <span class="keyword">### Repository Pattern</span>
+                    <br>- Abstrae lógica de acceso a datos
+                    <br>- Interface + Implementación concreta
+                    <br>- Permite cambiar fuente de datos sin afectar lógica de negocio
+                    <br>- Bind en Service Provider
+                    <br><br>
+                    <span class="keyword">### Service Layer</span>
+                    <br>- Lógica de negocio compleja en Services
+                    <br>- Controllers delgados, Services robustos
+                    <br>- Servicios reutilizables y testeables
+                    <br>- Inyección de dependencias
+                    <br><br>
+                    <span class="keyword">### Form Requests</span>
+                    <br>- Validación centralizada
+                    <br>- Reglas claras y reutilizables
+                    <br>- Autorización en authorize()
+                    <br>- Mensajes de error personalizados
+                    <br><br>
+                    <span class="keyword">### DTOs</span>
+                    <br>- Transferencia de datos tipada
+                    <br>- Validación de estructura
+                    <br>- Inmutabilidad cuando sea apropiado
+                    <br><br>
+                    <span class="keyword">### Principios SOLID</span>
+                    <br>- Single Responsibility: Una clase, una responsabilidad
+                    <br>- Open/Closed: Abierto a extensión, cerrado a modificación
+                    <br>- Liskov Substitution: Interfaces claras y respetadas
+                    <br>- Interface Segregation: Interfaces específicas
+                    <br>- Dependency Inversion: Depender de abstracciones
+                </div>
+            </div>
+
+            <!-- Agente de Backend -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <h4>⚙️ Agente de Backend</h4>
+                <div class="agent-description">
+                    <p><strong>Especialidad:</strong> Controllers, Models, Migrations, Eloquent y lógica de negocio</p>
+
+                    <div class="agent-skills">
+                        <strong>Conocimientos:</strong>
+                        <ul>
+                            <li>Eloquent ORM y relaciones</li>
+                            <li>Migrations y seeders</li>
+                            <li>Controllers y routing</li>
+                            <li>API Resources</li>
+                            <li>Middleware y autenticación</li>
+                            <li>Query optimization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/agents/backend-agent.md</span>
+                    </div>
+                    <span class="comment"># Backend Agent - Laravel Core Specialist</span>
+                    <br><br>
+                    <span class="keyword">name:</span> <span class="string">"backend-laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en desarrollo backend con Laravel"</span>
+                    <br><br>
+                    <span class="comment">## Instrucciones</span>
+                    <br><br>
+                    Eres un experto en backend Laravel. Tu enfoque es crear código robusto, seguro y eficiente:
+                    <br><br>
+                    <span class="keyword">### Controllers</span>
+                    <br>- Delgados: delega lógica compleja a Services
+                    <br>- Usa Form Requests para validación
+                    <br>- Respuestas consistentes (JSON para APIs)
+                    <br>- Manejo apropiado de errores
+                    <br><br>
+                    <span class="keyword">### Models</span>
+                    <br>- Fillable o guarded para mass assignment
+                    <br>- Casts para transformación de datos
+                    <br>- Accessors y Mutators cuando sea necesario
+                    <br>- Relaciones Eloquent claramente definidas
+                    <br>- Scopes para queries reutilizables
+                    <br><br>
+                    <span class="keyword">### Migrations</span>
+                    <br>- Versionado claro de base de datos
+                    <br>- Rollback seguro
+                    <br>- Índices para optimización
+                    <br>- Foreign keys y constraints
+                    <br>- Nombrado consistente
+                    <br><br>
+                    <span class="keyword">### Eloquent</span>
+                    <br>- Eager loading para evitar N+1
+                    <br>- Relaciones: hasMany, belongsTo, belongsToMany, hasOne
+                    <br>- Query Builder cuando Eloquent no sea suficiente
+                    <br>- Transacciones para operaciones críticas
+                    <br><br>
+                    <span class="keyword">### Seguridad</span>
+                    <br>- Validación exhaustiva de inputs
+                    <br>- Protección CSRF
+                    <br>- SQL Injection prevention (siempre usar bindings)
+                    <br>- Autorización con Policies y Gates
+                </div>
+            </div>
+
+            <!-- Agente de Code Review -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <h4>🔍 Agente de Revisión de Código</h4>
+                <div class="agent-description">
+                    <p><strong>Especialidad:</strong> Code review, mejores prácticas, estándares PSR-12 y optimización</p>
+
+                    <div class="agent-skills">
+                        <strong>Conocimientos:</strong>
+                        <ul>
+                            <li>Estándar PSR-12</li>
+                            <li>Convenciones Laravel</li>
+                            <li>Detección de code smells</li>
+                            <li>Optimización de performance</li>
+                            <li>Seguridad y vulnerabilidades</li>
+                            <li>Testing best practices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>.claude/agents/code-review-agent.md</span>
+                    </div>
+                    <span class="comment"># Code Review Agent - Laravel Quality Specialist</span>
+                    <br><br>
+                    <span class="keyword">name:</span> <span class="string">"code-review-laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en revisión de código y mejores prácticas para Laravel"</span>
+                    <br><br>
+                    <span class="comment">## Instrucciones</span>
+                    <br><br>
+                    Eres un revisor de código experto en Laravel. Analizas código con ojo crítico pero constructivo:
+                    <br><br>
+                    <span class="keyword">### Estándares de Código</span>
+                    <br>- PSR-12 para formato de código PHP
+                    <br>- Convenciones de nombrado Laravel (StudlyCase, camelCase, snake_case según contexto)
+                    <br>- Indentación consistente (4 espacios)
+                    <br>- Líneas no mayores a 120 caracteres
+                    <br><br>
+                    <span class="keyword">### Code Smells</span>
+                    <br>- Métodos/clases muy largos
+                    <br>- Duplicación de código
+                    <br>- Acoplamiento excesivo
+                    <br>- Complejidad ciclomática alta
+                    <br>- Variables mal nombradas
+                    <br><br>
+                    <span class="keyword">### Seguridad</span>
+                    <br>- SQL Injection vulnerabilities
+                    <br>- XSS (Cross-Site Scripting)
+                    <br>- CSRF protection
+                    <br>- Mass assignment vulnerabilities
+                    <br>- Exposición de datos sensibles
+                    <br><br>
+                    <span class="keyword">### Performance</span>
+                    <br>- N+1 query problems
+                    <br>- Missing indexes
+                    <br>- Unnecessary queries
+                    <br>- Memory leaks
+                    <br>- Cacheable queries
+                    <br><br>
+                    <span class="keyword">### Testing</span>
+                    <br>- Cobertura de tests adecuada
+                    <br>- Tests unitarios para lógica compleja
+                    <br>- Tests de feature para endpoints
+                    <br>- Assertions claras y completas
+                    <br><br>
+                    <span class="keyword">## Formato de Review</span>
+                    <br><br>
+                    Presenta hallazgos organizados por severidad:
+                    <br>- 🔴 <span class="keyword">CRÍTICO:</span> Vulnerabilidades de seguridad, bugs graves
+                    <br>- 🟠 <span class="keyword">ALTO:</span> Problemas de performance, code smells importantes
+                    <br>- 🟡 <span class="keyword">MEDIO:</span> Violaciones de estándares, mejoras recomendadas
+                    <br>- 🟢 <span class="keyword">BAJO:</span> Sugerencias de estilo, optimizaciones menores
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Usando los Agentes</strong>
+                <p>Para usar un agente, invócalo en tu conversación con Claude Code:</p>
+                <div class="code-example" style="background: rgba(255,255,255,0.2); margin-top: 1rem;">
+                    <span class="string">@frontend-laravel</span> crea un componente de formulario para empleados
+                    <br><br>
+                    <span class="string">@code-review-laravel</span> revisa mi EmployeeController
+                    <br><br>
+                    <span class="string">@patterns-laravel</span> implementa un repository para Employee
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ejemplo Práctico -->
+    <section id="ejemplo-practico">
+        <div class="container">
+            <h2 class="section-title">Ejemplo Práctico: CRUD de Empleados</h2>
+
+            <div class="content-card">
+                <h3>💼 Proyecto: Sistema de Gestión de Empleados</h3>
+                <p>Vamos a crear un CRUD completo para gestionar empleados usando todos nuestros agentes especializados. Este ejemplo incluye:</p>
+                <ul>
+                    <li>Migración de base de datos</li>
+                    <li>Modelo Eloquent con relaciones</li>
+                    <li>Repository Pattern para acceso a datos</li>
+                    <li>Service Layer para lógica de negocio</li>
+                    <li>Controller con Form Requests</li>
+                    <li>Vistas Blade con componentes</li>
+                    <li>Estilos Tailwind CSS</li>
+                    <li>Revisión de código y pruebas</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>🚀 Flujo de Trabajo con Agentes</h3>
+                <div class="workflow-timeline">
+                    <div class="workflow-step">
+                        <h5>1️⃣ Backend Agent - Migración</h5>
+                        <p>Primero, usamos el agente de backend para crear la estructura de base de datos.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@backend-laravel</span> crea una migración para la tabla employees con los siguientes campos:
+                            <br>- first_name (string)
+                            <br>- last_name (string)
+                            <br>- email (string, único)
+                            <br>- phone (string, nullable)
+                            <br>- department_id (foreign key)
+                            <br>- position (string)
+                            <br>- salary (decimal)
+                            <br>- hire_date (date)
+                            <br>- is_active (boolean, default true)
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>2️⃣ Backend Agent - Modelo</h5>
+                        <p>Creamos el modelo Employee con relaciones y configuración adecuada.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@backend-laravel</span> crea el modelo Employee con:
+                            <br>- Fillable fields apropiados
+                            <br>- Casts para hire_date (date), is_active (boolean), salary (decimal:2)
+                            <br>- Relación belongsTo con Department
+                            <br>- Accessor para full_name
+                            <br>- Scope para empleados activos
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>3️⃣ Patterns Agent - Repository</h5>
+                        <p>Implementamos el patrón Repository para abstraer acceso a datos.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@patterns-laravel</span> crea un Repository Pattern para Employee con:
+                            <br>- Interface EmployeeRepositoryInterface
+                            <br>- Implementación EmployeeRepository
+                            <br>- Métodos: all(), find(), create(), update(), delete(), findActive()
+                            <br>- Registra el binding en un Service Provider
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>4️⃣ Patterns Agent - Service</h5>
+                        <p>Creamos un Service Layer para lógica de negocio compleja.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@patterns-laravel</span> crea un EmployeeService con:
+                            <br>- Método para crear empleado (con validaciones de negocio)
+                            <br>- Método para actualizar empleado
+                            <br>- Método para activar/desactivar empleado
+                            <br>- Método para calcular antigüedad
+                            <br>- Inyección del EmployeeRepositoryInterface
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>5️⃣ Patterns Agent - Form Requests</h5>
+                        <p>Creamos Form Requests para validación centralizada.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@patterns-laravel</span> crea Form Requests para Employee:
+                            <br>- StoreEmployeeRequest con reglas de validación
+                            <br>- UpdateEmployeeRequest con reglas (email único excepto el actual)
+                            <br>- Mensajes de error personalizados en español
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>6️⃣ Backend Agent - Controller</h5>
+                        <p>Creamos el controller para manejar las peticiones HTTP.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@backend-laravel</span> crea EmployeeController con:
+                            <br>- Métodos CRUD: index, create, store, show, edit, update, destroy
+                            <br>- Usa EmployeeService para lógica de negocio
+                            <br>- Usa Form Requests para validación
+                            <br>- Respuestas apropiadas (vistas + mensajes flash)
+                            <br>- Manejo de errores
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>7️⃣ Frontend Agent - Vistas</h5>
+                        <p>Creamos las vistas Blade para el CRUD.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@frontend-laravel</span> crea las siguientes vistas:
+                            <br>- employees/index.blade.php (lista de empleados con tabla)
+                            <br>- employees/create.blade.php (formulario de creación)
+                            <br>- employees/edit.blade.php (formulario de edición)
+                            <br>- employees/show.blade.php (detalles del empleado)
+                            <br>- Usa componentes Blade para botones y formularios
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>8️⃣ Styles Agent - Diseño</h5>
+                        <p>Aplicamos estilos profesionales con Tailwind CSS.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@styles-tailwind</span> estiliza las vistas de empleados con:
+                            <br>- Tabla responsive con hover effects
+                            <br>- Formularios con diseño moderno
+                            <br>- Botones con estados (primary, danger, secondary)
+                            <br>- Cards para mostrar información
+                            <br>- Diseño mobile-first
+                            <br>- Mensajes de validación visualmente claros
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <h5>9️⃣ Code Review Agent - Revisión</h5>
+                        <p>Revisamos todo el código implementado.</p>
+                        <div class="code-example">
+                            <div class="code-title">
+                                <span>💬</span>
+                                <span>Prompt</span>
+                            </div>
+                            <span class="string">@code-review-laravel</span> revisa todo el código del módulo de empleados:
+                            <br>- Verifica cumplimiento de PSR-12
+                            <br>- Detecta posibles problemas de seguridad
+                            <br>- Identifica oportunidades de optimización
+                            <br>- Sugiere mejoras en la estructura
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📝 Código Generado - Migración</h3>
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>database/migrations/xxxx_create_employees_table.php</span>
+                    </div>
+                    <span class="keyword">&lt;?php</span>
+                    <br><br>
+                    <span class="keyword">use</span> Illuminate\Database\Migrations\Migration;
+                    <br><span class="keyword">use</span> Illuminate\Database\Schema\Blueprint;
+                    <br><span class="keyword">use</span> Illuminate\Support\Facades\Schema;
+                    <br><br>
+                    <span class="keyword">return new class extends</span> Migration
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schema::<span class="function">create</span>(<span class="string">'employees'</span>, <span class="keyword">function</span> (Blueprint $table) {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">id</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'first_name'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'last_name'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'email'</span>)-><span class="function">unique</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'phone'</span>)-><span class="function">nullable</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">foreignId</span>(<span class="string">'department_id'</span>)-><span class="function">constrained</span>()-><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'position'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">decimal</span>(<span class="string">'salary'</span>, 10, 2);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">date</span>(<span class="string">'hire_date'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">boolean</span>(<span class="string">'is_active'</span>)-><span class="function">default</span>(<span class="keyword">true</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">timestamps</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Índices para optimización</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">index</span>(<span class="string">'department_id'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">index</span>(<span class="string">'is_active'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br><br>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">down</span>(): <span class="keyword">void</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schema::<span class="function">dropIfExists</span>(<span class="string">'employees'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br>};
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📝 Código Generado - Modelo</h3>
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>app/Models/Employee.php</span>
+                    </div>
+                    <span class="keyword">&lt;?php</span>
+                    <br><br>
+                    <span class="keyword">namespace</span> App\Models;
+                    <br><br>
+                    <span class="keyword">use</span> Illuminate\Database\Eloquent\Model;
+                    <br><span class="keyword">use</span> Illuminate\Database\Eloquent\Relations\BelongsTo;
+                    <br><br>
+                    <span class="keyword">class</span> Employee <span class="keyword">extends</span> Model
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">protected</span> $fillable = [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'first_name'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'last_name'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'email'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'phone'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'department_id'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'position'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'salary'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'hire_date'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'is_active'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;];
+                    <br><br>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">protected</span> $casts = [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'hire_date'</span> => <span class="string">'date'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'is_active'</span> => <span class="string">'boolean'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'salary'</span> => <span class="string">'decimal:2'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;];
+                    <br><br>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Relación con Department</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">department</span>(): BelongsTo
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> $this-><span class="function">belongsTo</span>(Department::<span class="keyword">class</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br><br>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Accessor para nombre completo</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">getFullNameAttribute</span>(): <span class="keyword">string</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"{$this->first_name} {$this->last_name}"</span>;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br><br>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Scope para empleados activos</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">scopeActive</span>($query)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> $query-><span class="function">where</span>(<span class="string">'is_active'</span>, <span class="keyword">true</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br>}
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>📝 Código Generado - Vista Index</h3>
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>resources/views/employees/index.blade.php</span>
+                    </div>
+                    @<span class="keyword">extends</span>(<span class="string">'layouts.app'</span>)
+                    <br><br>
+                    @<span class="keyword">section</span>(<span class="string">'content'</span>)
+                    <br>&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"container mx-auto px-4 py-8"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Header --&gt;</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"flex justify-between items-center mb-6"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">h1</span> <span class="keyword">class</span>=<span class="string">"text-3xl font-bold text-gray-800"</span>&gt;Empleados&lt;/<span class="keyword">h1</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{ route('employees.create') }}"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span>=<span class="string">"bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Nuevo Empleado
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">a</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">div</span>&gt;
+                    <br><br>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Tabla Responsive --&gt;</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"bg-white rounded-lg shadow overflow-hidden"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">table</span> <span class="keyword">class</span>=<span class="string">"min-w-full divide-y divide-gray-200"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">thead</span> <span class="keyword">class</span>=<span class="string">"bg-gray-50"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">tr</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombre
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Departamento
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posición
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Estado
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acciones
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">tr</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">thead</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">tbody</span> <span class="keyword">class</span>=<span class="string">"bg-white divide-y divide-gray-200"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">foreach</span>($employees <span class="keyword">as</span> $employee)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">tr</span> <span class="keyword">class</span>=<span class="string">"hover:bg-gray-50 transition"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"font-medium text-gray-900"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->full_name }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">div</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-gray-500"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->email }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-gray-500"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->department->name }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-gray-500"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->position }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">if</span>($employee->is_active)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">span</span> <span class="keyword">class</span>=<span class="string">"px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Activo
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">span</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">else</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">span</span> <span class="keyword">class</span>=<span class="string">"px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inactivo
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">span</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">endif</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-right text-sm"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{ route('employees.show', $employee) }}"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span>=<span class="string">"text-indigo-600 hover:text-indigo-900"</span>&gt;Ver&lt;/<span class="keyword">a</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{ route('employees.edit', $employee) }}"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span>=<span class="string">"ml-3 text-yellow-600 hover:text-yellow-900"</span>&gt;Editar&lt;/<span class="keyword">a</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">tr</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">endforeach</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">tbody</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">table</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">div</span>&gt;
+                    <br>&lt;/<span class="keyword">div</span>&gt;
+                    <br>@<span class="keyword">endsection</span>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h4>🧪 Ejercicio: Prueba el Sistema Completo</h4>
+                <div class="practice-content">
+                    <p><strong>Pasos para probar:</strong></p>
+                    <ol>
+                        <li>Ejecuta las migraciones: <code>php artisan migrate</code></li>
+                        <li>Accede a la ruta <code>/employees</code> en tu navegador</li>
+                        <li>Crea un nuevo empleado usando el formulario</li>
+                        <li>Verifica que la validación funcione correctamente (prueba con email duplicado)</li>
+                        <li>Edita el empleado creado</li>
+                        <li>Usa el agente de code review para verificar la calidad del código: <code>@code-review-laravel revisa EmployeeController y el modelo Employee</code></li>
+                    </ol>
+                    <p><strong>Bonus:</strong> Implementa tests Feature para los endpoints del CRUD usando el agente backend.</p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Ventajas de Usar Agentes Especializados</strong>
+                <ul>
+                    <li><strong>Consistencia:</strong> Cada agente aplica las mejores prácticas de su área</li>
+                    <li><strong>Velocidad:</strong> Genera código completo siguiendo estándares sin requerir instrucciones detalladas</li>
+                    <li><strong>Calidad:</strong> El código generado sigue patrones probados y es mantenible</li>
+                    <li><strong>Aprendizaje:</strong> Observar el código generado te enseña mejores prácticas</li>
+                    <li><strong>Especialización:</strong> Cada agente es experto en su dominio</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navegación -->
+    <section id="navegacion" style="background: white;">
+        <div class="container">
+            <div class="nav-buttons">
+                <a href="modulo-2-hooks-comandos.html" class="nav-button secondary">
+                    ← Módulo 2: Hooks y Comandos
+                </a>
+                <a href="presentacion-claude-code.html" class="nav-button secondary">
+                    Volver al Inicio
+                </a>
+                <a href="presentacion-claude-code.html#modulos" class="nav-button">
+                    Explorar Más Módulos →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong>Capacitación Claude Code - Módulo 3: Plugins y Agentes Especializados</strong></p>
+            <p>Desarrollado para maximizar tu productividad con IA en desarrollo de software</p>
+            <p style="margin-top: 1rem; opacity: 0.7;">© 2025 - Material de Capacitación Interno</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.content-card, .practice-box, .agent-card, .workflow-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>

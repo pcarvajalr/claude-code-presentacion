@@ -1,0 +1,1 @@
+- al crear una migracion, analizar sistema de migraciones para mantener coherencia y secuencia.
