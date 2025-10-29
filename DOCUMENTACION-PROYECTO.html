@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Documentación del Proyecto Claude Code</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Documentación del Proyecto Claude Code</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#documentación-del-proyecto-claude-code---presentación-de-capacitación"
+id="toc-documentación-del-proyecto-claude-code---presentación-de-capacitación"><span
+class="toc-section-number">1</span> Documentación del Proyecto: Claude
+Code - Presentación de Capacitación</a>
+<ul>
+<li><a href="#introducción-y-visión-general"
+id="toc-introducción-y-visión-general"><span
+class="toc-section-number">1.1</span> 1. Introducción y Visión
+General</a>
+<ul>
+<li><a href="#objetivos-principales"
+id="toc-objetivos-principales"><span
+class="toc-section-number">1.1.1</span> Objetivos Principales</a></li>
+<li><a href="#público-objetivo" id="toc-público-objetivo"><span
+class="toc-section-number">1.1.2</span> Público Objetivo</a></li>
+</ul></li>
+<li><a href="#estructura-del-proyecto"
+id="toc-estructura-del-proyecto"><span
+class="toc-section-number">1.2</span> 2. Estructura del Proyecto</a>
+<ul>
+<li><a href="#archivos-principales" id="toc-archivos-principales"><span
+class="toc-section-number">1.2.1</span> Archivos Principales</a></li>
+</ul></li>
+<li><a href="#tecnologías-utilizadas"
+id="toc-tecnologías-utilizadas"><span
+class="toc-section-number">1.3</span> 3. Tecnologías Utilizadas</a>
+<ul>
+<li><a href="#frontend" id="toc-frontend"><span
+class="toc-section-number">1.3.1</span> Frontend</a></li>
+<li><a href="#despliegue-y-hosting" id="toc-despliegue-y-hosting"><span
+class="toc-section-number">1.3.2</span> Despliegue y Hosting</a></li>
+<li><a href="#herramientas-de-generación-de-contenido"
+id="toc-herramientas-de-generación-de-contenido"><span
+class="toc-section-number">1.3.3</span> Herramientas de Generación de
+Contenido</a></li>
+<li><a href="#características-de-diseño"
+id="toc-características-de-diseño"><span
+class="toc-section-number">1.3.4</span> Características de
+Diseño</a></li>
+</ul></li>
+<li><a href="#módulos-del-curso" id="toc-módulos-del-curso"><span
+class="toc-section-number">1.4</span> 4. Módulos del Curso</a>
+<ul>
+<li><a href="#módulo-1-fundamentos-y-configuración"
+id="toc-módulo-1-fundamentos-y-configuración"><span
+class="toc-section-number">1.4.1</span> Módulo 1: Fundamentos y
+Configuración</a></li>
+<li><a href="#módulo-2-automatización-con-hooks-y-comandos"
+id="toc-módulo-2-automatización-con-hooks-y-comandos"><span
+class="toc-section-number">1.4.2</span> Módulo 2: Automatización con
+Hooks y Comandos</a></li>
+<li><a href="#módulo-3-plugins-agentes-especializados-y-skills"
+id="toc-módulo-3-plugins-agentes-especializados-y-skills"><span
+class="toc-section-number">1.4.3</span> Módulo 3: Plugins, Agentes
+Especializados y Skills</a></li>
+<li><a href="#módulo-4-mcps-model-context-protocol-e-integraciones"
+id="toc-módulo-4-mcps-model-context-protocol-e-integraciones"><span
+class="toc-section-number">1.4.4</span> Módulo 4: MCPs (Model Context
+Protocol) e Integraciones</a></li>
+<li><a href="#módulo-5-aplicación-a-proyectos-reales"
+id="toc-módulo-5-aplicación-a-proyectos-reales"><span
+class="toc-section-number">1.4.5</span> Módulo 5: Aplicación a Proyectos
+Reales</a></li>
+</ul></li>
+<li><a href="#proyectos-prácticos" id="toc-proyectos-prácticos"><span
+class="toc-section-number">1.5</span> 5. Proyectos Prácticos</a>
+<ul>
+<li><a href="#proyecto-1-pwa-de-chat-multiusuario-laravel"
+id="toc-proyecto-1-pwa-de-chat-multiusuario-laravel"><span
+class="toc-section-number">1.5.1</span> Proyecto 1: PWA de Chat
+Multiusuario (Laravel)</a></li>
+<li><a href="#proyecto-2-backend-y-webhooks-.net-core"
+id="toc-proyecto-2-backend-y-webhooks-.net-core"><span
+class="toc-section-number">1.5.2</span> Proyecto 2: Backend y Webhooks
+(.NET Core)</a></li>
+<li><a href="#proyecto-3-mejora-de-proyecto-laravel-existente"
+id="toc-proyecto-3-mejora-de-proyecto-laravel-existente"><span
+class="toc-section-number">1.5.3</span> Proyecto 3: Mejora de Proyecto
+Laravel Existente</a></li>
+</ul></li>
+<li><a href="#herramientas-clave-de-claude-code"
+id="toc-herramientas-clave-de-claude-code"><span
+class="toc-section-number">1.6</span> 6. Herramientas Clave de Claude
+Code</a>
+<ul>
+<li><a href="#mcps-model-context-protocol"
+id="toc-mcps-model-context-protocol"><span
+class="toc-section-number">1.6.1</span> 6.1 MCPs (Model Context
+Protocol)</a></li>
+<li><a href="#hooks-automatización-de-eventos"
+id="toc-hooks-automatización-de-eventos"><span
+class="toc-section-number">1.6.2</span> 6.2 Hooks (Automatización de
+Eventos)</a></li>
+<li><a href="#slash-commands-personalizados"
+id="toc-slash-commands-personalizados"><span
+class="toc-section-number">1.6.3</span> 6.3 Slash Commands
+Personalizados</a></li>
+<li><a href="#plugins-del-marketplace"
+id="toc-plugins-del-marketplace"><span
+class="toc-section-number">1.6.4</span> 6.4 Plugins del
+Marketplace</a></li>
+<li><a href="#agentes-especializados"
+id="toc-agentes-especializados"><span
+class="toc-section-number">1.6.5</span> 6.5 Agentes
+Especializados</a></li>
+<li><a href="#skills-capacidades-especializadas"
+id="toc-skills-capacidades-especializadas"><span
+class="toc-section-number">1.6.6</span> 6.6 Skills (Capacidades
+Especializadas)</a></li>
+</ul></li>
+<li><a href="#sistema-de-hooks-detallado"
+id="toc-sistema-de-hooks-detallado"><span
+class="toc-section-number">1.7</span> 7. Sistema de Hooks Detallado</a>
+<ul>
+<li><a href="#arquitectura-de-hooks"
+id="toc-arquitectura-de-hooks"><span
+class="toc-section-number">1.7.1</span> Arquitectura de Hooks</a></li>
+<li><a href="#tipos-de-hooks-y-uso" id="toc-tipos-de-hooks-y-uso"><span
+class="toc-section-number">1.7.2</span> Tipos de Hooks y Uso</a></li>
+<li><a href="#configuración-de-hooks-en-settings.json"
+id="toc-configuración-de-hooks-en-settings.json"><span
+class="toc-section-number">1.7.3</span> Configuración de Hooks en
+settings.json</a></li>
+</ul></li>
+<li><a href="#configuración-y-despliegue"
+id="toc-configuración-y-despliegue"><span
+class="toc-section-number">1.8</span> 8. Configuración y Despliegue</a>
+<ul>
+<li><a href="#configuración-local" id="toc-configuración-local"><span
+class="toc-section-number">1.8.1</span> 8.1 Configuración Local</a></li>
+<li><a href="#despliegue-en-vercel" id="toc-despliegue-en-vercel"><span
+class="toc-section-number">1.8.2</span> 8.2 Despliegue en
+Vercel</a></li>
+<li><a href="#control-de-versiones" id="toc-control-de-versiones"><span
+class="toc-section-number">1.8.3</span> 8.3 Control de
+Versiones</a></li>
+</ul></li>
+<li><a href="#instrucciones-de-uso" id="toc-instrucciones-de-uso"><span
+class="toc-section-number">1.9</span> 9. Instrucciones de Uso</a>
+<ul>
+<li><a href="#para-instructores" id="toc-para-instructores"><span
+class="toc-section-number">1.9.1</span> 9.1 Para Instructores</a></li>
+<li><a href="#para-participantes" id="toc-para-participantes"><span
+class="toc-section-number">1.9.2</span> 9.2 Para Participantes</a></li>
+<li><a href="#acceso-a-la-presentación-web"
+id="toc-acceso-a-la-presentación-web"><span
+class="toc-section-number">1.9.3</span> 9.3 Acceso a la Presentación
+Web</a></li>
+<li><a href="#generación-de-pdfs" id="toc-generación-de-pdfs"><span
+class="toc-section-number">1.9.4</span> 9.4 Generación de PDFs</a></li>
+</ul></li>
+<li><a href="#entregables-del-curso"
+id="toc-entregables-del-curso"><span
+class="toc-section-number">1.10</span> 10. Entregables del Curso</a>
+<ul>
+<li><a href="#entregables-del-instructor"
+id="toc-entregables-del-instructor"><span
+class="toc-section-number">1.10.1</span> 10.1 Entregables del
+Instructor</a></li>
+<li><a href="#entregables-de-los-participantes"
+id="toc-entregables-de-los-participantes"><span
+class="toc-section-number">1.10.2</span> 10.2 Entregables de los
+Participantes</a></li>
+</ul></li>
+<li><a href="#recursos-adicionales" id="toc-recursos-adicionales"><span
+class="toc-section-number">1.11</span> 11. Recursos Adicionales</a>
+<ul>
+<li><a href="#documentación-oficial"
+id="toc-documentación-oficial"><span
+class="toc-section-number">1.11.1</span> 11.1 Documentación
+Oficial</a></li>
+<li><a href="#herramientas-complementarias"
+id="toc-herramientas-complementarias"><span
+class="toc-section-number">1.11.2</span> 11.2 Herramientas
+Complementarias</a></li>
+<li><a href="#comunidad" id="toc-comunidad"><span
+class="toc-section-number">1.11.3</span> 11.3 Comunidad</a></li>
+</ul></li>
+<li><a href="#roadmap-y-próximos-pasos"
+id="toc-roadmap-y-próximos-pasos"><span
+class="toc-section-number">1.12</span> 12. Roadmap y Próximos Pasos</a>
+<ul>
+<li><a href="#fase-1-capacitación-inicial-semanas-1-2"
+id="toc-fase-1-capacitación-inicial-semanas-1-2"><span
+class="toc-section-number">1.12.1</span> Fase 1: Capacitación Inicial
+(Semanas 1-2)</a></li>
+<li><a href="#fase-2-proyectos-prácticos-semanas-2-3"
+id="toc-fase-2-proyectos-prácticos-semanas-2-3"><span
+class="toc-section-number">1.12.2</span> Fase 2: Proyectos Prácticos
+(Semanas 2-3)</a></li>
+<li><a href="#fase-3-aplicación-real-semana-4"
+id="toc-fase-3-aplicación-real-semana-4"><span
+class="toc-section-number">1.12.3</span> Fase 3: Aplicación Real (Semana
+4)</a></li>
+<li><a href="#fase-4-post-capacitación-semana-5"
+id="toc-fase-4-post-capacitación-semana-5"><span
+class="toc-section-number">1.12.4</span> Fase 4: Post-Capacitación
+(Semana 5+)</a></li>
+</ul></li>
+<li><a href="#mejores-prácticas-recomendadas"
+id="toc-mejores-prácticas-recomendadas"><span
+class="toc-section-number">1.13</span> 13. Mejores Prácticas
+Recomendadas</a>
+<ul>
+<li><a href="#uso-de-claude-code" id="toc-uso-de-claude-code"><span
+class="toc-section-number">1.13.1</span> 13.1 Uso de Claude
+Code</a></li>
+<li><a href="#seguridad" id="toc-seguridad"><span
+class="toc-section-number">1.13.2</span> 13.2 Seguridad</a></li>
+</ul></li>
+<li><a href="#conclusión" id="toc-conclusión"><span
+class="toc-section-number">1.14</span> 14. Conclusión</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="1"
+id="documentación-del-proyecto-claude-code---presentación-de-capacitación"><span
+class="header-section-number">1</span> Documentación del Proyecto:
+Claude Code - Presentación de Capacitación</h1>
+<p><strong>Repositorio:</strong>
+https://github.com/pcarvajalr/claude-code-presentacion.git
+<strong>Fecha:</strong> Octubre 2025 <strong>Autor:</strong> Pedro
+Carvajal</p>
+<hr />
+<h2 data-number="1.1" id="introducción-y-visión-general"><span
+class="header-section-number">1.1</span> 1. Introducción y Visión
+General</h2>
+<p>Este proyecto es un <strong>portal educativo completo y
+autónomo</strong> diseñado para capacitar a equipos de desarrollo en el
+uso de Claude Code, el IDE oficial de Anthropic. El proyecto combina
+teoría, ejemplos prácticos y herramientas automatizadas para mejorar la
+productividad del desarrollo de software.</p>
+<h3 data-number="1.1.1" id="objetivos-principales"><span
+class="header-section-number">1.1.1</span> Objetivos Principales</h3>
+<ul>
+<li>Proporcionar un plan de capacitación estructurado de 2-4 semanas
+sobre Claude Code</li>
+<li>Enseñar las capacidades avanzadas de automatización, plugins y
+agentes especializados</li>
+<li>Aplicar conocimientos en proyectos reales de Laravel y .NET</li>
+<li>Desarrollar habilidades en MCPs (Model Context Protocol), hooks y
+comandos personalizados</li>
+<li>Crear agentes y skills específicos para las necesidades del
+equipo</li>
+</ul>
+<h3 data-number="1.1.2" id="público-objetivo"><span
+class="header-section-number">1.1.2</span> Público Objetivo</h3>
+<p>Equipo de desarrollo de software especializado en: - Laravel (PHP) -
+.NET Core (C#) - Desarrollo de aplicaciones web modernas - Integración
+de APIs y servicios externos</p>
+<hr />
+<h2 data-number="1.2" id="estructura-del-proyecto"><span
+class="header-section-number">1.2</span> 2. Estructura del Proyecto</h2>
+<pre><code>claude-code/
+├── .claude/                          # Configuración de Claude Code
+│   ├── hooks/                        # Scripts de automatización
+│   │   ├── EVENTOS-HOOKS.md         # Documentación completa de hooks
+│   │   └── HOOKS-RESUMEN.md         # Resumen rápido de hooks
+│   ├── skills/                       # Habilidades personalizadas
+│   │   ├── pdf-generator/            # Skill para generación de PDFs
+│   │   │   ├── scripts/             # Scripts de conversión
+│   │   │   ├── assets/              # Plantillas LaTeX y CSS
+│   │   │   ├── references/          # Documentación técnica
+│   │   │   └── SKILL.md             # Documentación del skill
+│   │   └── skill-creator/            # Herramienta para crear skills
+│   ├── settings.json                 # Configuración global
+│   └── settings.local.json           # Configuración local
+├── .git/                             # Repositorio Git
+├── .gitignore                        # Configuración de Git
+├── .vercel/                          # Configuración de Vercel
+├── CLAUDE.md                         # Instrucciones del proyecto
+├── Entregable.md                     # Documento de entregables
+├── index.html                        # Página principal (52 KB)
+├── modulo-1-fundamentos.html         # Módulo 1: Fundamentos (80 KB)
+├── modulo-2-hooks-comandos.html      # Módulo 2: Hooks y Comandos (67 KB)
+├── modulo-3-plugins-agentes.html     # Módulo 3: Plugins y Agentes (131 KB)
+├── presentacion-claude-code.html     # Presentación general (52 KB)
+├── plan-capacitacion-claude-code.md  # Plan de capacitación (4.8 KB)
+└── vercel.json                       # Configuración de despliegue</code></pre>
+<h3 data-number="1.2.1" id="archivos-principales"><span
+class="header-section-number">1.2.1</span> Archivos Principales</h3>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 26%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr>
+<th>Archivo</th>
+<th>Tamaño</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index.html</code></td>
+<td>52 KB</td>
+<td>Página principal con módulos en acordeón</td>
+</tr>
+<tr>
+<td><code>modulo-1-fundamentos.html</code></td>
+<td>80 KB</td>
+<td>Fundamentos y configuración de Claude Code</td>
+</tr>
+<tr>
+<td><code>modulo-2-hooks-comandos.html</code></td>
+<td>67 KB</td>
+<td>Automatización con hooks y comandos</td>
+</tr>
+<tr>
+<td><code>modulo-3-plugins-agentes.html</code></td>
+<td>131 KB</td>
+<td>Plugins, agentes especializados y skills</td>
+</tr>
+<tr>
+<td><code>presentacion-claude-code.html</code></td>
+<td>52 KB</td>
+<td>Presentación general del curso</td>
+</tr>
+<tr>
+<td><code>plan-capacitacion-claude-code.md</code></td>
+<td>4.8 KB</td>
+<td>Plan estratégico del curso</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.3" id="tecnologías-utilizadas"><span
+class="header-section-number">1.3</span> 3. Tecnologías Utilizadas</h2>
+<h3 data-number="1.3.1" id="frontend"><span
+class="header-section-number">1.3.1</span> Frontend</h3>
+<ul>
+<li><strong>HTML5</strong>: Semántica moderna, accesibilidad</li>
+<li><strong>CSS3</strong>:
+<ul>
+<li>Animaciones y transiciones</li>
+<li>Gradientes y efectos visuales</li>
+<li>Flexbox y Grid para layouts responsivos</li>
+<li>Variables CSS para tematización</li>
+</ul></li>
+<li><strong>JavaScript Vanilla</strong>:
+<ul>
+<li>Interactividad de menús y navegación</li>
+<li>Smooth scroll entre secciones</li>
+<li>Animaciones dinámicas</li>
+<li>Manejo de acordeones y modales</li>
+</ul></li>
+</ul>
+<h3 data-number="1.3.2" id="despliegue-y-hosting"><span
+class="header-section-number">1.3.2</span> Despliegue y Hosting</h3>
+<ul>
+<li><strong>Vercel</strong>: Hosting de la aplicación web</li>
+<li><strong>Git/GitHub</strong>: Control de versiones</li>
+<li><strong>Node.js</strong>: Scripts de conversión y
+automatización</li>
+<li><strong>PowerShell</strong>: Scripts de batch processing</li>
+</ul>
+<h3 data-number="1.3.3"
+id="herramientas-de-generación-de-contenido"><span
+class="header-section-number">1.3.3</span> Herramientas de Generación de
+Contenido</h3>
+<ul>
+<li><strong>Pandoc</strong>: Conversión de markdown a PDF con LaTeX</li>
+<li><strong>wkhtmltopdf</strong>: Conversión de HTML estático a PDF</li>
+<li><strong>Playwright</strong>: Conversión de presentaciones dinámicas
+a PDF</li>
+<li><strong>LaTeX</strong>: Generación de documentos profesionales</li>
+</ul>
+<h3 data-number="1.3.4" id="características-de-diseño"><span
+class="header-section-number">1.3.4</span> Características de
+Diseño</h3>
+<ul>
+<li><strong>Responsive Design</strong>: Adaptable a móviles, tablets y
+escritorio</li>
+<li><strong>Mobile-First</strong>: Diseño optimizado primero para
+dispositivos móviles</li>
+<li><strong>Accesibilidad</strong>: Navegación por teclado, semántica
+HTML</li>
+<li><strong>Optimización</strong>: Carga rápida, assets optimizados</li>
+</ul>
+<hr />
+<h2 data-number="1.4" id="módulos-del-curso"><span
+class="header-section-number">1.4</span> 4. Módulos del Curso</h2>
+<p>El curso está estructurado en <strong>5 módulos teóricos</strong> que
+cubren todos los aspectos de Claude Code.</p>
+<h3 data-number="1.4.1" id="módulo-1-fundamentos-y-configuración"><span
+class="header-section-number">1.4.1</span> Módulo 1: Fundamentos y
+Configuración</h3>
+<p><strong>Duración:</strong> 3-4 sesiones <strong>Archivo:</strong>
+<code>modulo-1-fundamentos.html</code></p>
+<p><strong>Contenido:</strong> - Introducción a Claude Code y sus
+capacidades como IDE - Configuración inicial del entorno de trabajo -
+Comandos básicos integrados: - <code>/release-notes</code>: Ver
+novedades de la plataforma - <code>/plugins</code>: Explorar marketplace
+de plugins - Comandos de navegación y ayuda - Interfaz y flujo de
+trabajo básico - Mejores prácticas para comenzar - Configuración de
+archivos CLAUDE.md para instrucciones personalizadas</p>
+<p><strong>Objetivos de Aprendizaje:</strong> - Comprender qué es Claude
+Code y cómo puede mejorar la productividad - Configurar correctamente el
+entorno de desarrollo - Dominar los comandos básicos esenciales -
+Establecer buenas prácticas desde el inicio</p>
+<h3 data-number="1.4.2"
+id="módulo-2-automatización-con-hooks-y-comandos"><span
+class="header-section-number">1.4.2</span> Módulo 2: Automatización con
+Hooks y Comandos</h3>
+<p><strong>Duración:</strong> 3-4 sesiones <strong>Archivo:</strong>
+<code>modulo-2-hooks-comandos.html</code></p>
+<p><strong>Contenido:</strong> - <strong>Sistema de Hooks</strong>: 9
+tipos de eventos automatizables - SessionStart: Validación de entorno al
+iniciar - UserPromptSubmit: Validación de prompts del usuario -
+PreToolUse: Ejecución de linters antes de cambios - PostToolUse:
+Formateo automático de código - Notification: Sistema de logging
+centralizado - Stop: Validación de calidad de respuestas - SubagentStop:
+Validación de outputs de agentes - PreCompact: Backup antes de compactar
+contexto - SessionEnd: Generación de reportes y limpieza</p>
+<ul>
+<li><strong>Slash Commands Personalizados</strong>:
+<ul>
+<li>Creación de comandos custom (.md en .claude/commands/)</li>
+<li>Ejemplos: <code>/review-laravel</code>, <code>/generate-api</code>,
+<code>/deploy-staging</code></li>
+<li>Reutilización de flujos comunes</li>
+</ul></li>
+<li><strong>Documentación y Configuración</strong>:
+<ul>
+<li>Archivos CLAUDE.md para instrucciones globales y de proyecto</li>
+<li>settings.json para configuración de Claude Code</li>
+</ul></li>
+</ul>
+<p><strong>Casos de Uso Prácticos:</strong> - Validación automática
+pre-commit - Aplicación de estándares de código - Detección de secretos
+en código - Reportes automáticos de sesiones</p>
+<h3 data-number="1.4.3"
+id="módulo-3-plugins-agentes-especializados-y-skills"><span
+class="header-section-number">1.4.3</span> Módulo 3: Plugins, Agentes
+Especializados y Skills</h3>
+<p><strong>Duración:</strong> 4-5 sesiones <strong>Archivo:</strong>
+<code>modulo-3-plugins-agentes.html</code></p>
+<p><strong>Contenido:</strong></p>
+<p><strong>A. Marketplace de Plugins:</strong> - Exploración del
+marketplace (<code>/plugins</code>) - Instalación y configuración de
+plugins oficiales - Plugins destacados: -
+<strong>code-reviewer</strong>: Revisión automática de código -
+<strong>enforcing-standards</strong>: Aplicación de estándares de código
+- <strong>pr-reviewer</strong>: Análisis de pull requests -
+<strong>test-generator</strong>: Generación automática de tests</p>
+<p><strong>B. Agentes Especializados:</strong> - Concepto de agentes: IA
+especializada en frameworks específicos - Creación de agentes
+personalizados para: - Laravel: Mejores prácticas, Eloquent, Blade -
+.NET Core: Clean Architecture, Entity Framework, LINQ - React/Vue:
+Componentes, hooks, estado - Configuración de agentes en settings.json -
+Invocación y uso de agentes en proyectos</p>
+<p><strong>C. Skills (Habilidades para Archivos Específicos):</strong> -
+Concepto de skills: Capacidades para tipos de archivo - Skills
+incluidos: - <strong>pdf-generator</strong>: Conversión de MD/HTML a PDF
+- <strong>skill-creator</strong>: Creación de nuevos skills - Creación
+de skills personalizados - Estructura de un skill (.claude/skills/)</p>
+<p><strong>Ejemplos Prácticos:</strong> - Configurar agente Laravel para
+proyecto PWA - Crear skill para generación de documentación - Instalar y
+usar plugin code-reviewer en pipeline</p>
+<h3 data-number="1.4.4"
+id="módulo-4-mcps-model-context-protocol-e-integraciones"><span
+class="header-section-number">1.4.4</span> Módulo 4: MCPs (Model Context
+Protocol) e Integraciones</h3>
+<p><strong>Duración:</strong> 2-3 sesiones</p>
+<p><strong>Contenido:</strong> - <strong>¿Qué son los MCPs?</strong> -
+Protocolo para extender capacidades de Claude Code - Conexión con
+servicios externos - Acceso a APIs, bases de datos, herramientas de
+diseño</p>
+<ul>
+<li><p><strong>MCPs Principales:</strong></p>
+<ul>
+<li><strong>Figma MCP</strong>: Importar diseños y componentes</li>
+<li><strong>GitHub MCP</strong>: Integración profunda con
+repositorios</li>
+<li><strong>Database MCPs</strong>: Conexión directa a bases de
+datos</li>
+<li><strong>API MCPs</strong>: Consumo de APIs REST/GraphQL</li>
+</ul></li>
+<li><p><strong>Instalación de MCPs:</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> mcp add <span class="at">--transport</span> http figma https://mcp.figma.com/mcp</span></code></pre></div></li>
+<li><p><strong>Casos de Uso:</strong></p>
+<ul>
+<li>Convertir diseños de Figma a código React/Vue</li>
+<li>Consultar bases de datos para análisis de esquemas</li>
+<li>Automatizar workflows con APIs externas</li>
+</ul></li>
+</ul>
+<h3 data-number="1.4.5"
+id="módulo-5-aplicación-a-proyectos-reales"><span
+class="header-section-number">1.4.5</span> Módulo 5: Aplicación a
+Proyectos Reales</h3>
+<p><strong>Duración:</strong> 4-5 sesiones</p>
+<p><strong>Contenido:</strong> - Integración de Claude Code en proyectos
+existentes - Resolución de desafíos técnicos reales del equipo -
+Optimización de código y flujos de trabajo - Configuración de agentes
+específicos para Laravel y .NET - Refactorización de código legacy -
+Generación automática de tests - Mejora de documentación de proyectos -
+Automatización de tareas repetitivas</p>
+<p><strong>Metodología:</strong> - Análisis de proyecto existente -
+Identificación de áreas de mejora - Aplicación de herramientas de Claude
+Code - Medición de impacto en productividad</p>
+<hr />
+<h2 data-number="1.5" id="proyectos-prácticos"><span
+class="header-section-number">1.5</span> 5. Proyectos Prácticos</h2>
+<p>El curso incluye <strong>3 proyectos prácticos</strong> para aplicar
+los conocimientos adquiridos.</p>
+<h3 data-number="1.5.1"
+id="proyecto-1-pwa-de-chat-multiusuario-laravel"><span
+class="header-section-number">1.5.1</span> Proyecto 1: PWA de Chat
+Multiusuario (Laravel)</h3>
+<p><strong>Duración:</strong> 4 sesiones <strong>Nivel:</strong>
+Intermedio-Avanzado</p>
+<p><strong>Tecnologías:</strong> - Laravel 10+ - Progressive Web App
+(PWA) - WebSockets (Laravel Broadcasting) - WhatsApp Business API -
+Figma para diseño UI/UX - MySQL/PostgreSQL</p>
+<p><strong>Características Principales:</strong> - Sistema de chat en
+tiempo real entre múltiples usuarios - Integración con WhatsApp Business
+API para recibir/enviar mensajes - Sincronización bidireccional: web ↔︎
+WhatsApp - Sistema de webhooks para eventos de WhatsApp - Notificaciones
+push en PWA - Gestión de sesiones y presencia de usuarios -
+Almacenamiento offline (Service Workers) - Diseño responsivo
+mobile-first</p>
+<p><strong>Herramientas de Claude Code Utilizadas:</strong> -
+<strong>MCP Figma</strong>: Importar diseños y convertir a componentes
+Blade - <strong>Agente Laravel</strong>: Generar modelos, controladores,
+migraciones - <strong>Hooks</strong>: Pre-commit validation, code
+standards - <strong>Plugin code-reviewer</strong>: Revisión automática
+de código Laravel - <strong>Slash Commands</strong>:
+<code>/generate-migration</code>, <code>/create-controller</code></p>
+<p><strong>Estructura del Proyecto:</strong></p>
+<pre><code>pwa-chat/
+├── app/
+│   ├── Models/User.php, Message.php, Conversation.php
+│   ├── Http/Controllers/ChatController.php, WhatsAppController.php
+│   ├── Events/MessageSent.php, UserTyping.php
+│   └── Services/WhatsAppService.php
+├── database/migrations/
+├── resources/
+│   ├── views/chat/
+│   └── js/chat-app.js
+├── routes/channels.php
+└── public/service-worker.js</code></pre>
+<p><strong>Entregables:</strong> - Aplicación PWA funcional con chat en
+tiempo real - Integración completa con WhatsApp Business API - Webhooks
+configurados y funcionando - Documentación técnica del proyecto - Tests
+unitarios y de integración</p>
+<h3 data-number="1.5.2"
+id="proyecto-2-backend-y-webhooks-.net-core"><span
+class="header-section-number">1.5.2</span> Proyecto 2: Backend y
+Webhooks (.NET Core)</h3>
+<p><strong>Duración:</strong> 4 sesiones <strong>Nivel:</strong>
+Intermedio</p>
+<p><strong>Tecnologías:</strong> - .NET Core 8.0 - API REST (ASP.NET Web
+API) - Entity Framework Core - JWT Authentication - SQL Server /
+PostgreSQL - Swagger/OpenAPI</p>
+<p><strong>Características Principales:</strong> - API RESTful con
+arquitectura limpia (Clean Architecture) - Sistema de autenticación y
+autorización con JWT - Gestión completa de usuarios (CRUD) - Sistema de
+webhooks para eventos del sistema - Validación de datos con
+FluentValidation - Logging estructurado (Serilog) - Rate limiting y
+throttling - Documentación automática con Swagger</p>
+<p><strong>Herramientas de Claude Code Utilizadas:</strong> -
+<strong>Agente .NET</strong>: Generar controladores, servicios, DTOs -
+<strong>Slash Commands</strong>: <code>/create-entity</code>,
+<code>/generate-tests</code> - <strong>Skills</strong>: Skill
+personalizado para generar documentación API - <strong>Hooks</strong>:
+PostToolUse para formateo automático (dotnet format)</p>
+<p><strong>Arquitectura Clean Architecture:</strong></p>
+<pre><code>WebhooksAPI/
+├── src/
+│   ├── Domain/
+│   │   ├── Entities/
+│   │   └── Interfaces/
+│   ├── Application/
+│   │   ├── Services/
+│   │   ├── DTOs/
+│   │   └── Validators/
+│   ├── Infrastructure/
+│   │   ├── Persistence/
+│   │   └── External/
+│   └── WebAPI/
+│       ├── Controllers/
+│       ├── Middleware/
+│       └── Program.cs
+└── tests/</code></pre>
+<p><strong>Endpoints Principales:</strong> -
+<code>POST /api/auth/register</code> - Registro de usuarios -
+<code>POST /api/auth/login</code> - Login con JWT -
+<code>GET /api/users</code> - Listar usuarios (autorizado) -
+<code>POST /api/webhooks</code> - Registrar webhook -
+<code>GET /api/webhooks/{id}/logs</code> - Ver logs de webhook</p>
+<p><strong>Entregables:</strong> - API REST funcional con Clean
+Architecture - Sistema de autenticación JWT implementado - CRUD completo
+de usuarios con validaciones - Sistema de webhooks operativo - Suite de
+tests unitarios y de integración - Documentación Swagger completa</p>
+<h3 data-number="1.5.3"
+id="proyecto-3-mejora-de-proyecto-laravel-existente"><span
+class="header-section-number">1.5.3</span> Proyecto 3: Mejora de
+Proyecto Laravel Existente</h3>
+<p><strong>Duración:</strong> 3-4 sesiones <strong>Nivel:</strong>
+Avanzado</p>
+<p><strong>Objetivos:</strong> - Aplicar Claude Code a un proyecto
+Laravel existente del equipo - Refactorizar código para mejorar calidad
+y mantenibilidad - Implementar mejores prácticas de Laravel - Generar
+tests automáticos para código legacy - Mejorar documentación del
+proyecto</p>
+<p><strong>Actividades:</strong></p>
+<p><strong>1. Análisis del Proyecto (1 sesión)</strong> - Usar agente
+Laravel para analizar estructura del proyecto - Identificar code smells
+y áreas de mejora - Detectar código duplicado - Analizar complejidad
+ciclomática</p>
+<p><strong>2. Refactorización (2 sesiones)</strong> - Aplicar patrones
+de diseño (Repository, Service Layer) - Mejorar consultas Eloquent (N+1
+queries) - Implementar Form Requests para validaciones - Crear DTOs para
+transferencia de datos - Refactorizar controladores gordos</p>
+<p><strong>3. Generación de Tests (1 sesión)</strong> - Generar tests
+unitarios con agente - Crear tests de feature para endpoints críticos -
+Configurar CI/CD con tests automáticos</p>
+<p><strong>4. Documentación (0.5 sesión)</strong> - Generar
+documentación de API - Documentar arquitectura del proyecto - Crear
+README comprehensivo</p>
+<p><strong>Herramientas Utilizadas:</strong> - <strong>Agentes
+personalizados</strong>: Agente específico para el proyecto -
+<strong>Plugins del marketplace</strong>: code-reviewer, pr-reviewer -
+<strong>Hooks</strong>: Pre-commit para tests, linting -
+<strong>Skills</strong>: pdf-generator para documentación</p>
+<p><strong>Métricas de Éxito:</strong> - Reducción de complejidad
+ciclomática en 30% - Cobertura de tests &gt; 70% - Reducción de N+1
+queries identificadas - Documentación completa generada</p>
+<p><strong>Entregables:</strong> - Código refactorizado con mejoras
+documentadas - Suite de tests con cobertura &gt; 70% - Documentación
+técnica actualizada - Reporte de mejoras y métricas</p>
+<hr />
+<h2 data-number="1.6" id="herramientas-clave-de-claude-code"><span
+class="header-section-number">1.6</span> 6. Herramientas Clave de Claude
+Code</h2>
+<h3 data-number="1.6.1" id="mcps-model-context-protocol"><span
+class="header-section-number">1.6.1</span> 6.1 MCPs (Model Context
+Protocol)</h3>
+<p>Los MCPs son extensiones que permiten a Claude Code conectarse con
+servicios externos.</p>
+<p><strong>MCPs Disponibles:</strong> - <strong>Figma MCP</strong>:
+Importar diseños, componentes, estilos - <strong>GitHub MCP</strong>:
+Integración profunda con repositorios - <strong>Database MCPs</strong>:
+MySQL, PostgreSQL, MongoDB - <strong>API MCPs</strong>: Consumo de APIs
+REST/GraphQL</p>
+<p><strong>Instalación:</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> mcp add <span class="at">--transport</span> http <span class="op">&lt;</span>nombre<span class="op">&gt;</span> <span class="op">&lt;</span>url<span class="op">&gt;</span></span></code></pre></div>
+<h3 data-number="1.6.2" id="hooks-automatización-de-eventos"><span
+class="header-section-number">1.6.2</span> 6.2 Hooks (Automatización de
+Eventos)</h3>
+<p>Sistema de 9 hooks para automatizar tareas en diferentes momentos del
+flujo de trabajo.</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 48%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Cuándo se Ejecuta</th>
+<th>Casos de Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SessionStart</td>
+<td>Al iniciar sesión</td>
+<td>Validar entorno, cargar configuración</td>
+</tr>
+<tr>
+<td>UserPromptSubmit</td>
+<td>Antes de procesar prompt</td>
+<td>Validar entrada, detectar secretos</td>
+</tr>
+<tr>
+<td>PreToolUse</td>
+<td>Antes de usar herramienta</td>
+<td>Ejecutar linter, validar permisos</td>
+</tr>
+<tr>
+<td>PostToolUse</td>
+<td>Después de usar herramienta</td>
+<td>Formatear código, ejecutar tests</td>
+</tr>
+<tr>
+<td>Notification</td>
+<td>Al recibir notificación</td>
+<td>Logging, alertas</td>
+</tr>
+<tr>
+<td>Stop</td>
+<td>Al detener ejecución</td>
+<td>Validar calidad, guardar estado</td>
+</tr>
+<tr>
+<td>SubagentStop</td>
+<td>Al terminar subagente</td>
+<td>Validar output de agente</td>
+</tr>
+<tr>
+<td>PreCompact</td>
+<td>Antes de compactar contexto</td>
+<td>Backup, guardar historial</td>
+</tr>
+<tr>
+<td>SessionEnd</td>
+<td>Al finalizar sesión</td>
+<td>Generar reportes, limpiar</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo de Hook - PostToolUse:</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;hooks&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;PostToolUse&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;npm run lint -- --fix&quot;</span><span class="fu">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Auto-fix linting issues&quot;</span><span class="fu">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;patterns&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;*.js&quot;</span><span class="ot">,</span> <span class="st">&quot;*.ts&quot;</span><span class="ot">]</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 data-number="1.6.3" id="slash-commands-personalizados"><span
+class="header-section-number">1.6.3</span> 6.3 Slash Commands
+Personalizados</h3>
+<p>Comandos reutilizables para tareas comunes.</p>
+<p><strong>Creación:</strong> 1. Crear archivo en
+<code>.claude/commands/nombre-comando.md</code> 2. Escribir el prompt
+del comando 3. Usar con <code>/nombre-comando</code></p>
+<p><strong>Ejemplos:</strong> - <code>/review-laravel</code>: Revisar
+código Laravel con estándares - <code>/generate-api</code>: Generar
+endpoint REST completo - <code>/deploy-staging</code>: Desplegar a
+ambiente de staging</p>
+<h3 data-number="1.6.4" id="plugins-del-marketplace"><span
+class="header-section-number">1.6.4</span> 6.4 Plugins del
+Marketplace</h3>
+<p><strong>Plugins Principales:</strong> -
+<strong>code-reviewer</strong>: Revisión automática de calidad de código
+- <strong>enforcing-standards</strong>: Aplicar estándares del equipo -
+<strong>pr-reviewer</strong>: Análisis de pull requests -
+<strong>test-generator</strong>: Generar tests automáticamente</p>
+<p><strong>Instalación:</strong></p>
+<pre><code>/plugins
+# Seleccionar plugin del marketplace</code></pre>
+<h3 data-number="1.6.5" id="agentes-especializados"><span
+class="header-section-number">1.6.5</span> 6.5 Agentes
+Especializados</h3>
+<p>IA especializada en frameworks y tecnologías específicas.</p>
+<p><strong>Configuración en settings.json:</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;agents&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;laravel-expert&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Experto en Laravel y Eloquent&quot;</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;tools&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Read&quot;</span><span class="ot">,</span> <span class="st">&quot;Write&quot;</span><span class="ot">,</span> <span class="st">&quot;Edit&quot;</span><span class="ot">,</span> <span class="st">&quot;Bash&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;context&quot;</span><span class="fu">:</span> <span class="st">&quot;Sigue las mejores prácticas de Laravel...&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Invocación:</strong></p>
+<pre><code>@laravel-expert Optimiza esta consulta Eloquent</code></pre>
+<h3 data-number="1.6.6" id="skills-capacidades-especializadas"><span
+class="header-section-number">1.6.6</span> 6.6 Skills (Capacidades
+Especializadas)</h3>
+<p>Habilidades para trabajar con tipos de archivo específicos.</p>
+<p><strong>Skills Incluidos:</strong> - <strong>pdf-generator</strong>:
+Convertir MD/HTML a PDF profesional - <strong>skill-creator</strong>:
+Asistente para crear nuevos skills</p>
+<p><strong>Estructura de un Skill:</strong></p>
+<pre><code>.claude/skills/mi-skill/
+├── SKILL.md          # Documentación y workflows
+├── scripts/          # Scripts auxiliares
+├── assets/           # Recursos (plantillas, estilos)
+└── references/       # Documentación técnica</code></pre>
+<hr />
+<h2 data-number="1.7" id="sistema-de-hooks-detallado"><span
+class="header-section-number">1.7</span> 7. Sistema de Hooks
+Detallado</h2>
+<h3 data-number="1.7.1" id="arquitectura-de-hooks"><span
+class="header-section-number">1.7.1</span> Arquitectura de Hooks</h3>
+<p>Los hooks son scripts que se ejecutan automáticamente en respuesta a
+eventos específicos durante una sesión de Claude Code.</p>
+<h3 data-number="1.7.2" id="tipos-de-hooks-y-uso"><span
+class="header-section-number">1.7.2</span> Tipos de Hooks y Uso</h3>
+<h4 data-number="1.7.2.1" id="sessionstart"><span
+class="header-section-number">1.7.2.1</span> 1. SessionStart</h4>
+<p><strong>Propósito:</strong> Validar el entorno y configuración al
+iniciar sesión</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .claude/hooks/session-start.sh</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar que Node.js está instalado</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="ot">! </span><span class="bu">command</span> <span class="at">-v</span> node <span class="op">&amp;&gt;</span> /dev/null<span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;ERROR: Node.js no está instalado&quot;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar versión de PHP</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">php</span> <span class="at">--version</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&quot;PHP 8&quot;</span></span></code></pre></div>
+<h4 data-number="1.7.2.2" id="userpromptsubmit"><span
+class="header-section-number">1.7.2.2</span> 2. UserPromptSubmit</h4>
+<p><strong>Propósito:</strong> Validar prompts del usuario antes de
+procesarlos</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Detectar secretos en el prompt</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$PROMPT</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">&quot;(password|api_key|secret)&quot;</span> <span class="at">-i</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;ADVERTENCIA: Posible secreto detectado en el prompt&quot;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h4 data-number="1.7.2.3" id="pretooluse"><span
+class="header-section-number">1.7.2.3</span> 3. PreToolUse</h4>
+<p><strong>Propósito:</strong> Ejecutar validaciones antes de que Claude
+use una herramienta</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar linter antes de modificar código</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$TOOL</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;Edit&quot;</span> <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$TOOL</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;Write&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">npm</span> run lint</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h4 data-number="1.7.2.4" id="posttooluse"><span
+class="header-section-number">1.7.2.4</span> 4. PostToolUse</h4>
+<p><strong>Propósito:</strong> Formatear o procesar código después de
+cambios</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formatear automáticamente después de editar</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$TOOL</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;Edit&quot;</span> <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$TOOL</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;Write&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$FILE</span><span class="st">&quot;</span> <span class="ot">==</span> <span class="pp">*</span>.php <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">./vendor/bin/pint</span> <span class="st">&quot;</span><span class="va">$FILE</span><span class="st">&quot;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$FILE</span><span class="st">&quot;</span> <span class="ot">==</span> <span class="pp">*</span>.js <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">npx</span> prettier <span class="at">--write</span> <span class="st">&quot;</span><span class="va">$FILE</span><span class="st">&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h4 data-number="1.7.2.5" id="notification"><span
+class="header-section-number">1.7.2.5</span> 5. Notification</h4>
+<p><strong>Propósito:</strong> Logging centralizado de eventos</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar log de notificaciones</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;[</span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">] </span><span class="va">$MESSAGE</span><span class="st">&quot;</span> <span class="op">&gt;&gt;</span> .claude/logs/notifications.log</span></code></pre></div>
+<h4 data-number="1.7.2.6" id="stop"><span
+class="header-section-number">1.7.2.6</span> 6. Stop</h4>
+<p><strong>Propósito:</strong> Validar calidad antes de detener
+ejecución</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar tests antes de terminar</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test</span></code></pre></div>
+<h4 data-number="1.7.2.7" id="subagentstop"><span
+class="header-section-number">1.7.2.7</span> 7. SubagentStop</h4>
+<p><strong>Propósito:</strong> Validar output de agentes
+especializados</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificar que el agente generó tests</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$AGENT</span><span class="st">&quot;</span> <span class="ot">=</span> <span class="st">&quot;test-generator&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">find</span> tests/ <span class="at">-name</span> <span class="st">&#39;*.php&#39;</span> <span class="at">-mmin</span> <span class="at">-5</span><span class="va">)</span><span class="st">&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="st">&quot;ADVERTENCIA: No se generaron archivos de test&quot;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<h4 data-number="1.7.2.8" id="precompact"><span
+class="header-section-number">1.7.2.8</span> 8. PreCompact</h4>
+<p><strong>Propósito:</strong> Backup antes de compactar contexto</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardar snapshot del contexto</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> .claude/context .claude/backups/context-<span class="va">$(</span><span class="fu">date</span> +%Y%m%d-%H%M%S<span class="va">)</span></span></code></pre></div>
+<h4 data-number="1.7.2.9" id="sessionend"><span
+class="header-section-number">1.7.2.9</span> 9. SessionEnd</h4>
+<p><strong>Propósito:</strong> Generar reportes y limpiar recursos</p>
+<p><strong>Ejemplo de Uso:</strong></p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar reporte de sesión</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Sesión finalizada: </span><span class="va">$(</span><span class="fu">date</span><span class="va">)</span><span class="st">&quot;</span> <span class="op">&gt;&gt;</span> .claude/reports/sessions.log</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Archivos modificados: </span><span class="va">$MODIFIED_FILES</span><span class="st">&quot;</span> <span class="op">&gt;&gt;</span> .claude/reports/sessions.log</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Limpiar archivos temporales</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> .claude/temp/<span class="pp">*</span></span></code></pre></div>
+<h3 data-number="1.7.3"
+id="configuración-de-hooks-en-settings.json"><span
+class="header-section-number">1.7.3</span> Configuración de Hooks en
+settings.json</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;hooks&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;SessionStart&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;bash .claude/hooks/validate-env.sh&quot;</span><span class="fu">,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Validar entorno de desarrollo&quot;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;PostToolUse&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;npm run format&quot;</span><span class="fu">,</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Formatear código automáticamente&quot;</span><span class="fu">,</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;patterns&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;*.js&quot;</span><span class="ot">,</span> <span class="st">&quot;*.ts&quot;</span><span class="ot">,</span> <span class="st">&quot;*.jsx&quot;</span><span class="ot">,</span> <span class="st">&quot;*.tsx&quot;</span><span class="ot">]</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;./vendor/bin/pint&quot;</span><span class="fu">,</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Formatear código PHP&quot;</span><span class="fu">,</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;patterns&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;*.php&quot;</span><span class="ot">]</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;PreToolUse&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;npm run lint&quot;</span><span class="fu">,</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Validar código con linter&quot;</span><span class="fu">,</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;patterns&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;*.js&quot;</span><span class="ot">,</span> <span class="st">&quot;*.ts&quot;</span><span class="ot">]</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;SessionEnd&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">{</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;command&quot;</span><span class="fu">:</span> <span class="st">&quot;bash .claude/hooks/generate-report.sh&quot;</span><span class="fu">,</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Generar reporte de sesión&quot;</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<hr />
+<h2 data-number="1.8" id="configuración-y-despliegue"><span
+class="header-section-number">1.8</span> 8. Configuración y
+Despliegue</h2>
+<h3 data-number="1.8.1" id="configuración-local"><span
+class="header-section-number">1.8.1</span> 8.1 Configuración Local</h3>
+<p><strong>Archivos de Configuración:</strong></p>
+<p><strong>CLAUDE.md (Instrucciones del Proyecto):</strong></p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>al crear una migración, analizar sistema de migraciones para mantener coherencia y secuencia.</span></code></pre></div>
+<p><strong>settings.json (Configuración de Claude Code):</strong></p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;model&quot;</span><span class="fu">:</span> <span class="st">&quot;sonnet&quot;</span><span class="fu">,</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;hooks&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="er">/*</span> <span class="er">configuración</span> <span class="er">de</span> <span class="er">hooks</span> <span class="er">*/</span> <span class="fu">},</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;agents&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="er">/*</span> <span class="er">definición</span> <span class="er">de</span> <span class="er">agentes</span> <span class="er">*/</span> <span class="fu">},</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;preferences&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;autoSave&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;formatOnSave&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 data-number="1.8.2" id="despliegue-en-vercel"><span
+class="header-section-number">1.8.2</span> 8.2 Despliegue en Vercel</h3>
+<p><strong>vercel.json:</strong></p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;buildCommand&quot;</span><span class="fu">:</span> <span class="kw">null</span><span class="fu">,</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;outputDirectory&quot;</span><span class="fu">:</span> <span class="st">&quot;.&quot;</span><span class="fu">,</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;routes&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/index.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-1&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-1-fundamentos.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-2&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-2-hooks-comandos.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-3&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-3-plugins-agentes.html&quot;</span> <span class="fu">}</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Comandos de Despliegue:</strong></p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar Vercel CLI</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> vercel</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Desplegar a producción</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="ex">vercel</span> <span class="at">--prod</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview deployment</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="ex">vercel</span></span></code></pre></div>
+<h3 data-number="1.8.3" id="control-de-versiones"><span
+class="header-section-number">1.8.3</span> 8.3 Control de Versiones</h3>
+<p><strong>Git Workflow:</strong></p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clonar repositorio</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/pcarvajalr/claude-code-presentacion.git</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear rama para nuevas características</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature/nueva-caracteristica</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit y push</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: agregar nueva característica&quot;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin feature/nueva-caracteristica</span></code></pre></div>
+<p><strong>Commits Recientes:</strong> - <code>14adc2f</code> - Eliminar
+elemento “Timeline” del menú de navegación y añadir .vercel a .gitignore
+- <code>9a6194a</code> - Initial commit: Presentación de capacitación
+Claude Code</p>
+<hr />
+<h2 data-number="1.9" id="instrucciones-de-uso"><span
+class="header-section-number">1.9</span> 9. Instrucciones de Uso</h2>
+<h3 data-number="1.9.1" id="para-instructores"><span
+class="header-section-number">1.9.1</span> 9.1 Para Instructores</h3>
+<p><strong>Preparación del Curso:</strong> 1. Clonar el repositorio del
+proyecto 2. Revisar el contenido de cada módulo HTML 3. Preparar
+ejemplos prácticos adicionales según necesidades del equipo 4.
+Configurar acceso a MCPs necesarios (Figma, GitHub) 5. Preparar entornos
+de desarrollo para proyectos prácticos</p>
+<p><strong>Impartir las Sesiones:</strong> 1. Seguir el orden de los
+módulos (1 → 2 → 3 → 4 → 5) 2. Dedicar 50% del tiempo a
+teoría/demostración, 50% a práctica 3. Usar la página web como material
+de presentación 4. Intercalar proyectos prácticos entre módulos teóricos
+5. Dedicar tiempo a resolver desafíos reales del equipo</p>
+<p><strong>Recursos Disponibles:</strong> - Presentación web interactiva
+en cada módulo HTML - Documentación de hooks en
+<code>.claude/hooks/</code> - Skills pre-configurados en
+<code>.claude/skills/</code> - Plan detallado en
+<code>plan-capacitacion-claude-code.md</code></p>
+<h3 data-number="1.9.2" id="para-participantes"><span
+class="header-section-number">1.9.2</span> 9.2 Para Participantes</h3>
+<p><strong>Antes del Curso:</strong> 1. Instalar Claude Code:
+https://claude.com/claude-code 2. Configurar cuenta de Anthropic 3.
+Clonar el repositorio del proyecto 4. Revisar la presentación general:
+<code>presentacion-claude-code.html</code></p>
+<p><strong>Durante el Curso:</strong> 1. Seguir las presentaciones en
+los archivos HTML 2. Practicar con los ejercicios propuestos 3.
+Implementar los proyectos prácticos 4. Crear agentes y hooks
+personalizados 5. Aplicar aprendizajes a proyectos actuales</p>
+<p><strong>Después del Curso:</strong> 1. Integrar Claude Code en
+workflow diario 2. Compartir agentes y hooks con el equipo 3. Continuar
+explorando plugins del marketplace 4. Documentar casos de uso
+específicos</p>
+<h3 data-number="1.9.3" id="acceso-a-la-presentación-web"><span
+class="header-section-number">1.9.3</span> 9.3 Acceso a la Presentación
+Web</h3>
+<p><strong>Localmente:</strong> 1. Abrir <code>index.html</code> en un
+navegador web 2. Navegar por los módulos usando el menú 3.
+Expandir/contraer secciones con los acordeones</p>
+<p><strong>Online (Vercel):</strong> - URL: (configurar después del
+despliegue) - Acceso directo a cada módulo mediante rutas</p>
+<h3 data-number="1.9.4" id="generación-de-pdfs"><span
+class="header-section-number">1.9.4</span> 9.4 Generación de PDFs</h3>
+<p>Usar el skill pdf-generator para crear versiones PDF de la
+documentación:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir documentación a PDF</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> plan-capacitacion-claude-code.md <span class="at">-o</span> plan-capacitacion.pdf <span class="dt">\</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--toc</span> <span class="dt">\</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--number-sections</span> <span class="dt">\</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--variable</span> geometry:margin=1in</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir módulos HTML a PDF</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> .claude/skills/pdf-generator/scripts/html-to-pdf.js <span class="dt">\</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  modulo-1-fundamentos.html <span class="dt">\</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  modulo-1-fundamentos.pdf</span></code></pre></div>
+<hr />
+<h2 data-number="1.10" id="entregables-del-curso"><span
+class="header-section-number">1.10</span> 10. Entregables del Curso</h2>
+<h3 data-number="1.10.1" id="entregables-del-instructor"><span
+class="header-section-number">1.10.1</span> 10.1 Entregables del
+Instructor</h3>
+<ol type="1">
+<li><strong>Aplicación Base con Spec Kit de GitHub</strong>
+<ul>
+<li>Template de proyecto con Claude Code pre-configurado</li>
+<li>Estructura de directorios estándar</li>
+<li>Hooks y comandos básicos incluidos</li>
+</ul></li>
+<li><strong>Set de Agentes Personalizados</strong>
+<ul>
+<li>Agente Laravel especializado</li>
+<li>Agente .NET Core</li>
+<li>Agentes para tareas comunes del equipo</li>
+</ul></li>
+<li><strong>PWA Funcional (Proyecto 1)</strong>
+<ul>
+<li>Aplicación de chat en tiempo real</li>
+<li>Integración con WhatsApp Business API</li>
+<li>Código documentado y tests incluidos</li>
+</ul></li>
+<li><strong>Backend .NET Core (Proyecto 2)</strong>
+<ul>
+<li>API REST con Clean Architecture</li>
+<li>Sistema de autenticación JWT</li>
+<li>Webhooks funcionales</li>
+</ul></li>
+<li><strong>Documentación Completa</strong>
+<ul>
+<li>Guías de hooks y comandos</li>
+<li>Referencias de MCPs</li>
+<li>Tutoriales de plugins</li>
+</ul></li>
+<li><strong>Mejoras en Proyecto Laravel Existente (Proyecto 3)</strong>
+<ul>
+<li>Código refactorizado</li>
+<li>Tests generados automáticamente</li>
+<li>Documentación actualizada</li>
+</ul></li>
+</ol>
+<h3 data-number="1.10.2" id="entregables-de-los-participantes"><span
+class="header-section-number">1.10.2</span> 10.2 Entregables de los
+Participantes</h3>
+<ol type="1">
+<li><strong>Configuración Personal Optimizada</strong>
+<ul>
+<li>settings.json personalizado</li>
+<li>Hooks adaptados a su workflow</li>
+<li>Slash commands para tareas repetitivas</li>
+</ul></li>
+<li><strong>Agentes y Hooks Personalizados</strong>
+<ul>
+<li>Al menos 2 agentes específicos para sus proyectos</li>
+<li>Al menos 3 hooks implementados</li>
+<li>Documentación de su configuración</li>
+</ul></li>
+<li><strong>Conocimientos Aplicados</strong>
+<ul>
+<li>Integración de Claude Code en proyecto actual</li>
+<li>Mejoras documentadas en productividad</li>
+<li>Casos de uso específicos resueltos</li>
+</ul></li>
+<li><strong>Portafolio de Mejores Prácticas</strong>
+<ul>
+<li>Colección de comandos útiles</li>
+<li>Biblioteca de prompts efectivos</li>
+<li>Patterns de uso de agentes</li>
+</ul></li>
+</ol>
+<hr />
+<h2 data-number="1.11" id="recursos-adicionales"><span
+class="header-section-number">1.11</span> 11. Recursos Adicionales</h2>
+<h3 data-number="1.11.1" id="documentación-oficial"><span
+class="header-section-number">1.11.1</span> 11.1 Documentación
+Oficial</h3>
+<ul>
+<li><strong>Claude Code Docs</strong>:
+https://docs.claude.com/claude-code</li>
+<li><strong>Anthropic API</strong>: https://docs.anthropic.com</li>
+<li><strong>Model Context Protocol</strong>:
+https://modelcontextprotocol.io</li>
+</ul>
+<h3 data-number="1.11.2" id="herramientas-complementarias"><span
+class="header-section-number">1.11.2</span> 11.2 Herramientas
+Complementarias</h3>
+<ul>
+<li><strong>Pandoc</strong>: https://pandoc.org</li>
+<li><strong>Playwright</strong>: https://playwright.dev</li>
+<li><strong>Vercel</strong>: https://vercel.com</li>
+<li><strong>Laravel</strong>: https://laravel.com</li>
+<li><strong>.NET</strong>: https://dotnet.microsoft.com</li>
+</ul>
+<h3 data-number="1.11.3" id="comunidad"><span
+class="header-section-number">1.11.3</span> 11.3 Comunidad</h3>
+<ul>
+<li><strong>GitHub Issues</strong>:
+https://github.com/pcarvajalr/claude-code-presentacion/issues</li>
+<li><strong>Discussions</strong>: Sección de discusiones en GitHub</li>
+<li><strong>Slack/Teams</strong>: Canal del equipo para soporte</li>
+</ul>
+<hr />
+<h2 data-number="1.12" id="roadmap-y-próximos-pasos"><span
+class="header-section-number">1.12</span> 12. Roadmap y Próximos
+Pasos</h2>
+<h3 data-number="1.12.1"
+id="fase-1-capacitación-inicial-semanas-1-2"><span
+class="header-section-number">1.12.1</span> Fase 1: Capacitación Inicial
+(Semanas 1-2)</h3>
+<ul>
+<li>Completar Módulos 1-3</li>
+<li>Iniciar Proyecto 1 (PWA Laravel)</li>
+</ul>
+<h3 data-number="1.12.2"
+id="fase-2-proyectos-prácticos-semanas-2-3"><span
+class="header-section-number">1.12.2</span> Fase 2: Proyectos Prácticos
+(Semanas 2-3)</h3>
+<ul>
+<li>Completar Proyectos 1 y 2</li>
+<li>Módulos 4-5</li>
+</ul>
+<h3 data-number="1.12.3" id="fase-3-aplicación-real-semana-4"><span
+class="header-section-number">1.12.3</span> Fase 3: Aplicación Real
+(Semana 4)</h3>
+<ul>
+<li>Proyecto 3: Mejora de proyecto existente</li>
+<li>Integración en workflow del equipo</li>
+</ul>
+<h3 data-number="1.12.4" id="fase-4-post-capacitación-semana-5"><span
+class="header-section-number">1.12.4</span> Fase 4: Post-Capacitación
+(Semana 5+)</h3>
+<ul>
+<li>Soporte continuo</li>
+<li>Sharing de agentes y hooks</li>
+<li>Casos de uso avanzados</li>
+</ul>
+<hr />
+<h2 data-number="1.13" id="mejores-prácticas-recomendadas"><span
+class="header-section-number">1.13</span> 13. Mejores Prácticas
+Recomendadas</h2>
+<h3 data-number="1.13.1" id="uso-de-claude-code"><span
+class="header-section-number">1.13.1</span> 13.1 Uso de Claude Code</h3>
+<ol type="1">
+<li><strong>Comenzar Simple</strong>
+<ul>
+<li>No sobre-ingenierizar soluciones</li>
+<li>Empezar con comandos básicos</li>
+<li>Agregar hooks gradualmente</li>
+</ul></li>
+<li><strong>Documentar Todo</strong>
+<ul>
+<li>Usar CLAUDE.md para instrucciones del proyecto</li>
+<li>Documentar agentes y hooks creados</li>
+<li>Mantener README actualizado</li>
+</ul></li>
+<li><strong>Reutilizar Configuraciones</strong>
+<ul>
+<li>Compartir agentes exitosos con el equipo</li>
+<li>Crear biblioteca de slash commands</li>
+<li>Versionar configuraciones en Git</li>
+</ul></li>
+<li><strong>Iterar y Mejorar</strong>
+<ul>
+<li>Refinar prompts basándose en resultados</li>
+<li>Ajustar agentes según necesidades</li>
+<li>Actualizar hooks con nuevos casos de uso</li>
+</ul></li>
+</ol>
+<h3 data-number="1.13.2" id="seguridad"><span
+class="header-section-number">1.13.2</span> 13.2 Seguridad</h3>
+<ol type="1">
+<li><strong>Nunca Commitear Secretos</strong>
+<ul>
+<li>Usar hooks para detectar API keys</li>
+<li>Configurar .gitignore apropiadamente</li>
+<li>Usar variables de entorno</li>
+</ul></li>
+<li><strong>Validar Entradas</strong>
+<ul>
+<li>Usar hooks UserPromptSubmit</li>
+<li>Sanitizar datos en webhooks</li>
+<li>Validar configuraciones</li>
+</ul></li>
+<li><strong>Revisar Código Generado</strong>
+<ul>
+<li>No confiar ciegamente en código generado</li>
+<li>Usar plugins code-reviewer</li>
+<li>Ejecutar tests antes de deployar</li>
+</ul></li>
+</ol>
+<hr />
+<h2 data-number="1.14" id="conclusión"><span
+class="header-section-number">1.14</span> 14. Conclusión</h2>
+<p>Este proyecto proporciona un <strong>plan de capacitación completo y
+estructurado</strong> para dominar Claude Code y aplicarlo efectivamente
+en proyectos de desarrollo de software. La combinación de módulos
+teóricos, proyectos prácticos y herramientas automatizadas asegura que
+los participantes no solo aprendan las capacidades de Claude Code, sino
+que las apliquen directamente a sus proyectos reales.</p>
+<p><strong>Beneficios Esperados:</strong> - ⚡ <strong>Incremento en
+Productividad</strong>: 30-50% reducción en tiempo de desarrollo - 🎯
+<strong>Mejora en Calidad</strong>: Código más consistente y bien
+documentado - 🤖 <strong>Automatización</strong>: Tareas repetitivas
+automatizadas con hooks - 📚 <strong>Documentación</strong>: Generación
+automática de docs profesionales - 🧪 <strong>Testing</strong>:
+Generación automática de tests unitarios</p>
+<p><strong>Siguientes Pasos:</strong> 1. Revisar el contenido de cada
+módulo HTML 2. Configurar el entorno de desarrollo 3. Comenzar con el
+Módulo 1: Fundamentos 4. Practicar con los proyectos incluidos 5.
+Integrar Claude Code en proyectos reales</p>
+<hr />
+<p><strong>Fecha de Última Actualización:</strong> Octubre 2025
+<strong>Versión:</strong> 1.0 <strong>Autor:</strong> Pedro Carvajal
+<strong>Repositorio:</strong>
+https://github.com/pcarvajalr/claude-code-presentacion.git
+<strong>Licencia:</strong> (Especificar licencia del proyecto)</p>
+<hr />
+<p><em>Documento generado con Claude Code usando el skill
+pdf-generator</em></p>
+</body>
+</html>
