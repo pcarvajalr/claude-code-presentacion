@@ -210,7 +210,8 @@
             line-height: 1.8;
         }
 
-        .content-card ul, .content-card ol {
+        .content-card ul,
+        .content-card ol {
             margin-left: 2rem;
             color: #64748b;
         }
@@ -324,7 +325,8 @@
             backdrop-filter: blur(10px);
         }
 
-        .practice-content ol, .practice-content ul {
+        .practice-content ol,
+        .practice-content ul {
             margin-left: 1.5rem;
         }
 
@@ -587,8 +589,9 @@
     <section class="hero">
         <div class="hero-content">
             <div class="module-badge">🔌 MÓDULO 3</div>
-            <h1>Plugins y Agentes Especializados</h1>
-            <p class="subtitle">Potencia Claude Code con plugins del marketplace y agentes personalizados para Laravel</p>
+            <h1>Plugins, Agentes Especializados y Skills</h1>
+            <p class="subtitle">Potencia Claude Code con plugins del marketplace y agentes personalizados para Laravel
+            </p>
 
             <div class="objectives-grid">
                 <div class="objective-card">
@@ -600,12 +603,12 @@
                     <p>Desarrolla agentes especializados para Laravel</p>
                 </div>
                 <div class="objective-card">
-                    <h3>💼 Caso Práctico</h3>
-                    <p>Implementa un CRUD completo usando agentes</p>
+                    <h3>🎯 Skills Personalizados</h3>
+                    <p>Crea skills reutilizables con skill-creator</p>
                 </div>
                 <div class="objective-card">
-                    <h3>✅ Validar Código</h3>
-                    <p>Prueba y valida con agentes especializados</p>
+                    <h3>💼 Caso Práctico</h3>
+                    <p>Implementa funcionalidades completas</p>
                 </div>
             </div>
         </div>
@@ -618,13 +621,16 @@
 
             <div class="content-card">
                 <h3>📦 ¿Qué son los Plugins?</h3>
-                <p>Los plugins son extensiones que añaden funcionalidades adicionales a Claude Code. Desde revisores de código especializados hasta generadores de documentación, el marketplace de plugins ofrece herramientas creadas por la comunidad para mejorar tu flujo de trabajo.</p>
+                <p>Los plugins son extensiones que añaden funcionalidades adicionales a Claude Code. Desde revisores de
+                    código especializados hasta generadores de documentación, el marketplace de plugins ofrece
+                    herramientas creadas por la comunidad para mejorar tu flujo de trabajo.</p>
 
                 <div class="info-box">
                     <strong>💡 Beneficios de usar plugins</strong>
                     <ul>
                         <li><strong>Especialización:</strong> Plugins diseñados para tareas específicas</li>
-                        <li><strong>Productividad:</strong> Automatiza tareas repetitivas con agentes pre-configurados</li>
+                        <li><strong>Productividad:</strong> Automatiza tareas repetitivas con agentes pre-configurados
+                        </li>
                         <li><strong>Estándares:</strong> Aplica mejores prácticas consistentemente en tu proyecto</li>
                         <li><strong>Comunidad:</strong> Aprovecha el conocimiento colectivo de desarrolladores</li>
                     </ul>
@@ -652,22 +658,41 @@
                 </ul>
 
                 <div class="tip-box">
-                    <strong>💡 Plugins Recomendados para Laravel</strong>
+                    <strong>💡 Ejemplos de plugins</strong>
                     <ul>
-                        <li><strong>wshobson/agents:</strong> Colección de agentes especializados para diferentes tecnologías</li>
-                        <li><strong>code-reviewer:</strong> Revisa código con foco en mejores prácticas</li>
+                        <li><strong>wshobson/agents:</strong> Colección de agentes especializados para diferentes
+                            tecnologías</li>
+                        <li><strong>code-review-ai:</strong> Revisa código con foco en mejores prácticas</li>
+                        <li><strong>code-refactoring:</strong> Mejora la estructura del código sin cambiar su
+                            comportamiento</li>
                         <li><strong>enforcing-standards:</strong> Aplica estándares de código automáticamente</li>
                     </ul>
+                </div>
+
+                <div class="code-example">
+                    <span class="comment"># Marketplace recomendado</span>
+                    <br>
+                    <span class="keyword">/plugin marketplace add</span> wshobson/agents
+                    <br>
+                    <span class="comment"># Explorar marketplace</span>
+                    <br>
+                    <span class="keyword">/plugins</span>
+                    <br>
+                    <span class="comment"># Instalar plugin de code review</span>
+                    <br>
+                    <span class="keyword">/plugin install</span> code-review-ai
+                    <br>
                 </div>
             </div>
 
             <div class="content-card">
-                <h3>⚙️ Instalando Plugins</h3>
+                <h3>⚙️ Instalando y utilizando Plugins</h3>
                 <p>Existen dos formas principales de instalar plugins:</p>
 
                 <div class="step" data-step="1">
                     <h4>Desde el Marketplace</h4>
-                    <p>Usa el comando <code>/plugins</code> y selecciona el plugin que deseas instalar desde la interfaz.</p>
+                    <p>Usa el comando <code>/plugins</code> y selecciona el plugin que deseas instalar desde la
+                        interfaz.</p>
                 </div>
 
                 <div class="step" data-step="2">
@@ -679,12 +704,27 @@
                         </div>
                         /plugin install code-reviewer
                     </div>
-                    <p>Este comando instala el plugin directamente sin necesidad de abrir la interfaz del marketplace.</p>
+                    <p>Este comando instala el plugin directamente sin necesidad de abrir la interfaz del marketplace.
+                    </p>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Usando el plugin de línea de comandos</h4>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>💻</span>
+                            <span>Terminal</span>
+                        </div>
+                        /code-review-ai revisa los cambios del último commit <br>
+                        /code-review-ai revisa el archivo app/Models/User.php
+                    </div>
+                    <p>Este comando ejecuta el plugin de revisión de código en el contexto del último commit realizado.</p>
                 </div>
 
                 <div class="warning-box">
                     <strong>⚠️ Compatibilidad</strong>
-                    <p>Algunos plugins pueden requerir configuración adicional o depender de herramientas específicas instaladas en tu sistema. Revisa siempre la documentación del plugin antes de instalarlo.</p>
+                    <p>Algunos plugins pueden requerir configuración adicional o depender de herramientas específicas
+                        instaladas en tu sistema. Revisa siempre la documentación del plugin antes de instalarlo.</p>
                 </div>
             </div>
         </div>
@@ -697,7 +737,9 @@
 
             <div class="content-card">
                 <h3>🤖 ¿Qué son los Agentes?</h3>
-                <p>Los agentes son instancias especializadas de Claude Code configuradas con conocimientos específicos sobre un área de desarrollo. Piensa en ellos como "expertos virtuales" en diferentes aspectos de tu proyecto.</p>
+                <p>Los agentes son instancias especializadas de Claude Code configuradas con conocimientos específicos
+                    sobre un área de desarrollo. Piensa en ellos como "expertos virtuales" en diferentes aspectos de tu
+                    proyecto.</p>
 
                 <p>Para proyectos Laravel, podemos crear agentes especializados en:</p>
                 <ul>
@@ -728,13 +770,13 @@
                         </div>
                         proyecto-laravel/
                         <br>├── .claude/
-                        <br>│   ├── agents/
-                        <br>│   │   ├── frontend-agent.md
-                        <br>│   │   ├── styles-agent.md
-                        <br>│   │   ├── patterns-agent.md
-                        <br>│   │   ├── backend-agent.md
-                        <br>│   │   └── code-review-agent.md
-                        <br>│   └── settings.json
+                        <br>│ ├── agents/
+                        <br>│ │ ├── frontend-agent.md
+                        <br>│ │ ├── styles-agent.md
+                        <br>│ │ ├── patterns-agent.md
+                        <br>│ │ ├── backend-agent.md
+                        <br>│ │ └── code-review-agent.md
+                        <br>│ └── settings.json
                         <br>├── app/
                         <br>└── ...
                     </div>
@@ -745,7 +787,8 @@
             <div class="agent-card">
                 <h4>🎨 Agente de Frontend</h4>
                 <div class="agent-description">
-                    <p><strong>Especialidad:</strong> Componentes Blade, Livewire, vistas y componentes reutilizables</p>
+                    <p><strong>Especialidad:</strong> Componentes Blade, Livewire, vistas y componentes reutilizables
+                    </p>
 
                     <div class="agent-skills">
                         <strong>Conocimientos:</strong>
@@ -768,7 +811,8 @@
                     <span class="comment"># Frontend Agent - Laravel Specialist</span>
                     <br><br>
                     <span class="keyword">name:</span> <span class="string">"frontend-laravel"</span>
-                    <br><span class="keyword">description:</span> <span class="string">"Especialista en desarrollo frontend para Laravel con Blade y Livewire"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en desarrollo
+                        frontend para Laravel con Blade y Livewire"</span>
                     <br><br>
                     <span class="comment">## Instrucciones</span>
                     <br><br>
@@ -826,7 +870,8 @@
                     <span class="comment"># Styles Agent - Tailwind CSS Specialist</span>
                     <br><br>
                     <span class="keyword">name:</span> <span class="string">"styles-tailwind"</span>
-                    <br><span class="keyword">description:</span> <span class="string">"Especialista en diseño y estilos con Tailwind CSS"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en diseño y estilos
+                        con Tailwind CSS"</span>
                     <br><br>
                     <span class="comment">## Instrucciones</span>
                     <br><br>
@@ -860,7 +905,8 @@
             <div class="agent-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                 <h4>🏗️ Agente de Patrones</h4>
                 <div class="agent-description">
-                    <p><strong>Especialidad:</strong> Arquitectura de software, patrones de diseño y organización de código</p>
+                    <p><strong>Especialidad:</strong> Arquitectura de software, patrones de diseño y organización de
+                        código</p>
 
                     <div class="agent-skills">
                         <strong>Conocimientos:</strong>
@@ -883,11 +929,13 @@
                     <span class="comment"># Patterns Agent - Laravel Architecture Specialist</span>
                     <br><br>
                     <span class="keyword">name:</span> <span class="string">"patterns-laravel"</span>
-                    <br><span class="keyword">description:</span> <span class="string">"Especialista en patrones de diseño y arquitectura para Laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en patrones de
+                        diseño y arquitectura para Laravel"</span>
                     <br><br>
                     <span class="comment">## Instrucciones</span>
                     <br><br>
-                    Eres un arquitecto de software experto en Laravel. Aplicas patrones de diseño para código mantenible y escalable:
+                    Eres un arquitecto de software experto en Laravel. Aplicas patrones de diseño para código mantenible
+                    y escalable:
                     <br><br>
                     <span class="keyword">### Repository Pattern</span>
                     <br>- Abstrae lógica de acceso a datos
@@ -948,7 +996,8 @@
                     <span class="comment"># Backend Agent - Laravel Core Specialist</span>
                     <br><br>
                     <span class="keyword">name:</span> <span class="string">"backend-laravel"</span>
-                    <br><span class="keyword">description:</span> <span class="string">"Especialista en desarrollo backend con Laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en desarrollo
+                        backend con Laravel"</span>
                     <br><br>
                     <span class="comment">## Instrucciones</span>
                     <br><br>
@@ -992,7 +1041,8 @@
             <div class="agent-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
                 <h4>🔍 Agente de Revisión de Código</h4>
                 <div class="agent-description">
-                    <p><strong>Especialidad:</strong> Code review, mejores prácticas, estándares PSR-12 y optimización</p>
+                    <p><strong>Especialidad:</strong> Code review, mejores prácticas, estándares PSR-12 y optimización
+                    </p>
 
                     <div class="agent-skills">
                         <strong>Conocimientos:</strong>
@@ -1015,7 +1065,8 @@
                     <span class="comment"># Code Review Agent - Laravel Quality Specialist</span>
                     <br><br>
                     <span class="keyword">name:</span> <span class="string">"code-review-laravel"</span>
-                    <br><span class="keyword">description:</span> <span class="string">"Especialista en revisión de código y mejores prácticas para Laravel"</span>
+                    <br><span class="keyword">description:</span> <span class="string">"Especialista en revisión de
+                        código y mejores prácticas para Laravel"</span>
                     <br><br>
                     <span class="comment">## Instrucciones</span>
                     <br><br>
@@ -1085,7 +1136,8 @@
 
             <div class="content-card">
                 <h3>💼 Proyecto: Sistema de Gestión de Empleados</h3>
-                <p>Vamos a crear un CRUD completo para gestionar empleados usando todos nuestros agentes especializados. Este ejemplo incluye:</p>
+                <p>Vamos a crear un CRUD completo para gestionar empleados usando todos nuestros agentes especializados.
+                    Este ejemplo incluye:</p>
                 <ul>
                     <li>Migración de base de datos</li>
                     <li>Modelo Eloquent con relaciones</li>
@@ -1109,7 +1161,8 @@
                                 <span>💬</span>
                                 <span>Prompt</span>
                             </div>
-                            <span class="string">@backend-laravel</span> crea una migración para la tabla employees con los siguientes campos:
+                            <span class="string">@backend-laravel</span> crea una migración para la tabla employees con
+                            los siguientes campos:
                             <br>- first_name (string)
                             <br>- last_name (string)
                             <br>- email (string, único)
@@ -1247,7 +1300,8 @@
                                 <span>💬</span>
                                 <span>Prompt</span>
                             </div>
-                            <span class="string">@code-review-laravel</span> revisa todo el código del módulo de empleados:
+                            <span class="string">@code-review-laravel</span> revisa todo el código del módulo de
+                            empleados:
                             <br>- Verifica cumplimiento de PSR-12
                             <br>- Detecta posibles problemas de seguridad
                             <br>- Identifica oportunidades de optimización
@@ -1272,30 +1326,54 @@
                     <br><br>
                     <span class="keyword">return new class extends</span> Migration
                     <br>{
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">up</span>(): <span class="keyword">void</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">up</span>(): <span class="keyword">void</span>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schema::<span class="function">create</span>(<span class="string">'employees'</span>, <span class="keyword">function</span> (Blueprint $table) {
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">id</span>();
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'first_name'</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'last_name'</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'email'</span>)-><span class="function">unique</span>();
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'phone'</span>)-><span class="function">nullable</span>();
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">foreignId</span>(<span class="string">'department_id'</span>)-><span class="function">constrained</span>()-><span class="function">onDelete</span>(<span class="string">'cascade'</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">string</span>(<span class="string">'position'</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">decimal</span>(<span class="string">'salary'</span>, 10, 2);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">date</span>(<span class="string">'hire_date'</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">boolean</span>(<span class="string">'is_active'</span>)-><span class="function">default</span>(<span class="keyword">true</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">timestamps</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schema::<span
+                        class="function">create</span>(<span class="string">'employees'</span>, <span
+                        class="keyword">function</span> (Blueprint $table) {
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">id</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">string</span>(<span class="string">'first_name'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">string</span>(<span class="string">'last_name'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">string</span>(<span class="string">'email'</span>)-><span
+                        class="function">unique</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">string</span>(<span class="string">'phone'</span>)-><span
+                        class="function">nullable</span>();
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">foreignId</span>(<span class="string">'department_id'</span>)-><span
+                        class="function">constrained</span>()-><span class="function">onDelete</span>(<span
+                        class="string">'cascade'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">string</span>(<span class="string">'position'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">decimal</span>(<span class="string">'salary'</span>, 10, 2);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">date</span>(<span class="string">'hire_date'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">boolean</span>(<span class="string">'is_active'</span>)-><span
+                        class="function">default</span>(<span class="keyword">true</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">timestamps</span>();
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Índices para optimización</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">index</span>(<span class="string">'department_id'</span>);
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span class="function">index</span>(<span class="string">'is_active'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//
+                        Índices para optimización</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">index</span>(<span class="string">'department_id'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$table-><span
+                        class="function">index</span>(<span class="string">'is_active'</span>);
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;}
                     <br><br>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">down</span>(): <span class="keyword">void</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">down</span>(): <span class="keyword">void</span>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schema::<span class="function">dropIfExists</span>(<span class="string">'employees'</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Schema::<span
+                        class="function">dropIfExists</span>(<span class="string">'employees'</span>);
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;}
                     <br>};
                 </div>
@@ -1330,27 +1408,37 @@
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;];
                     <br><br>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">protected</span> $casts = [
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'hire_date'</span> => <span class="string">'date'</span>,
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'is_active'</span> => <span class="string">'boolean'</span>,
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'salary'</span> => <span class="string">'decimal:2'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'hire_date'</span> => <span
+                        class="string">'date'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'is_active'</span> => <span
+                        class="string">'boolean'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'salary'</span> => <span
+                        class="string">'decimal:2'</span>,
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;];
                     <br><br>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Relación con Department</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">department</span>(): BelongsTo
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">department</span>(): BelongsTo
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> $this-><span class="function">belongsTo</span>(Department::<span class="keyword">class</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> $this-><span
+                        class="function">belongsTo</span>(Department::<span class="keyword">class</span>);
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;}
                     <br><br>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Accessor para nombre completo</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">getFullNameAttribute</span>(): <span class="keyword">string</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">getFullNameAttribute</span>(): <span class="keyword">string</span>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="string">"{$this->first_name} {$this->last_name}"</span>;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span
+                        class="string">"{$this->first_name} {$this->last_name}"</span>;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;}
                     <br><br>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Scope para empleados activos</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span class="function">scopeActive</span>($query)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">scopeActive</span>($query)
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> $query-><span class="function">where</span>(<span class="string">'is_active'</span>, <span class="keyword">true</span>);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>
+                    $query-><span class="function">where</span>(<span class="string">'is_active'</span>, <span
+                        class="keyword">true</span>);
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;}
                     <br>}
                 </div>
@@ -1366,78 +1454,163 @@
                     @<span class="keyword">extends</span>(<span class="string">'layouts.app'</span>)
                     <br><br>
                     @<span class="keyword">section</span>(<span class="string">'content'</span>)
-                    <br>&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"container mx-auto px-4 py-8"</span>&gt;
+                    <br>&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span
+                        class="string">"container mx-auto px-4 py-8"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Header --&gt;</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"flex justify-between items-center mb-6"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">h1</span> <span class="keyword">class</span>=<span class="string">"text-3xl font-bold text-gray-800"</span>&gt;Empleados&lt;/<span class="keyword">h1</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{ route('employees.create') }}"</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span>=<span class="string">"bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span
+                        class="keyword">class</span>=<span class="string">"flex justify-between items-center
+                        mb-6"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">h1</span> <span
+                        class="keyword">class</span>=<span class="string">"text-3xl font-bold
+                        text-gray-800"</span>&gt;Empleados&lt;/<span class="keyword">h1</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span
+                        class="keyword">href</span>=<span class="string">"{{ route('employees.create') }}"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="keyword">class</span>=<span class="string">"bg-indigo-600 hover:bg-indigo-700 text-white
+                        px-6 py-3 rounded-lg"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Nuevo Empleado
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">a</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">div</span>&gt;
                     <br><br>
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Tabla Responsive --&gt;</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"bg-white rounded-lg shadow overflow-hidden"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">table</span> <span class="keyword">class</span>=<span class="string">"min-w-full divide-y divide-gray-200"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">thead</span> <span class="keyword">class</span>=<span class="string">"bg-gray-50"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">tr</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span
+                        class="keyword">class</span>=<span class="string">"bg-white rounded-lg shadow
+                        overflow-hidden"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">table</span> <span
+                        class="keyword">class</span>=<span class="string">"min-w-full divide-y
+                        divide-gray-200"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">thead</span> <span class="keyword">class</span>=<span
+                        class="string">"bg-gray-50"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">tr</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3
+                        text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombre
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3
+                        text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3
+                        text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Departamento
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3
+                        text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Posición
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3
+                        text-left text-xs font-medium text-gray-500 uppercase"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Estado
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">th</span> <span class="keyword">class</span>=<span class="string">"px-6 py-3
+                        text-right text-xs font-medium text-gray-500 uppercase"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Acciones
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">th</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">tr</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">thead</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">tbody</span> <span class="keyword">class</span>=<span class="string">"bg-white divide-y divide-gray-200"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">foreach</span>($employees <span class="keyword">as</span> $employee)
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">tr</span> <span class="keyword">class</span>=<span class="string">"hover:bg-gray-50 transition"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"font-medium text-gray-900"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->full_name }}
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">div</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-gray-500"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->email }}
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-gray-500"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->department->name }}
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-gray-500"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $employee->position }}
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">if</span>($employee->is_active)
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">span</span> <span class="keyword">class</span>=<span class="string">"px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">th</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">tr</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">thead</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">tbody</span> <span class="keyword">class</span>=<span class="string">"bg-white
+                        divide-y divide-gray-200"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span
+                        class="keyword">foreach</span>($employees <span class="keyword">as</span> $employee)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">tr</span> <span class="keyword">class</span>=<span
+                        class="string">"hover:bg-gray-50 transition"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4
+                        whitespace-nowrap"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">div</span> <span class="keyword">class</span>=<span class="string">"font-medium
+                        text-gray-900"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                    $employee->full_name }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">div</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4
+                        whitespace-nowrap text-gray-500"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                    $employee->email }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4
+                        whitespace-nowrap text-gray-500"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                    $employee->department->name }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4
+                        whitespace-nowrap text-gray-500"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+                    $employee->position }}
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4
+                        whitespace-nowrap"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span
+                        class="keyword">if</span>($employee->is_active)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">span</span> <span class="keyword">class</span>=<span class="string">"px-3 py-1
+                        bg-green-100 text-green-800 rounded-full text-sm"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Activo
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">span</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">else</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">span</span> <span class="keyword">class</span>=<span class="string">"px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">span</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span
+                        class="keyword">else</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">span</span> <span class="keyword">class</span>=<span class="string">"px-3 py-1
+                        bg-red-100 text-red-800 rounded-full text-sm"</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inactivo
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">span</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">endif</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4 whitespace-nowrap text-right text-sm"</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{ route('employees.show', $employee) }}"</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span>=<span class="string">"text-indigo-600 hover:text-indigo-900"</span>&gt;Ver&lt;/<span class="keyword">a</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{ route('employees.edit', $employee) }}"</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">class</span>=<span class="string">"ml-3 text-yellow-600 hover:text-yellow-900"</span>&gt;Editar&lt;/<span class="keyword">a</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">td</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">tr</span>&gt;
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span class="keyword">endforeach</span>
-                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">tbody</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">span</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span
+                        class="keyword">endif</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">td</span> <span class="keyword">class</span>=<span class="string">"px-6 py-4
+                        whitespace-nowrap text-right text-sm"</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{
+                        route('employees.show', $employee) }}"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="keyword">class</span>=<span class="string">"text-indigo-600
+                        hover:text-indigo-900"</span>&gt;Ver&lt;/<span class="keyword">a</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span
+                        class="keyword">a</span> <span class="keyword">href</span>=<span class="string">"{{
+                        route('employees.edit', $employee) }}"</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="keyword">class</span>=<span class="string">"ml-3 text-yellow-600
+                        hover:text-yellow-900"</span>&gt;Editar&lt;/<span class="keyword">a</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">td</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">tr</span>&gt;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<span
+                        class="keyword">endforeach</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span
+                        class="keyword">tbody</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">table</span>&gt;
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="keyword">div</span>&gt;
                     <br>&lt;/<span class="keyword">div</span>&gt;
@@ -1455,9 +1628,12 @@
                         <li>Crea un nuevo empleado usando el formulario</li>
                         <li>Verifica que la validación funcione correctamente (prueba con email duplicado)</li>
                         <li>Edita el empleado creado</li>
-                        <li>Usa el agente de code review para verificar la calidad del código: <code>@code-review-laravel revisa EmployeeController y el modelo Employee</code></li>
+                        <li>Usa el agente de code review para verificar la calidad del código:
+                            <code>@code-review-laravel revisa EmployeeController y el modelo Employee</code>
+                        </li>
                     </ol>
-                    <p><strong>Bonus:</strong> Implementa tests Feature para los endpoints del CRUD usando el agente backend.</p>
+                    <p><strong>Bonus:</strong> Implementa tests Feature para los endpoints del CRUD usando el agente
+                        backend.</p>
                 </div>
             </div>
 
@@ -1465,7 +1641,8 @@
                 <strong>💡 Ventajas de Usar Agentes Especializados</strong>
                 <ul>
                     <li><strong>Consistencia:</strong> Cada agente aplica las mejores prácticas de su área</li>
-                    <li><strong>Velocidad:</strong> Genera código completo siguiendo estándares sin requerir instrucciones detalladas</li>
+                    <li><strong>Velocidad:</strong> Genera código completo siguiendo estándares sin requerir
+                        instrucciones detalladas</li>
                     <li><strong>Calidad:</strong> El código generado sigue patrones probados y es mantenible</li>
                     <li><strong>Aprendizaje:</strong> Observar el código generado te enseña mejores prácticas</li>
                     <li><strong>Especialización:</strong> Cada agente es experto en su dominio</li>
@@ -1473,6 +1650,769 @@
             </div>
         </div>
     </section>
+
+    <!-- Skills: Capacidades Especializadas -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills: Capacidades Especializadas</h2>
+
+            <div class="content-card">
+                <h3>🎯 ¿Qué son los Skills?</h3>
+                <p>Los <strong>Skills</strong> son paquetes modulares de conocimiento especializado que transforman a
+                    Claude de un agente de propósito general en un experto en dominios o tareas específicas. Funcionan
+                    como "guías de incorporación" que le enseñan a Claude procedimientos, convenciones y mejores
+                    prácticas para áreas puntuales.</p>
+
+                <p>A diferencia de los plugins (que son colecciones) o los agentes (que son instancias configuradas),
+                    los skills son conocimiento procedimental que Claude carga dinámicamente según necesidad.</p>
+
+                <div class="info-box">
+                    <strong>💡 Características de los Skills</strong>
+                    <ul>
+                        <li><strong>Progressive Disclosure:</strong> Se cargan gradualmente según necesidad</li>
+                        <li><strong>Reutilizables:</strong> Funcionan en cualquier proyecto que los necesite</li>
+                        <li><strong>Modulares:</strong> Cada skill se enfoca en una tarea o dominio específico</li>
+                        <li><strong>Empaquetables:</strong> Incluyen instrucciones, scripts y referencias</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔄 Skills vs Plugins vs Agentes</h3>
+                <p>Es importante entender las diferencias entre estos tres conceptos:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Skills</th>
+                            <th>Plugins</th>
+                            <th>Agentes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Qué es</strong></td>
+                            <td>Conocimiento especializado</td>
+                            <td>Colección de skills</td>
+                            <td>Instancia configurada de Claude</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Estructura</strong></td>
+                            <td>Carpeta con SKILL.md</td>
+                            <td>Repo con marketplace.json</td>
+                            <td>Configuración + contexto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Carga</strong></td>
+                            <td>Dinámica según necesidad</td>
+                            <td>Manual desde marketplace</td>
+                            <td>Permanente en sesión</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scope</strong></td>
+                            <td>Tarea/dominio específico</td>
+                            <td>Grupo de dominios relacionados</td>
+                            <td>Proyecto/workflow completo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplo</strong></td>
+                            <td>laravel-migrations</td>
+                            <td>document-skills</td>
+                            <td>Asistente de Laravel</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <strong>⚠️ Cuándo usar cada uno</strong>
+                    <ul>
+                        <li><strong>Skills:</strong> Cuando necesitas conocimiento reutilizable para tareas específicas
+                        </li>
+                        <li><strong>Plugins:</strong> Para distribuir múltiples skills relacionados como paquete</li>
+                        <li><strong>Agentes:</strong> Para automatización autónoma con contexto permanente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔧 Skill Creator: La Herramienta de Anthropic</h3>
+                <p>Anthropic proporciona <code>skill-creator</code>, un meta-skill (skill para crear skills) disponible
+                    en: <a href="https://github.com/anthropics/skills/tree/main/skill-creator" target="_blank"
+                        style="color: var(--primary);">github.com/anthropics/skills</a></p>
+
+                <p>Este skill-creator ofrece:</p>
+                <ul>
+                    <li>Proceso estructurado de 6 pasos para crear skills de alta calidad</li>
+                    <li>Script <code>init_skill.py</code> para generar estructura básica</li>
+                    <li>Script <code>package_skill.py</code> para validar y empaquetar</li>
+                    <li>Mejores prácticas y patrones de diseño probados</li>
+                </ul>
+
+                <div class="step" data-step="1">
+                    <h4>Anatomía de un Skill</h4>
+                    <p>Un skill tiene la siguiente estructura:</p>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>📂</span>
+                            <span>Estructura de un Skill</span>
+                        </div>
+                        nombre-del-skill/
+                        <br>├── SKILL.md (REQUERIDO)
+                        <br>│ ├── YAML frontmatter (metadata)
+                        <br>│ │ ├── name: (requerido)
+                        <br>│ │ └── description: (requerido)
+                        <br>│ └── Contenido Markdown (instrucciones)
+                        <br>│
+                        <br>└── Recursos Empaquetados (OPCIONALES)
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;├── scripts/ - Código ejecutable (Python/Bash)
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;├── references/ - Documentación de referencia
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;└── assets/ - Templates y archivos de output
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>SKILL.md - El Corazón del Skill</h4>
+                    <p>Todo skill debe tener un archivo <code>SKILL.md</code> con YAML frontmatter:</p>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>📄</span>
+                            <span>Ejemplo de SKILL.md</span>
+                        </div>
+                        <span class="comment">---</span>
+                        <br><span class="keyword">name:</span> <span class="string">laravel-migrations</span>
+                        <br><span class="keyword">description:</span> <span class="string">Este skill debe usarse cuando
+                            se trabaja con migraciones Laravel para mantener coherencia con el sistema de migraciones
+                            existente, generar código siguiendo convenciones del framework y verificar secuencia numérica
+                            correcta.</span>
+                        <br><span class="comment">---</span>
+                        <br><br>
+                        <span class="comment"># Laravel Migrations Skill</span>
+                        <br><br>
+                        <span class="keyword">## Cuándo Usar</span>
+                        <br><br>
+                        Usar este skill cuando:
+                        <br>- Se solicite crear nueva migración
+                        <br>- Se necesite analizar migraciones existentes
+                        <br>- Se requiera verificar coherencia del schema
+                        <br><br>
+                        <span class="keyword">## Proceso de Creación</span>
+                        <br><br>
+                        Para crear una migración:
+                        <br>1. Analizar migraciones existentes con <span class="string">scripts/analyze_migrations.py</span>
+                        <br>2. Consultar schema actual en <span class="string">references/database_schema.md</span>
+                        <br>3. Generar migración siguiendo convenciones del proyecto
+                        <br>4. Verificar que down() revierte cambios de up()
+                    </div>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Recursos Empaquetados</h4>
+                    <p>Los skills pueden incluir tres tipos de recursos:</p>
+
+                    <table style="margin-top: 1rem;">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Propósito</th>
+                                <th>Cuándo Incluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>scripts/</strong></td>
+                                <td>Código ejecutable</td>
+                                <td>Operaciones repetitivas, automatización determinística</td>
+                            </tr>
+                            <tr>
+                                <td><strong>references/</strong></td>
+                                <td>Documentación extensa</td>
+                                <td>Schemas, APIs, guías detalladas que se cargan on-demand</td>
+                            </tr>
+                            <tr>
+                                <td><strong>assets/</strong></td>
+                                <td>Archivos para output</td>
+                                <td>Templates, boilerplate, imágenes, fuentes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Principio de Progressive Disclosure</strong>
+                    <p>Los skills se diseñan con carga gradual:</p>
+                    <ul>
+                        <li><strong>Nivel 1:</strong> Metadata (name + description) - Siempre en contexto (~100
+                            palabras)</li>
+                        <li><strong>Nivel 2:</strong> SKILL.md body - Cuando el skill se activa (~5k palabras)</li>
+                        <li><strong>Nivel 3:</strong> Recursos empaquetados - Según necesidad (ilimitado)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🚀 Skills Especializados para Laravel</h3>
+                <p>A continuación presentamos cinco skills que puedes crear para potenciar tu desarrollo en Laravel,
+                    cada uno enfocado en una tarea específica del framework.</p>
+            </div>
+
+            <!-- Skill 1: Laravel Migrations -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                <h4>🗄️ Laravel Migrations Skill</h4>
+                <div class="agent-description">
+                    <p><strong>Propósito:</strong> Asistir en la creación y gestión de migraciones Laravel manteniendo
+                        coherencia con el sistema existente.</p>
+
+                    <div class="agent-skills">
+                        <strong>Capacidades:</strong>
+                        <ul>
+                            <li>Analizar migraciones existentes para mantener secuencia numérica</li>
+                            <li>Generar código siguiendo convenciones del proyecto</li>
+                            <li>Verificar coherencia del schema de base de datos</li>
+                            <li>Aplicar mejores prácticas en definición de tablas e índices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>Estructura del Skill</span>
+                    </div>
+                    laravel-migrations/
+                    <br>├── SKILL.md
+                    <br>├── scripts/
+                    <br>│ ├── analyze_migrations.py &nbsp;&nbsp;<span class="comment"># Analiza secuencia de
+                        migraciones</span>
+                    <br>│ └── generate_migration.py &nbsp;<span class="comment"># Genera boilerplate</span>
+                    <br>└── references/
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;├── database_schema.md &nbsp;&nbsp;<span class="comment"># Schema actual
+                        del proyecto</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;└── naming_conventions.md <span class="comment"># Convenciones del
+                        equipo</span>
+                </div>
+
+                <div class="code-example" style="margin-top: 1rem;">
+                    <div class="code-title">
+                        <span>💬</span>
+                        <span>Ejemplo de uso</span>
+                    </div>
+                    <span class="comment"># Activar el skill implícitamente al mencionar migraciones</span>
+                    <br><span class="string">"Crea una migración para la tabla products con los campos..."</span>
+                    <br><br>
+                    <span class="comment"># El skill analiza migraciones existentes automáticamente</span>
+                    <br><span class="comment"># Genera código siguiendo convenciones detectadas</span>
+                    <br><span class="comment"># Asegura que down() revierta cambios de up()</span>
+                </div>
+            </div>
+
+            <!-- Skill 2: Laravel Testing -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                <h4>🧪 Laravel Testing Skill</h4>
+                <div class="agent-description">
+                    <p><strong>Propósito:</strong> Generar tests PHPUnit/Pest siguiendo estructura y convenciones del
+                        proyecto.</p>
+
+                    <div class="agent-skills">
+                        <strong>Capacidades:</strong>
+                        <ul>
+                            <li>Generar Feature Tests para endpoints HTTP</li>
+                            <li>Crear Unit Tests para lógica de negocio aislada</li>
+                            <li>Aplicar patrón AAA (Arrange-Act-Assert)</li>
+                            <li>Configurar RefreshDatabase y factories apropiadamente</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>Estructura del Skill</span>
+                    </div>
+                    laravel-testing/
+                    <br>├── SKILL.md
+                    <br>├── scripts/
+                    <br>│ └── generate_test.py &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Genera esqueleto de
+                        tests</span>
+                    <br>└── references/
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;└── test_patterns.md &nbsp;&nbsp;<span class="comment"># Patrones de
+                        testing del equipo</span>
+                </div>
+
+                <div class="code-example" style="margin-top: 1rem;">
+                    <div class="code-title">
+                        <span>📝</span>
+                        <span>Ejemplo de Test Generado</span>
+                    </div>
+                    <span class="keyword">public function</span> <span class="function">test_users_can_be_created</span>():
+                    <span class="keyword">void</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Arrange</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;$userData = [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'name'</span> => <span
+                        class="string">'John Doe'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'email'</span> => <span
+                        class="string">'john@example.com'</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;];
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Act</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;$response = $this-><span class="function">postJson</span>(<span
+                        class="string">'/api/users'</span>, $userData);
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Assert</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;$response-><span class="function">assertStatus</span>(201);
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;$this-><span class="function">assertDatabaseHas</span>(<span
+                        class="string">'users'</span>, [<span class="string">'email'</span> => <span
+                        class="string">'john@example.com'</span>]);
+                    <br>}
+                </div>
+            </div>
+
+            <!-- Skill 3: Laravel API Resources -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                <h4>📦 Laravel API Resources Skill</h4>
+                <div class="agent-description">
+                    <p><strong>Propósito:</strong> Generar Resources y transformadores de API siguiendo JSON:API o
+                        estructura personalizada del proyecto.</p>
+
+                    <div class="agent-skills">
+                        <strong>Capacidades:</strong>
+                        <ul>
+                            <li>Crear JsonResource con estructura consistente</li>
+                            <li>Generar ResourceCollection para paginación</li>
+                            <li>Aplicar eager loading para evitar N+1 queries</li>
+                            <li>Implementar conditional attributes con $this->when()</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>Estructura del Skill</span>
+                    </div>
+                    laravel-api-resources/
+                    <br>├── SKILL.md
+                    <br>├── assets/
+                    <br>│ ├── resource_template.php &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Template de
+                        Resource</span>
+                    <br>│ └── collection_template.php &nbsp;&nbsp;<span class="comment"># Template de Collection</span>
+                    <br>└── references/
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;└── api_structure.md &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="comment"># Estructura JSON del proyecto</span>
+                </div>
+
+                <div class="code-example" style="margin-top: 1rem;">
+                    <div class="code-title">
+                        <span>📝</span>
+                        <span>Ejemplo de Resource</span>
+                    </div>
+                    <span class="keyword">public function</span> <span class="function">toArray</span>(Request $request):
+                    <span class="keyword">array</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'id'</span> => $this->id,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'type'</span> => <span
+                        class="string">'posts'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'attributes'</span> => [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="string">'title'</span> => $this->title,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="string">'content'</span> => $this->content,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'relationships'</span> => [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="string">'author'</span> => <span class="keyword">new</span> UserResource($this-><span
+                        class="function">whenLoaded</span>(<span class="string">'user'</span>)),
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;];
+                    <br>}
+                </div>
+            </div>
+
+            <!-- Skill 4: Laravel Validation -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                <h4>✅ Laravel Validation Skill</h4>
+                <div class="agent-description">
+                    <p><strong>Propósito:</strong> Crear Form Requests y reglas de validación personalizadas con
+                        mensajes en español.</p>
+
+                    <div class="agent-skills">
+                        <strong>Capacidades:</strong>
+                        <ul>
+                            <li>Generar Form Requests con reglas de validación complejas</li>
+                            <li>Crear Custom Validation Rules reutilizables</li>
+                            <li>Implementar mensajes de error en español</li>
+                            <li>Configurar autorización en método authorize()</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>Estructura del Skill</span>
+                    </div>
+                    laravel-validation/
+                    <br>├── SKILL.md
+                    <br>├── assets/
+                    <br>│ ├── form_request_template.php &nbsp;<span class="comment"># Template de FormRequest</span>
+                    <br>│ └── custom_rule_template.php &nbsp;&nbsp;<span class="comment"># Template de Rule</span>
+                    <br>└── references/
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;└── validation_rules.md &nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="comment"># Reglas comunes del proyecto</span>
+                </div>
+
+                <div class="code-example" style="margin-top: 1rem;">
+                    <div class="code-title">
+                        <span>📝</span>
+                        <span>Ejemplo de Form Request</span>
+                    </div>
+                    <span class="keyword">public function</span> <span class="function">rules</span>(): <span
+                        class="keyword">array</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'email'</span> => [<span
+                        class="string">'required'</span>, <span class="string">'email'</span>, <span
+                        class="string">'unique:users,email,'</span>.$this->user],
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'name'</span> => [<span
+                        class="string">'required'</span>, <span class="string">'string'</span>, <span
+                        class="string">'max:255'</span>],
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'password'</span> => [<span
+                        class="string">'sometimes'</span>, <span class="string">'min:8'</span>, <span
+                        class="string">'confirmed'</span>],
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;];
+                    <br>}
+                    <br><br>
+                    <span class="keyword">public function</span> <span class="function">messages</span>(): <span
+                        class="keyword">array</span>
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> [
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'email.unique'</span> => <span
+                        class="string">'El correo electrónico ya está registrado.'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'password.min'</span> => <span
+                        class="string">'La contraseña debe tener al menos 8 caracteres.'</span>,
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;];
+                    <br>}
+                </div>
+            </div>
+
+            <!-- Skill 5: Laravel Jobs & Queues -->
+            <div class="agent-card" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                <h4>⚡ Laravel Jobs & Queues Skill</h4>
+                <div class="agent-description">
+                    <p><strong>Propósito:</strong> Generar Jobs, configurar colas y manejar trabajos en background de
+                        manera eficiente.</p>
+
+                    <div class="agent-skills">
+                        <strong>Capacidades:</strong>
+                        <ul>
+                            <li>Crear Jobs con lógica de negocio encapsulada</li>
+                            <li>Configurar intentos, timeouts y delays</li>
+                            <li>Implementar manejo de fallos con failed()</li>
+                            <li>Generar listeners para eventos de colas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">
+                        <span>📄</span>
+                        <span>Estructura del Skill</span>
+                    </div>
+                    laravel-jobs-queues/
+                    <br>├── SKILL.md
+                    <br>├── assets/
+                    <br>│ ├── job_template.php &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">#
+                        Template de Job</span>
+                    <br>│ └── listener_template.php &nbsp;&nbsp;&nbsp;<span class="comment"># Template de
+                        Listener</span>
+                    <br>└── references/
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;└── queue_configuration.md <span class="comment"># Config de colas del
+                        proyecto</span>
+                </div>
+
+                <div class="code-example" style="margin-top: 1rem;">
+                    <div class="code-title">
+                        <span>📝</span>
+                        <span>Ejemplo de Job</span>
+                    </div>
+                    <span class="keyword">class</span> ProcessOrder <span class="keyword">implements</span>
+                    ShouldQueue
+                    <br>{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">use</span> Dispatchable, InteractsWithQueue,
+                    Queueable, SerializesModels;
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span> $tries = 3;
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public</span> $timeout = 120;
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">__construct</span>(<span class="keyword">public</span> Order $order) {}
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">handle</span>(): <span class="keyword">void</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Lógica de procesamiento
+                        del pedido</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">public function</span> <span
+                        class="function">failed</span>(Throwable $exception): <span class="keyword">void</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Notificar al
+                        administrador</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                    <br>}
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⚡ Mejores Prácticas y Uso Óptimo de Skills</h3>
+                <p>Para crear y usar skills de manera efectiva, sigue estas mejores prácticas validadas por Anthropic:
+                </p>
+
+                <div class="step" data-step="1">
+                    <h4>Descripción de Calidad</h4>
+                    <p>La descripción del skill determina CUÁNDO Claude lo activará. Debe ser específica sobre contexto
+                        y escenarios:</p>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>❌</span>
+                            <span>Mal - Descripción vaga</span>
+                        </div>
+                        <span class="keyword">description:</span> <span class="string">"Helper para Laravel"</span>
+                    </div>
+                    <div class="code-example" style="margin-top: 1rem;">
+                        <div class="code-title">
+                            <span>✅</span>
+                            <span>Bien - Descripción específica</span>
+                        </div>
+                        <span class="keyword">description:</span> <span class="string">"Este skill debe usarse cuando se
+                            trabaja con migraciones Laravel para mantener coherencia con el sistema de migraciones
+                            existente, generar código siguiendo convenciones del framework y verificar secuencia numérica
+                            correcta."</span>
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Progressive Disclosure</h4>
+                    <p>Diseña tus skills para cargar contenido gradualmente:</p>
+                    <ul>
+                        <li><strong>SKILL.md conciso:</strong> Máximo 5k palabras con instrucciones esenciales</li>
+                        <li><strong>Referencias on-demand:</strong> Documentación extensa en <code>references/</code>
+                            que se carga solo cuando es necesaria</li>                        
+                    </ul>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Scripts Ejecutables</h4>
+                    <p>Los scripts deben ser autónomos y documentados:</p>
+                    <ul>
+                        <li>Siempre incluir <code>--help</code> completo con todas las opciones</li>
+                        <li>Documentar uso en SKILL.md sin revelar implementación</li>
+                        <li>Usar para código que se reescribe repetidamente o requiere precisión determinística</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>📝</span>
+                            <span>Documentación de Script en SKILL.md</span>
+                        </div>
+                        <span class="keyword">### Helper Scripts</span>
+                        <br><br>
+                        <span class="comment"># analyze_migrations.py</span>
+                        <br>Analiza estructura de migraciones y genera reporte.
+                        <br><br>
+                        <span class="string">**Uso:**</span>
+                        <br>python scripts/analyze_migrations.py --db database/migrations/
+                        <br><br>
+                        <span class="comment"># NO leer el código del script a menos que sea necesario parcharlo</span>
+                    </div>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h4>No Duplicar Información</h4>
+                    <p>Mantén separada la información procedimental de la referencial:</p>
+                    <table style="margin-top: 1rem;">
+                        <thead>
+                            <tr>
+                                <th>Ubicación</th>
+                                <th>Contenido</th>
+                                <th>Propósito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SKILL.md</strong></td>
+                                <td>Instrucciones procedimentales</td>
+                                <td>Qué hacer y cuándo hacerlo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>references/</strong></td>
+                                <td>Información detallada</td>
+                                <td>Specs, ejemplos extensos, documentación</td>
+                            </tr>
+                            <tr>
+                                <td><strong>scripts/</strong></td>
+                                <td>Código ejecutable</td>
+                                <td>Automatización de tareas repetitivas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>assets/</strong></td>
+                                <td>Templates y archivos</td>
+                                <td>Boilerplate para generar output</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="step" data-step="5">
+                    <h4>Distribución en Equipo</h4>
+                    <p>Comparte skills con tu equipo mediante plugins:</p>
+                    <div class="code-example">
+                        <div class="code-title">
+                            <span>📄</span>
+                            <span>.claude-plugin/marketplace.json</span>
+                        </div>
+                        {
+                        <br>&nbsp;&nbsp;<span class="string">"name"</span>: <span
+                            class="string">"laravel-team-skills"</span>,
+                        <br>&nbsp;&nbsp;<span class="string">"plugins"</span>: [
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"name"</span>: <span
+                            class="string">"laravel-dev-suite"</span>,
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"description"</span>: <span
+                            class="string">"Skills para desarrollo Laravel"</span>,
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"skills"</span>: [
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                            class="string">"./laravel-migrations"</span>,
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                            class="string">"./laravel-testing"</span>,
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                            class="string">"./laravel-api-resources"</span>
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                        <br>&nbsp;&nbsp;]
+                        <br>}
+                    </div>
+                    <div class="code-example" style="margin-top: 1rem;">
+                        <div class="code-title">
+                            <span>💻</span>
+                            <span>Instalación por el equipo</span>
+                        </div>
+                        /plugin marketplace add github:tu-org/laravel-team-skills
+                        <br>/plugin install laravel-dev-suite@laravel-team-skills
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Iteración Basada en Uso Real</strong>
+                <p>Los skills evolucionan con el tiempo:</p>
+                <ol>
+                    <li>Crear skill inicial con <code>init_skill.py</code></li>
+                    <li>Usarlo en tareas reales del proyecto</li>
+                    <li>Notar ineficiencias, errores o casos no cubiertos</li>
+                    <li>Actualizar SKILL.md o agregar recursos necesarios</li>
+                </ol>
+            </div>
+
+            <div class="practice-box">
+                <h4>🧪 Ejercicio Práctico: Crea tu Primer Skill</h4>
+                <div class="practice-content">
+                    <p><strong>Objetivo:</strong> Crear un skill <code>laravel-seeder</code> que ayude a generar
+                        seeders con datos de prueba realistas.</p>
+
+                    <div class="workflow-timeline">
+                        <div class="workflow-step">
+                            <h5>1️⃣ Inicializar el Skill</h5>
+                            <p>Usa el script de inicialización del skill-creator:</p>
+                            <div class="code-example" style="margin-top: 0.5rem;">
+                                python skill-creator/scripts/init_skill.py laravel-seeder --path ./.claude/skills
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <h5>2️⃣ Editar SKILL.md</h5>
+                            <p>Completa el archivo generado con:</p>
+                            <ul>
+                                <li><strong>name:</strong> laravel-seeder</li>
+                                <li><strong>description:</strong> "Este skill debe usarse cuando se necesite generar
+                                    seeders Laravel con datos de prueba realistas usando Faker, siguiendo la estructura
+                                    de models del proyecto y respetando relaciones entre tablas."</li>
+                                <li><strong>Instrucciones:</strong> Proceso paso a paso para generar seeders</li>
+                            </ul>
+                        </div>
+
+                        <div class="workflow-step">
+                            <h5>3️⃣ Agregar Script Helper</h5>
+                            <p>Crea <code>scripts/analyze_models.py</code> que:</p>
+                            <ul>
+                                <li>Lea los modelos en <code>app/Models/</code></li>
+                                <li>Detecte relaciones (hasMany, belongsTo, etc.)</li>
+                                <li>Identifique campos fillable</li>
+                                <li>Genere reporte de estructura para seeders</li>
+                            </ul>
+                        </div>
+
+                        <div class="workflow-step">
+                            <h5>4️⃣ Crear Referencias</h5>
+                            <p>Agrega <code>references/faker_locales.md</code> con:</p>
+                            <ul>
+                                <li>Lista de proveedores Faker en español</li>
+                                <li>Ejemplos de datos realistas (nombres, direcciones, etc.)</li>
+                                <li>Patrones comunes de datos del proyecto</li>
+                            </ul>
+                        </div>
+
+                        <div class="workflow-step">
+                            <h5>5️⃣ Agregar Templates</h5>
+                            <p>Incluye en <code>assets/seeder_template.php</code>:</p>
+                            <ul>
+                                <li>Estructura base de un seeder</li>
+                                <li>Ejemplo de uso de Factory</li>
+                                <li>Comentarios explicativos</li>
+                            </ul>
+                        </div>
+
+                        <div class="workflow-step">
+                            <h5>6️⃣ Validar y Empaquetar</h5>
+                            <p>Verifica la estructura y empaqueta:</p>
+                            <div class="code-example" style="margin-top: 0.5rem;">
+                                python skill-creator/scripts/package_skill.py ./.claude/skills/laravel-seeder
+                            </div>
+                        </div>
+
+                        <div class="workflow-step">
+                            <h5>7️⃣ Probar el Skill</h5>
+                            <p>Usa el skill en un proyecto Laravel real:</p>
+                            <div class="code-example" style="margin-top: 0.5rem;">
+                                <span class="string">"Crea un seeder para la tabla products que genere 50 productos con
+                                    datos realistas en español"</span>
+                            </div>
+                            <p style="margin-top: 0.5rem;">Claude debería activar automáticamente el skill laravel-seeder
+                                y generar el código apropiado.</p>
+                        </div>
+                    </div>
+
+                    <p style="margin-top: 2rem;"><strong>Bonus:</strong> Comparte el skill con tu equipo creando un
+                        plugin marketplace interno.</p>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>🎯 Cuándo Crear un Skill vs un Agente</strong>
+                <ul>
+                    <li><strong>Skill:</strong> Para conocimiento reutilizable y procedimental que aplica en múltiples
+                        proyectos (ej: generación de migraciones, testing patterns)</li>
+                    <li><strong>Agente:</strong> Para contexto específico de un proyecto con configuración permanente
+                        (ej: "Asistente de Laravel del Proyecto X" con conocimiento del código específico)</li>
+                    <li><strong>Ambos:</strong> Los agentes pueden usar skills para mejorar sus capacidades</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    
 
     <!-- Navegación -->
     <section id="navegacion" style="background: white;">
@@ -1494,7 +2434,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p><strong>Capacitación Claude Code - Módulo 3: Plugins y Agentes Especializados</strong></p>
+            <p><strong>Capacitación Claude Code - Módulo 3: Plugins, Agentes Especializados y Skills</strong></p>
             <p>Desarrollado para maximizar tu productividad con IA en desarrollo de software</p>
             <p style="margin-top: 1rem; opacity: 0.7;">© 2025 - Material de Capacitación Interno</p>
         </div>

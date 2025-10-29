@@ -1,0 +1,290 @@
+/**
+ * PDF-Optimized CSS Styles
+ *
+ * CSS styles optimized for PDF generation via wkhtmltopdf or Playwright.
+ * Designed for presentations, reports, and documentation.
+ *
+ * Usage with pandoc:
+ *   pandoc document.md -o document.pdf --css=pdf-styles.css --pdf-engine=wkhtmltopdf
+ *
+ * Usage with wkhtmltopdf:
+ *   wkhtmltopdf --enable-local-file-access --user-style-sheet=pdf-styles.css input.html output.pdf
+ */
+
+/* === PAGE SETUP === */
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+@media print {
+    /* Ensure backgrounds print */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Page breaks */
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+
+    pre, blockquote, table {
+        page-break-inside: avoid;
+    }
+
+    img {
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+}
+
+/* === TYPOGRAPHY === */
+
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #333;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Headings */
+h1 {
+    font-size: 24pt;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 20pt;
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #34495e;
+    border-bottom: 2px solid #bdc3c7;
+    padding-bottom: 8px;
+}
+
+h3 {
+    font-size: 16pt;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    color: #34495e;
+}
+
+h4 {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Paragraphs */
+p {
+    margin: 0 0 12px 0;
+    text-align: justify;
+}
+
+/* === LISTS === */
+
+ul, ol {
+    margin: 0 0 15px 25px;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* === CODE BLOCKS === */
+
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 10pt;
+    background-color: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+
+pre {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 10pt;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-left: 4px solid #3498db;
+    padding: 15px;
+    margin: 15px 0;
+    overflow-x: auto;
+    line-height: 1.4;
+    border-radius: 4px;
+}
+
+pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: inherit;
+}
+
+/* === BLOCKQUOTES === */
+
+blockquote {
+    margin: 20px 0;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-left: 5px solid #3498db;
+    font-style: italic;
+    color: #555;
+}
+
+blockquote p {
+    margin: 0;
+}
+
+/* === TABLES === */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 11pt;
+}
+
+thead {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* === LINKS === */
+
+a {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* === IMAGES === */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* === HORIZONTAL RULES === */
+
+hr {
+    border: none;
+    border-top: 2px solid #bdc3c7;
+    margin: 30px 0;
+}
+
+/* === PRESENTATION SPECIFIC === */
+
+/* For reveal.js or slide-based content */
+.reveal section {
+    text-align: left;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+    text-align: left;
+}
+
+/* === UTILITIES === */
+
+.page-break {
+    page-break-after: always;
+}
+
+.no-break {
+    page-break-inside: avoid;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+/* === FOOTER/HEADER === */
+
+.header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 40px;
+    font-size: 10pt;
+    color: #777;
+}
+
+/* === HIGHLIGHTS === */
+
+.highlight {
+    background-color: #fff3cd;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.warning {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.info {
+    background-color: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.success {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 15px;
+    margin: 15px 0;
+}
