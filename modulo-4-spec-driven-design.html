@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 4: Spec-Driven Development - Claude Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        nav .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav .breadcrumb a:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            z-index: 1;
+        }
+
+        .module-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .objective-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .objective-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .objective-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+
+        section:nth-child(even) {
+            background: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .content-card h3 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            color: #64748b;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            margin-left: 2rem;
+            color: #64748b;
+        }
+
+        .content-card li {
+            margin-bottom: 0.8rem;
+            line-height: 1.8;
+        }
+
+        /* Code Examples */
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            line-height: 1.6;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .code-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .keyword {
+            color: #c792ea;
+            font-weight: bold;
+        }
+
+        .string {
+            color: #c3e88d;
+        }
+
+        .comment {
+            color: #697891;
+            font-style: italic;
+        }
+
+        .function {
+            color: #82aaff;
+        }
+
+        /* Steps */
+        .step {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--primary);
+            position: relative;
+            padding-left: 3.5rem;
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .step p {
+            color: #64748b;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Practice Box */
+        .practice-box {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            color: white;
+            box-shadow: 0 5px 20px rgba(67, 233, 123, 0.3);
+        }
+
+        .practice-box h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .practice-content {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .practice-content ol,
+        .practice-content ul {
+            margin-left: 1.5rem;
+        }
+
+        .practice-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Tip Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 5px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .tip-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e0f2fe;
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .info-box strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fef3c7;
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Command Card */
+        .command-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .command-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .command-card .command-description {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .command-card .command-usage {
+            margin-top: 1rem;
+        }
+
+        .command-card .command-usage ul {
+            margin-left: 1.5rem;
+        }
+
+        .command-card .command-usage li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .comparison-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .comparison-card ul {
+            margin-left: 1.5rem;
+            color: #64748b;
+        }
+
+        .comparison-card li {
+            margin-bottom: 0.8rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: var(--gradient-1);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-1);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .fade-in:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .fade-in:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">Claude Code</div>
+            <div class="breadcrumb">
+                <a href="DOCUMENTACION-PROYECTO.html">Inicio</a>
+                <span>→</span>
+                <span>Módulo 4</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="module-badge">MÓDULO 4</div>
+            <h1>Spec-Driven Development</h1>
+            <p class="subtitle">Construye aplicaciones complejas desde especificaciones ejecutables</p>
+
+            <div class="objectives-grid">
+                <div class="objective-card fade-in">
+                    <h3>📋 Especificaciones</h3>
+                    <p>Definir productos mediante specs ejecutables</p>
+                </div>
+                <div class="objective-card fade-in">
+                    <h3>🔧 Spec-Kit</h3>
+                    <p>Dominar el toolkit de GitHub</p>
+                </div>
+                <div class="objective-card fade-in">
+                    <h3>🎨 MCPs</h3>
+                    <p>Integrar Context7 y Figma</p>
+                </div>
+                <div class="objective-card fade-in">
+                    <h3>🚀 Proyecto</h3>
+                    <p>Crear app Laravel completa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 1: Introducción -->
+    <section id="introduccion">
+        <div class="container">
+            <h2 class="section-title">¿Qué es Spec-Driven Development?</h2>
+
+            <div class="content-card">
+                <h3>🎯 La Filosofía del Spec-Driven Development</h3>
+                <p>El <strong>Spec-Driven Development</strong> (Desarrollo Guiado por Especificaciones) invierte el
+                    enfoque tradicional del desarrollo de software: en lugar de escribir código y luego documentarlo,
+                    primero defines especificaciones ejecutables que generan código de manera iterativa.</p>
+
+                <div class="info-box">
+                    <strong>💡 Concepto Clave</strong>
+                    Las especificaciones no son solo documentación estática, sino artefactos ejecutables que guían la
+                    creación del código. Claude Code y herramientas como spec-kit transforman tus especificaciones en
+                    implementaciones funcionales.
+                </div>
+
+                <h4 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">Desarrollo Tradicional vs
+                    Spec-Driven</h4>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>🔧 Desarrollo Tradicional</h4>
+                        <ul>
+                            <li>Escribes código directamente</li>
+                            <li>Documentas después (si lo haces)</li>
+                            <li>Enfoque en el "cómo" técnico</li>
+                            <li>Iteraciones lentas</li>
+                            <li>Difícil mantener sincronía código-docs</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>✨ Spec-Driven Development</h4>
+                        <ul>
+                            <li>Defines especificaciones primero</li>
+                            <li>Las specs generan código</li>
+                            <li>Enfoque en el "qué" y "por qué"</li>
+                            <li>Refinamiento iterativo rápido</li>
+                            <li>Código siempre alineado con specs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🌟 Ventajas del Spec-Driven Development</h3>
+                <ul>
+                    <li><strong>Claridad de propósito:</strong> Enfocas en resultados predecibles antes de implementar
+                    </li>
+                    <li><strong>Velocidad:</strong> Claude Code interpreta tus especificaciones y genera código de
+                        forma eficiente</li>
+                    <li><strong>Consistencia:</strong> Las especificaciones mantienen coherencia en todo el proyecto
+                    </li>
+                    <li><strong>Documentación viva:</strong> Las specs son la fuente de verdad, siempre actualizadas
+                    </li>
+                    <li><strong>Colaboración:</strong> Equipos técnicos y no técnicos pueden contribuir a las specs
+                    </li>
+                    <li><strong>Iteración rápida:</strong> Modificar specs y regenerar código es más rápido que
+                        refactorizar manualmente</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>💡 Cuándo Usar Spec-Driven Development</strong>
+                    Es ideal para proyectos nuevos, features complejas con múltiples interacciones, arquitecturas bien
+                    definidas (Laravel, Django, etc.), y equipos que necesitan alineación clara sobre objetivos.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🤖 Por Qué Funciona Bien con Claude Code</h3>
+                <p>Claude Code está diseñado para entender especificaciones detalladas y transformarlas en código
+                    funcional. Las capacidades avanzadas de razonamiento de Claude permiten:</p>
+                <ul>
+                    <li>Interpretar requisitos ambiguos y pedir clarificaciones</li>
+                    <li>Generar arquitecturas completas basadas en specs</li>
+                    <li>Mantener coherencia en todo el codebase</li>
+                    <li>Iterar rápidamente sobre cambios en especificaciones</li>
+                    <li>Integrar con herramientas como Context7 y Figma para contexto adicional</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 2: Configuración del Entorno -->
+    <section id="configuracion">
+        <div class="container">
+            <h2 class="section-title">Configuración del Entorno</h2>
+
+            <div class="content-card">
+                <h3>🛠️ Instalación de Herramientas</h3>
+                <p>Para trabajar con Spec-Driven Development en Claude Code, necesitarás instalar algunas herramientas
+                    esenciales.</p>
+
+                <div class="step" data-step="1">
+                    <h4>Instalar uv (gestor de paquetes Python)</h4>
+                    <p><code>uv</code> es un gestor de paquetes ultrarrápido para Python que spec-kit utiliza.</p>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        <br>
+                        <span class="comment"># Verificar instalación</span><br>
+                        uvx --version<br><br>
+
+                        pip install uv<br><br>
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Crear proyecto Laravel</h4>
+                    <p>Antes de instalar spec-kit, crea el proyecto Laravel base que usaremos para el proyecto práctico.</p>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        <span class="comment"># Crear proyecto Laravel</span><br>
+                        composer create-project laravel/laravel chat-whatsapp<br><br>
+                        <span class="comment"># Navegar al directorio del proyecto</span><br>
+                        cd chat-whatsapp
+                    </div>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Instalar spec-kit</h4>
+                    <p>Spec-kit es el toolkit oficial de GitHub para Spec-Driven Development.</p>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        <span class="comment"># Instalación global con uv</span><br>
+                        uv tool install specify-cli --from git+https://github.com/github/spec-kit.git<br><br>
+                        <span class="comment"># Verificar instalación</span><br>
+                        specify --version<br><br>
+                        <span class="comment"># Uso en proyecto sin instalación (con uvx)</span><br>
+                        uvx --from git+https://github.com/github/spec-kit.git specify init (nombre del proyecto)
+                    </div>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h4>Iniciar un proyecto con spec-kit (instalacion global)</h4>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        <span class="comment"># Crear nuevo proyecto</span><br>
+                        specify init mi-proyecto --ai claude<br><br>
+                        <span class="comment"># Esto crea la estructura:</span><br>
+                        <span class="comment"># .spec/</span><br>
+                        <span class="comment"># ├── constitution.md</span><br>
+                        <span class="comment"># ├── specification.md</span><br>
+                        <span class="comment"># ├── plan.md</span><br>
+                        <span class="comment"># └── tasks.md</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>📌 Nota Importante</strong>
+                    Los comandos de spec-kit funcionan como slash commands en Claude Code. Una vez instalado spec-kit,
+                    podrás usar comandos como <code>/speckit.constitution</code>, <code>/speckit.specify</code>, etc.,
+                    directamente en tu conversación con Claude.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔌 Configuración de MCPs</h3>
+                <p>Los Model Context Protocols (MCPs) extienden las capacidades de Claude Code con contexto adicional.
+                    Para Spec-Driven Development, dos MCPs son particularmente útiles:</p>
+
+                <div class="step" data-step="1">
+                    <h4>Context7 - Gestión de Versiones de Tecnologías</h4>
+                    <p>Context7 proporciona información actualizada sobre versiones de frameworks, librerías y mejores
+                        prácticas.</p>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Claude Code - Terminal</div>
+                        <span class="comment"># Instalar Context7 MCP</span><br>
+                        claude mcp add context7 -- npx -y @upstash/context7-mcp<br><br>
+                        <span class="comment"># Una vez instalado, Claude tendrá acceso a:</span><br>
+                        <span class="comment"># - Versiones actuales de Laravel, Node.js, Python, etc.</span><br>
+                        <span class="comment"># - Mejores prácticas de cada tecnología</span><br>
+                        <span class="comment"># - Compatibilidad entre versiones</span>
+                    </div>
+                    <div class="tip-box">
+                        <strong>💡 Uso con Specs</strong>
+                        Al especificar tu proyecto, Context7 ayuda a Claude a recomendar versiones específicas y
+                        configuraciones optimizadas. Por ejemplo, si especificas "una aplicación Laravel", Context7
+                        proporcionará la versión más reciente y estable de Laravel, PHP, y dependencias relacionadas.
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Figma MCP - Integración de Diseño</h4>
+                    <p>El Figma MCP permite a Claude acceder a tus diseños de Figma para implementar interfaces basadas
+                        en especificaciones visuales.</p>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Claude Code - Terminal</div>
+                        <span class="comment"># Instalar Figma MCP</span><br>
+                        claude mcp add --transport http figma https://mcp.figma.com/mcp<br><br>
+                        <span class="comment"># Autenticación con Figma</span><br>
+                        /mcp <br><br>
+                        <span class="comment"># Claude te guiará para hacer login en Figma</span>
+                    </div>
+                    <div class="code-example">
+                        <div class="code-title">📝 Uso en Especificaciones</div>
+                        <span class="comment"># En tu specification.md puedes referenciar diseños:</span><br><br>
+                        <span class="string">## UI del Dashboard</span><br>
+                        Implementar el diseño del dashboard según Figma:<br>
+                        https://figma.com/file/ABC123/mi-proyecto<br><br>
+                        <span class="comment"># Claude accederá al diseño y generará componentes</span>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Requisitos de Figma MCP</strong>
+                    Necesitas una cuenta de Figma (gratuita o de pago) y permisos de acceso a los archivos de diseño
+                    que quieras usar. El MCP respeta los permisos de tu cuenta.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 3: Comandos de Spec-Kit -->
+    <section id="comandos">
+        <div class="container">
+            <h2 class="section-title">Comandos de Spec-Kit</h2>
+
+            <div class="content-card">
+                <p>Spec-kit proporciona un conjunto de comandos (slash commands en Claude Code) que guían el proceso de
+                    desarrollo desde la especificación hasta la implementación. Cada comando tiene un propósito
+                    específico en el flujo de trabajo.</p>
+            </div>
+
+            <!-- Comando 1: Constitution -->
+            <div class="command-card">
+                <h4>📜 /speckit.constitution</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Establecer los principios rectores y la visión del proyecto.
+                    <br><br>
+                    La "constitución" define el propósito fundamental, valores, restricciones y decisiones
+                    arquitectónicas de alto nivel de tu proyecto. Es la base sobre la cual se construirán todas las
+                    especificaciones.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Al inicio de un proyecto nuevo</li>
+                        <li>Para establecer principios antes de especificar features</li>
+                        <li>Cuando el equipo necesita alineación sobre la visión</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.constitution proyecto laravel integrado con api whatsapp cloud. Diseño existente en
+                    figma<br><br>
+                    <span class="comment"># Claude te pedirá detalles y generará:</span><br>
+                    <span class="comment"># .spec/constitution.md</span>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">📄 Ejemplo de Constitution</div>
+                    <span class="comment"># Constitution: Plataforma de Gestión de WhatsApp</span><br><br>
+                    <span class="string">## Propósito</span><br>
+                    Crear una plataforma SaaS multiusuario para gestionar múltiples<br>
+                    líneas de WhatsApp Cloud API, permitiendo a equipos de soporte<br>
+                    atender conversaciones de manera eficiente.<br><br>
+                    <span class="string">## Principios</span><br>
+                    1. <strong>Escalabilidad</strong>: Soportar cientos de usuarios simultáneos<br>
+                    2. <strong>Tiempo Real</strong>: Mensajes deben llegar instantáneamente<br>
+                    3. <strong>Seguridad</strong>: Datos encriptados, autenticación robusta<br>
+                    4. <strong>UX</strong>: Interfaz intuitiva similar a apps de mensajería<br><br>
+                    <span class="string">## Stack Tecnológico</span><br>
+                    - Backend: Laravel 11 (PHP 8.3)<br>
+                    - Frontend: Vue 3 + Inertia.js<br>
+                    - Base de datos: PostgreSQL 16<br>
+                    - Cola: Redis + Laravel Horizon<br>
+                    - WebSockets: Laravel Reverb<br>
+                    - Contenedorización: Docker Compose<br><br>
+                    <span class="string">## Restricciones</span><br>
+                    - Cumplir con políticas de WhatsApp Business API<br>
+                    - GDPR compliant para datos de usuarios<br>
+                    - Presupuesto: infraestructura en AWS/DigitalOcean
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Mejores Prácticas</strong>
+                    Mantén la constitución concisa pero clara. Evita detalles de implementación específicos (esos van
+                    en specs y planes). Enfócate en el "por qué" y "qué", no en el "cómo".
+                </div>
+            </div>
+
+            <!-- Comando 2: Specify -->
+            <div class="command-card">
+                <h4>📋 /speckit.specify</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Definir requisitos detallados, casos de uso y comportamientos
+                    esperados.
+                    <br><br>
+                    La especificación describe qué debe hacer tu aplicación desde la perspectiva del usuario. Incluye
+                    features, flujos de usuario, reglas de negocio y criterios de aceptación.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Después de establecer la constitución</li>
+                        <li>Para agregar nuevas features a un proyecto existente</li>
+                        <li>Cuando necesitas clarificar requisitos ambiguos</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.specify<br><br>
+                    <span class="comment"># O especifica directamente:</span><br>
+                    /speckit.specify Necesito una plataforma Laravel con login administrado, para gestionar
+                    múltiples líneas de WhatsApp Cloud API. Debe ser multiusuario,
+                    permitir asignación de conversaciones, enviar mensajes de texto
+                    e imágenes.
+                    pantallas de configuracion de lineas de whatsapp y plantillas en meta. rol de usuarios. diseño en
+                    https://www.figma.com/design/6Ni3yOjH2eHVMSxWs3maMK/%F0%9F%9F%A8-E-MA---Mockups?node-id=0-1&p=f&t=ZH09BKIb6ckFzhEC-0
+                    <br><br>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">📄 Ejemplo de Specification</div>
+                    <span class="comment"># Specification: Features Core</span><br><br>
+                    <span class="string">## 1. Autenticación y Usuarios</span><br>
+                    - Login con email/password<br>
+                    - Roles: Admin, Supervisor, Agente<br>
+                    - Admin puede crear/editar usuarios y asignar roles<br>
+                    - 2FA opcional con TOTP<br><br>
+                    <span class="string">## 2. Gestión de Líneas WhatsApp</span><br>
+                    - Conectar múltiples números de WhatsApp Cloud API<br>
+                    - Configurar webhook para recibir mensajes<br>
+                    - Mostrar estado de conexión (activo/inactivo)<br>
+                    - Cada línea puede tener agentes asignados<br><br>
+                    <span class="string">## 3. Bandeja de Conversaciones</span><br>
+                    - Vista tipo inbox con lista de conversaciones<br>
+                    - Filtros: sin leer, asignadas a mí, todas<br>
+                    - Búsqueda por nombre o número de contacto<br>
+                    - Indicador de mensajes no leídos<br>
+                    - Auto-refresh cada 5 segundos (o WebSocket)<br><br>
+                    <span class="string">## 4. Chat Interface</span><br>
+                    - Interfaz similar a WhatsApp Web<br>
+                    - Enviar mensajes de texto<br>
+                    - Enviar imágenes (jpg, png, max 5MB)<br>
+                    - Ver historial completo de conversación<br>
+                    - Timestamps legibles<br>
+                    - Estados de mensaje: enviado, entregado, leído<br><br>
+                    <span class="string">## 5. Dashboard y Métricas</span><br>
+                    - Total de conversaciones (hoy, semana, mes)<br>
+                    - Tiempo promedio de respuesta<br>
+                    - Conversaciones por agente<br>
+                    - Gráfico de mensajes por hora del día
+                </div>
+
+                <div class="info-box">
+                    <strong>🤔 NEEDS CLARIFICATION</strong>
+                    <p style="color: black;">
+                        Si Claude encuentra ambigüedades, responderá con preguntas marcadas como "NEEDS CLARIFICATION".
+                        Respóndelas antes de continuar al siguiente paso. También puedes usar
+                        <code>/speckit.clarify</code> para resolver dudas proactivamente.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Comando 3: Plan -->
+            <div class="command-card">
+                <h4>🏗️ /speckit.plan</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Crear el plan técnico de implementación basado en las especificaciones.
+                    <br><br>
+                    El plan traduce las especificaciones a decisiones técnicas concretas: arquitectura de base de datos,
+                    estructura de carpetas, librerías a usar, endpoints de API, componentes, etc.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Después de definir y clarificar las especificaciones</li>
+                        <li>Antes de generar tareas de implementación</li>
+                        <li>Para revisar la arquitectura técnica propuesta</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.plan plataforma laravel de chats de whatsapp, base de datos sql, recibe mensajes del
+                    webhook existente a travez de socket. usa context7 para implementar las versiones de cada
+                    tecnologia. usa mcp de figma para diseño existente. Todo desplegado en docker compose. evita
+                    sobreingenieria.<br><br>
+                    <span class="comment"># Claude generará plan.md basándose en constitution</span><br>
+                    <span class="comment"># y specification, usando Context7 para versiones</span>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">📄 Ejemplo de Plan</div>
+                    <span class="comment"># Plan: Arquitectura Técnica</span><br><br>
+                    <span class="string">## Base de Datos (PostgreSQL 16)</span><br><br>
+                    <strong>Tablas principales:</strong><br>
+                    - users (id, name, email, password, role, created_at)<br>
+                    - whatsapp_lines (Id,IdApp,IdCuentaWhatsAppBusiness,IdTelefonoEmpresa,NombreEmpresa,TelefonoEmpresa,TokenDeAcceso,FechaCreacion)<br>                    
+                    - messages
+                    (Id, IdApiWS, Mensaje, Estado, Celular, IdPersona, IdUsuario, NombreUsuario, FechaReal, Fecha, Hora,
+                    Tipo, EsEntrante, EnviadoMasivamente, NombrePlantilla, UrlArchivo, RespuestaDe)<br>                    
+                    <span class="string">## Estructura Laravel</span><br><br>
+                    app/<br>
+                    ├── Models/<br>
+                    │ ├── User.php<br>
+                    │ ├── WhatsAppLine.php<br>
+                    │ ├── Conversation.php<br>
+                    │ └── Message.php<br>
+                    ├── Http/Controllers/<br>
+                    │ ├── AuthController.php<br>
+                    │ ├── DashboardController.php<br>
+                    │ ├── ConversationController.php<br>
+                    │ └── WebhookController.php<br>
+                    ├── Services/<br>
+                    │ └── WhatsAppService.php<br>
+                    └── Events/<br>
+                    └── NewMessageReceived.php<br><br>
+                    <span class="string">## API Endpoints</span><br><br>
+                    POST /api/login<br>
+                    GET /api/conversations<br>
+                    GET /api/conversations/{id}/messages<br>
+                    POST /api/messages<br>
+                    POST /api/webhook/whatsapp<br><br>
+                    <span class="string">## Frontend (Vue 3 + Inertia)</span><br><br>
+                    resources/js/Pages/<br>
+                    ├── Auth/Login.vue<br>
+                    ├── Dashboard.vue<br>
+                    ├── Conversations/Index.vue<br>
+                    └── Conversations/Chat.vue<br><br>
+                    <span class="string">## Docker Compose</span><br><br>
+                    services:<br>
+                    &nbsp;&nbsp;app: Laravel app (PHP 8.3-fpm)<br>
+                    &nbsp;&nbsp;nginx: Web server<br>
+                    &nbsp;&nbsp;postgres: Database<br>
+                    &nbsp;&nbsp;redis: Cache y colas<br>
+                    &nbsp;&nbsp;horizon: Laravel Horizon dashboard
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Integración con Context7</strong>
+                    Si instalaste Context7 MCP, Claude usará información actualizada sobre versiones de Laravel, PHP,
+                    Vue, etc., al generar el plan. Esto asegura que uses versiones compatibles y actuales.
+                </div>
+            </div>
+
+            <!-- Comando 4: Task -->
+            <div class="command-card">
+                <h4>✅ /speckit.task</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Desglosar el plan en tareas accionables y ordenadas.
+                    <br><br>
+                    Las tareas son pasos concretos de implementación que pueden completarse secuencialmente. Cada tarea
+                    tiene dependencias claras y un objetivo específico.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Después de revisar y aprobar el plan técnico</li>
+                        <li>Antes de comenzar la implementación</li>
+                        <li>Para visualizar el alcance del trabajo</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.task<br><br>
+                    <span class="comment"># Claude generará tasks.md con lista numerada</span><br>
+                    <span class="comment"># de tareas en orden lógico de ejecución</span>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">📄 Ejemplo de Tasks</div>
+                    <span class="comment"># Tasks: Lista de Implementación</span><br><br>
+                    <span class="string">## Fase 1: Configuración Base</span><br>
+                    1. Crear proyecto Laravel 11 con Breeze + Inertia + Vue 3<br>
+                    2. Configurar Docker Compose (app, nginx, postgres, redis)<br>
+                    3. Configurar variables de entorno (.env.example)<br>
+                    4. Instalar Laravel Horizon para colas<br><br>
+                    <span class="string">## Fase 2: Base de Datos y Modelos</span><br>
+                    5. Crear migración tabla users con campo 'role'<br>
+                    6. Crear migración tabla whatsapp_lines<br>
+                    7. Crear migración tabla conversations<br>
+                    8. Crear migración tabla messages<br>
+                    9. Crear migración tabla assignments<br>
+                    10. Crear modelos Eloquent con relaciones<br><br>
+                    <span class="string">## Fase 3: Autenticación</span><br>
+                    11. Implementar middleware de roles<br>
+                    12. Crear seeder para usuario admin inicial<br>
+                    13. Página de login (usando Breeze)<br><br>
+                    <span class="string">## Fase 4: Integración WhatsApp API</span><br>
+                    14. Crear WhatsAppService para enviar mensajes<br>
+                    15. Implementar WebhookController para recibir mensajes<br>
+                    16. Configurar ruta pública para webhook<br>
+                    17. Crear job ProcessIncomingMessage<br><br>
+                    <span class="string">## Fase 5: Frontend - Conversaciones</span><br>
+                    18. Crear página Dashboard con métricas<br>
+                    19. Crear componente ConversationsList<br>
+                    20. Crear componente ChatWindow<br>
+                    21. Implementar polling o WebSocket para tiempo real<br><br>
+                    <span class="string">## Fase 6: Testing y Deploy</span><br>
+                    22. Tests unitarios para WhatsAppService<br>
+                    23. Tests de integración para webhook<br>
+                    24. Documentación de deployment<br>
+                    25. Script de deploy para producción
+                </div>
+
+                <div class="info-box">
+                    <strong>🔍 Validar con /speckit.analyze</strong>
+                    <p style="color: black;">
+                    Después de generar tareas, ejecuta <code>/speckit.analyze</code> para que Claude valide la
+                    consistencia entre constitution, specs, plan y tasks. Esto detecta inconsistencias o tareas
+                    faltantes.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Comando 5: Implement -->
+            <div class="command-card">
+                <h4>🚀 /speckit.implement</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Ejecutar todas las tareas y construir el proyecto.
+                    <br><br>
+                    Este comando inicia la implementación completa. Claude trabajará sistemáticamente a través de cada
+                    tarea, escribiendo código, creando archivos, configurando dependencias y verificando que todo
+                    funcione correctamente.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Después de validar las tareas con /speckit.analyze</li>
+                        <li>Cuando estés listo para construir el proyecto</li>
+                        <li>Para implementar una feature completa de principio a fin</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.implement<br><br>
+                    <span class="comment"># Claude comenzará a ejecutar tareas una por una</span><br>
+                    <span class="comment"># Verás progreso en tiempo real</span><br>
+                    <span class="comment"># Claude puede pedir confirmación en decisiones clave</span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⏱️ Tiempo de Implementación</strong>
+                    <p style="color: black;">
+                    La implementación completa puede tomar tiempo dependiendo de la complejidad del proyecto. Claude
+                    trabajará metódicamente, pero es un proceso iterativo. Puedes interrumpir y reanudar en cualquier
+                    momento.
+                    </p>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Modo Supervisado vs Autónomo</strong>
+                    Puedes ejecutar <code>/speckit.implement</code> de forma supervisada (Claude te pregunta antes de
+                    decisiones importantes) o autónoma (Claude toma decisiones basándose en las specs). Especifica tu
+                    preferencia al inicio.
+                </div>
+            </div>
+
+            <!-- Comando 6: Clarify -->
+            <div class="command-card">
+                <h4>🤔 /speckit.clarify</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Resolver ambigüedades antes de continuar al siguiente paso.
+                    <br><br>
+                    Este comando hace que Claude analice las especificaciones actuales e identifique puntos que
+                    necesitan clarificación. Es proactivo: en lugar de esperar a que Claude encuentre problemas,
+                    tú buscas clarificarlos primero.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Después de escribir especificaciones complejas</li>
+                        <li>Antes de generar el plan técnico</li>
+                        <li>Cuando sientas que hay ambigüedad en requisitos</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.clarify<br><br>
+                    <span class="comment"># Claude responderá con preguntas como:</span><br>
+                    <span class="comment"># "¿Los agentes pueden ver conversaciones de otros agentes?"</span><br>
+                    <span class="comment"># "¿Qué pasa si un mensaje falla al enviar?"</span><br>
+                    <span class="comment"># "¿Necesitas soporte para mensajes de voz/video?"</span>
+                </div>
+            </div>
+
+            <!-- Comando 7: Analyze -->
+            <div class="command-card">
+                <h4>🔍 /speckit.analyze</h4>
+                <div class="command-description">
+                    <strong>Propósito:</strong> Validar consistencia entre constitution, specs, plan y tasks.
+                    <br><br>
+                    Este comando verifica que no haya inconsistencias, tareas faltantes, o conflictos entre los
+                    diferentes artefactos de spec-kit.
+                </div>
+
+                <div class="command-usage">
+                    <strong>Cuándo usar:</strong>
+                    <ul>
+                        <li>Después de generar tareas</li>
+                        <li>Antes de implementar</li>
+                        <li>Para hacer una revisión de calidad</li>
+                    </ul>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en Claude Code</div>
+                    <span class="comment"># En la conversación con Claude</span><br>
+                    /speckit.analyze<br><br>
+                    <span class="comment"># Claude analizará y reportará:</span><br>
+                    <span class="comment"># - Inconsistencias detectadas</span><br>
+                    <span class="comment"># - Tareas que parecen faltar</span><br>
+                    <span class="comment"># - Conflictos entre specs y plan</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 4: MCPs para Spec-Driven -->
+    <section id="mcps">
+        <div class="container">
+            <h2 class="section-title">MCPs para Spec-Driven Development</h2>
+
+            <div class="content-card">
+                <h3>🔌 Model Context Protocols (MCPs)</h3>
+                <p>Los MCPs extienden las capacidades de Claude Code proporcionando contexto adicional que mejora la
+                    calidad de las especificaciones y el código generado.</p>
+            </div>
+
+            <div class="content-card">
+                <h3>📚 Context7 - Gestión de Versiones de Tecnologías</h3>
+                <p>Context7 es un MCP que proporciona información actualizada sobre versiones de frameworks, librerías,
+                    compatibilidad y mejores prácticas.</p>
+
+                <h4 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">¿Qué aporta Context7?</h4>
+                <ul>
+                    <li><strong>Versiones actuales:</strong> Siempre usa las versiones más recientes y estables</li>
+                    <li><strong>Compatibilidad:</strong> Detecta conflictos entre versiones de dependencias</li>
+                    <li><strong>Mejores prácticas:</strong> Configuraciones optimizadas para cada tecnología</li>
+                    <li><strong>Deprecaciones:</strong> Advierte sobre APIs obsoletas</li>
+                </ul>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en especificaciones</div>
+                    <span class="comment"># En tu specification.md</span><br><br>
+                    <span class="string">## Stack Tecnológico</span><br>
+                    Usar Laravel última versión estable con Vue 3.<br><br>
+                    <span class="comment"># Claude con Context7 interpretará esto como:</span><br>
+                    - Laravel 11.x (última estable)<br>
+                    - PHP 8.3 (requisito de Laravel 11)<br>
+                    - Vue 3.4.x<br>
+                    - Composer 2.x<br>
+                    - Node 20.x LTS
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Ventaja en Spec-Driven Development</strong>
+                    Con Context7, no necesitas especificar versiones exactas en tus specs. Puedes enfocarte en "qué"
+                    quieres construir, y Claude seleccionará las versiones apropiadas automáticamente.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🎨 Figma MCP - Integración de Diseño</h3>
+                <p>El Figma MCP permite a Claude acceder a tus diseños de Figma y transformarlos en código de
+                    componentes, respetando el diseño visual especificado.</p>
+
+                <h4 style="color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">¿Qué aporta Figma MCP?</h4>
+                <ul>
+                    <li><strong>Acceso a diseños:</strong> Claude puede ver tus frames, componentes y estilos de Figma
+                    </li>
+                    <li><strong>Extracción de CSS:</strong> Colores, tipografías, espaciados se extraen
+                        automáticamente</li>
+                    <li><strong>Generación de componentes:</strong> Crea componentes Vue/React basados en el diseño
+                    </li>
+                    <li><strong>Consistencia visual:</strong> El código resultante refleja fielmente el diseño</li>
+                </ul>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de uso en especificaciones</div>
+                    <span class="comment"># En tu specification.md</span><br><br>
+                    <span class="string">## UI del Chat</span><br>
+                    Implementar el diseño del chat según Figma:<br>
+                    https://figma.com/file/ABC123XYZ/WhatsApp-Platform<br><br>
+                    Páginas a implementar:<br>
+                    - Frame: "Conversation List"<br>
+                    - Frame: "Chat Window"<br>
+                    - Frame: "Dashboard"<br><br>
+                    <span class="comment"># Claude accederá a Figma, analizará los frames,</span><br>
+                    <span class="comment"># y generará componentes Vue que coincidan con el diseño</span>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">🎨 Ejemplo de resultado</div>
+                    <span class="comment">&lt;!-- ChatWindow.vue generado desde Figma --&gt;</span><br>
+                    <span class="keyword">&lt;template&gt;</span><br>
+                    &nbsp;&nbsp;<span class="keyword">&lt;div</span> <span class="function">class</span>=<span
+                        class="string">"chat-window"</span><span class="keyword">&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;div</span> <span
+                        class="function">class</span>=<span class="string">"header"</span><span
+                        class="keyword">&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">&lt;!-- Colores y espaciado desde Figma
+                        --&gt;</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">&lt;/div&gt;</span><br>
+                    &nbsp;&nbsp;<span class="keyword">&lt;/div&gt;</span><br>
+                    <span class="keyword">&lt;/template&gt;</span><br><br>
+                    <span class="keyword">&lt;style</span> <span class="function">scoped</span><span
+                        class="keyword">&gt;</span><br>
+                    <span class="function">.chat-window</span> {<br>
+                    &nbsp;&nbsp;<span class="comment">/* Estilos extraídos de Figma */</span><br>
+                    &nbsp;&nbsp;background: <span class="string">#F8F9FA</span>;<br>
+                    &nbsp;&nbsp;border-radius: <span class="string">12px</span>;<br>
+                    &nbsp;&nbsp;padding: <span class="string">24px</span>;<br>
+                    }<br>
+                    <span class="keyword">&lt;/style&gt;</span>
+                </div>
+
+                <div class="info-box">
+                    <strong>🔐 Seguridad y Permisos</strong>
+                    El Figma MCP respeta los permisos de tu cuenta. Solo puedes acceder a archivos para los que tienes
+                    permiso en Figma. Los datos no se almacenan, solo se accede durante la generación de código.
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Limitaciones</strong>
+                    Diseños muy complejos o con animaciones intrincadas pueden necesitar ajustes manuales. El MCP
+                    extrae estructura y estilos estáticos, pero animaciones complejas deben especificarse por separado.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔗 Uso Combinado de MCPs</h3>
+                <p>La verdadera potencia aparece al combinar múltiples MCPs en tu flujo de Spec-Driven Development:</p>
+
+                <div class="code-example">
+                    <div class="code-title">💬 Ejemplo de flujo completo</div>
+                    <span class="comment"># 1. Establecer constitución</span><br>
+                    /speckit.constitution<br><br>
+                    <span class="comment"># 2. Especificar con referencia a Figma</span><br>
+                    /speckit.specify<br>
+                    Crear plataforma Laravel para WhatsApp con diseño de Figma:<br>
+                    https://figma.com/file/ABC123/platform<br><br>
+                    <span class="comment"># 3. Planificar (Context7 selecciona versiones)</span><br>
+                    /speckit.plan<br><br>
+                    <span class="comment"># 4. Generar tareas</span><br>
+                    /speckit.task<br><br>
+                    <span class="comment"># 5. Implementar (Claude usa Figma MCP para UI,</span><br>
+                    <span class="comment"># Context7 para versiones correctas)</span><br>
+                    /speckit.implement
+                </div>
+
+                <div class="tip-box">
+                    <strong>✨ Resultado</strong>
+                    Obtienes una aplicación Laravel con las versiones correctas de todas las dependencias, componentes
+                    Vue que coinciden perfectamente con tu diseño de Figma, y una arquitectura coherente con tus
+                    especificaciones. Todo generado de manera iterativa y refinada.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 5: Proyecto Práctico -->
+    <section id="proyecto">
+        <div class="container">
+            <h2 class="section-title">Proyecto Práctico Completo</h2>
+
+            <div class="content-card">
+                <h3>🚀 Caso de Estudio: Plataforma de Gestión de WhatsApp</h3>
+                <p>Vamos a construir una plataforma SaaS completa desde cero usando Spec-Driven Development. Este
+                    proyecto integrará Laravel, Vue 3, WhatsApp Cloud API, Docker, y tiempo real con WebSockets.</p>
+
+                <div class="info-box">
+                    <strong>🎯 Objetivo del Proyecto</strong>
+                    Crear una plataforma multiusuario donde equipos de soporte puedan gestionar múltiples líneas de
+                    WhatsApp Business, atender conversaciones en tiempo real, asignar chats a agentes, y ver métricas
+                    de rendimiento.
+                </div>
+            </div>
+
+            <!-- Paso 1 -->
+            <div class="content-card">
+                <h3>Paso 1: Configuración Inicial</h3>
+
+                <div class="step" data-step="1">
+                    <h4>Crear directorio del proyecto</h4>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        mkdir whatsapp-platform<br>
+                        cd whatsapp-platform<br>
+                        git init
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Iniciar proyecto con spec-kit</h4>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        specify init whatsapp-platform --ai claude<br><br>
+                        <span class="comment"># Esto crea .spec/ con templates</span>
+                    </div>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Abrir Claude Code en el proyecto</h4>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        claude .<br><br>
+                        <span class="comment"># O desde VS Code, abrir la carpeta</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="content-card">
+                <h3>Paso 2: Establecer la Constitución</h3>
+
+                <div class="code-example">
+                    <div class="code-title">💬 En Claude Code</div>
+                    /speckit.constitution<br><br>
+                    Crear una plataforma SaaS para gestionar WhatsApp Cloud API.<br><br>
+                    <strong>Propósito:</strong> Permitir a equipos de soporte atender múltiples<br>
+                    líneas de WhatsApp desde una interfaz centralizada.<br><br>
+                    <strong>Principios:</strong><br>
+                    - Tiempo real: mensajes instantáneos<br>
+                    - Escalable: soportar cientos de usuarios<br>
+                    - Seguro: cumplir con políticas de WhatsApp y GDPR<br>
+                    - UX intuitiva: similar a WhatsApp Web<br><br>
+                    <strong>Stack:</strong><br>
+                    - Backend: Laravel 11<br>
+                    - Frontend: Vue 3 + Inertia.js<br>
+                    - DB: PostgreSQL<br>
+                    - Tiempo real: Laravel Reverb<br>
+                    - Contenedores: Docker Compose<br><br>
+                    <strong>Restricciones:</strong><br>
+                    - Presupuesto moderado (AWS/DigitalOcean)<br>
+                    - Cumplir políticas de WhatsApp Business
+                </div>
+
+                <div class="tip-box">
+                    <strong>✅ Resultado Esperado</strong>
+                    Claude generará <code>.spec/constitution.md</code> con un documento bien estructurado que captura
+                    la visión del proyecto.
+                </div>
+            </div>
+
+            <!-- Paso 3 -->
+            <div class="content-card">
+                <h3>Paso 3: Definir Especificaciones</h3>
+
+                <div class="code-example">
+                    <div class="code-title">💬 En Claude Code</div>
+                    /speckit.specify<br><br>
+                    <strong>Features principales:</strong><br><br>
+                    1. <strong>Autenticación</strong><br>
+                    &nbsp;&nbsp;&nbsp;- Login email/password<br>
+                    &nbsp;&nbsp;&nbsp;- Roles: Admin, Supervisor, Agente<br>
+                    &nbsp;&nbsp;&nbsp;- 2FA opcional<br><br>
+                    2. <strong>Gestión de Líneas WhatsApp</strong><br>
+                    &nbsp;&nbsp;&nbsp;- Conectar múltiples números via Cloud API<br>
+                    &nbsp;&nbsp;&nbsp;- Configurar webhooks<br>
+                    &nbsp;&nbsp;&nbsp;- Asignar agentes a líneas<br><br>
+                    3. <strong>Bandeja de Conversaciones</strong><br>
+                    &nbsp;&nbsp;&nbsp;- Lista de conversaciones activas<br>
+                    &nbsp;&nbsp;&nbsp;- Filtros: sin leer, asignadas, todas<br>
+                    &nbsp;&nbsp;&nbsp;- Búsqueda por nombre/número<br>
+                    &nbsp;&nbsp;&nbsp;- Auto-refresh tiempo real<br><br>
+                    4. <strong>Interfaz de Chat</strong><br>
+                    &nbsp;&nbsp;&nbsp;- Enviar/recibir mensajes de texto<br>
+                    &nbsp;&nbsp;&nbsp;- Enviar imágenes (max 5MB)<br>
+                    &nbsp;&nbsp;&nbsp;- Ver historial completo<br>
+                    &nbsp;&nbsp;&nbsp;- Estados: enviado, entregado, leído<br><br>
+                    5. <strong>Dashboard con Métricas</strong><br>
+                    &nbsp;&nbsp;&nbsp;- Conversaciones totales<br>
+                    &nbsp;&nbsp;&nbsp;- Tiempo promedio de respuesta<br>
+                    &nbsp;&nbsp;&nbsp;- Conversaciones por agente<br>
+                    &nbsp;&nbsp;&nbsp;- Gráfico mensajes/hora
+                </div>
+
+                <div class="info-box">
+                    <strong>🤔 Claude Puede Pedir Clarificaciones</strong>
+                    Es probable que Claude responda con preguntas como:
+                    <ul>
+                        <li>"¿Los agentes pueden reasignar conversaciones?"</li>
+                        <li>"¿Qué sucede con mensajes fallidos? ¿Hay reintentos?"</li>
+                        <li>"¿Se necesita soporte para mensajes multimedia (audio, video, documentos)?"</li>
+                    </ul>
+                    Responde estas clarificaciones para refinar las specs.
+                </div>
+            </div>
+
+            <!-- Paso 4 -->
+            <div class="content-card">
+                <h3>Paso 4: Generar Plan Técnico</h3>
+
+                <div class="code-example">
+                    <div class="code-title">💬 En Claude Code</div>
+                    /speckit.plan<br><br>
+                    <span class="comment"># Claude generará un plan técnico detallado</span><br>
+                    <span class="comment"># con arquitectura, estructura de DB, endpoints, etc.</span>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Revisar el Plan</strong>
+                    Lee cuidadosamente el <code>.spec/plan.md</code> generado. Si hay algo que no te gusta o quieres
+                    cambiar, puedes pedirle a Claude que modifique el plan antes de continuar.
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">📄 Extracto del Plan (ejemplo)</div>
+                    <span class="string">## Base de Datos</span><br><br>
+                    <strong>users</strong>: id, name, email, password, role, created_at<br>
+                    <strong>whatsapp_lines</strong>: id, phone_number, api_token, webhook_token<br>
+                    <strong>conversations</strong>: id, line_id, contact_name, status, last_message_at<br>
+                    <strong>messages</strong>: id, conversation_id, sender_type, content, status<br><br>
+                    <span class="string">## API Endpoints</span><br><br>
+                    POST /api/login<br>
+                    GET /api/conversations<br>
+                    POST /api/messages<br>
+                    POST /webhook/whatsapp<br><br>
+                    <span class="string">## Docker Services</span><br><br>
+                    - app (Laravel PHP 8.3)<br>
+                    - nginx<br>
+                    - postgres<br>
+                    - redis<br>
+                    - horizon
+                </div>
+            </div>
+
+            <!-- Paso 5 -->
+            <div class="content-card">
+                <h3>Paso 5: Desglosar en Tareas</h3>
+
+                <div class="code-example">
+                    <div class="code-title">💬 En Claude Code</div>
+                    /speckit.task<br><br>
+                    <span class="comment"># Claude generará lista de tareas ordenadas</span>
+                </div>
+
+                <div class="code-example">
+                    <div class="code-title">📄 Extracto de Tasks (ejemplo)</div>
+                    <span class="string">## Fase 1: Setup</span><br>
+                    1. Crear proyecto Laravel 11 con Breeze + Inertia + Vue<br>
+                    2. Configurar Docker Compose<br>
+                    3. Configurar .env y variables<br><br>
+                    <span class="string">## Fase 2: Database</span><br>
+                    4. Crear migraciones (users, lines, conversations, messages)<br>
+                    5. Crear modelos con relaciones<br>
+                    6. Seeders para datos iniciales<br><br>
+                    <span class="string">## Fase 3: WhatsApp Integration</span><br>
+                    7. Crear WhatsAppService<br>
+                    8. Implementar WebhookController<br>
+                    9. Job para procesar mensajes entrantes<br><br>
+                    <span class="comment"># ... continúa con ~25 tareas</span>
+                </div>
+
+                <div class="info-box">
+                    <strong>🔍 Validar Consistencia</strong>
+                    Ejecuta <code>/speckit.analyze</code> para verificar que las tareas cubran todas las
+                    especificaciones y no haya inconsistencias.
+                </div>
+            </div>
+
+            <!-- Paso 6 -->
+            <div class="content-card">
+                <h3>Paso 6: Implementar</h3>
+
+                <div class="code-example">
+                    <div class="code-title">💬 En Claude Code</div>
+                    /speckit.implement<br><br>
+                    <span class="comment"># Claude comenzará a ejecutar las tareas</span><br>
+                    <span class="comment"># Verás progreso en tiempo real</span><br>
+                    <span class="comment"># Puede pedir confirmación en decisiones clave</span>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⏱️ Tiempo Estimado</strong>
+                    Para un proyecto de esta complejidad, la implementación completa puede tomar varias horas. Claude
+                    trabajará metódicamente, pero puedes interrumpir y reanudar en cualquier momento. El progreso se
+                    guarda automáticamente.
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Supervisión Durante Implementación</strong>
+                    Monitorea el progreso. Si ves algo que no te gusta, puedes interrumpir y pedir ajustes. Claude
+                    puede modificar el enfoque y continuar desde donde se quedó.
+                </div>
+            </div>
+
+            <!-- Paso 7 -->
+            <div class="content-card">
+                <h3>Paso 7: Probar y Refinar</h3>
+
+                <div class="step" data-step="1">
+                    <h4>Levantar el ambiente con Docker</h4>
+                    <div class="code-example">
+                        <div class="code-title">🖥️ Terminal</div>
+                        docker-compose up -d<br>
+                        docker-compose exec app php artisan migrate --seed<br>
+                        docker-compose exec app php artisan horizon<br><br>
+                        <span class="comment"># Acceder a http://localhost</span>
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Probar features principales</h4>
+                    <ul>
+                        <li>Login con usuario seed</li>
+                        <li>Conectar una línea de WhatsApp</li>
+                        <li>Configurar webhook en WhatsApp Cloud API</li>
+                        <li>Enviar mensaje de prueba desde un teléfono</li>
+                        <li>Verificar que aparece en la plataforma</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Iterar sobre ajustes</h4>
+                    <p>Si encuentras bugs o quieres agregar features, simplemente dile a Claude en lenguaje natural:
+                    </p>
+                    <div class="code-example">
+                        <div class="code-title">💬 Ejemplo de iteración</div>
+                        El tiempo de respuesta en el dashboard no se está calculando<br>
+                        correctamente. Debe ser desde que llega el mensaje del cliente<br>
+                        hasta que el agente responde por primera vez.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resultado Final -->
+            <div class="practice-box">
+                <h4>✨ Resultado Final</h4>
+                <div class="practice-content">
+                    <strong>Has construido una plataforma completa que incluye:</strong>
+                    <ul>
+                        <li>✅ Autenticación con roles y permisos</li>
+                        <li>✅ Integración con WhatsApp Cloud API</li>
+                        <li>✅ Interfaz de chat en tiempo real</li>
+                        <li>✅ Sistema de asignación de conversaciones</li>
+                        <li>✅ Dashboard con métricas analíticas</li>
+                        <li>✅ Arquitectura dockerizada lista para deploy</li>
+                        <li>✅ Base de datos optimizada con índices</li>
+                        <li>✅ Colas para procesamiento asíncrono</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Todo desde especificaciones ejecutables, sin escribir código
+                            manualmente.</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 6: Flujo de Trabajo -->
+    <section id="workflow">
+        <div class="container">
+            <h2 class="section-title">Flujo de Trabajo Spec-Driven</h2>
+
+            <div class="content-card">
+                <h3>🔄 El Ciclo de Desarrollo Spec-Driven</h3>
+                <p>Spec-Driven Development no es lineal, es iterativo. Aquí está el ciclo completo:</p>
+
+                <div style="text-align: center; margin: 2rem 0;">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'%3E%3Ccircle cx='300' cy='200' r='150' fill='none' stroke='%236366f1' stroke-width='3'/%3E%3Ccircle cx='300' cy='50' r='30' fill='%236366f1'/%3E%3Ctext x='300' y='60' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3E1%3C/text%3E%3Ccircle cx='450' cy='200' r='30' fill='%238b5cf6'/%3E%3Ctext x='450' y='210' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3E2%3C/text%3E%3Ccircle cx='300' cy='350' r='30' fill='%23f59e0b'/%3E%3Ctext x='300' y='360' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3E3%3C/text%3E%3Ccircle cx='150' cy='200' r='30' fill='%2343e97b'/%3E%3Ctext x='150' y='210' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3E4%3C/text%3E%3C/svg%3E"
+                        alt="Ciclo Spec-Driven" style="max-width: 400px; width: 100%;">
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>1. Constitution</h4>
+                        <p>Define visión, principios y restricciones del proyecto</p>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>2. Specify</h4>
+                        <p>Detalla requisitos, casos de uso y comportamientos esperados</p>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>3. Plan & Task</h4>
+                        <p>Traduce specs a arquitectura técnica y tareas concretas</p>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>4. Implement</h4>
+                        <p>Claude ejecuta las tareas, generando código funcional</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🤝 Integración con Módulos Anteriores</h3>
+                <p>Spec-Driven Development se integra perfectamente con hooks, comandos y agentes de Claude Code:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Módulo</th>
+                            <th>Cómo se Integra con Spec-Driven</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Módulo 2: Hooks</strong></td>
+                            <td>Crear hooks que validen specs automáticamente antes de commit, o que ejecuten tests
+                                después de <code>/speckit.implement</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Módulo 2: Comandos</strong></td>
+                            <td>Crear slash commands personalizados que combinen spec-kit con tu workflow (ej:
+                                <code>/mi-empresa.new-feature</code> que ejecuta constitution → specify → implement)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Módulo 3: MCPs</strong></td>
+                            <td>Usar MCPs adicionales (DB, File System, etc.) durante la implementación para acceder a
+                                recursos externos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Módulo 3: Agentes</strong></td>
+                            <td>Los agentes especializados se invocan automáticamente durante
+                                <code>/speckit.implement</code> (ej: code-reviewer revisa el código generado)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h3>🏢 Workflow en Equipo</h3>
+                <p>Spec-Driven Development funciona excelente en equipos. Aquí está cómo diferentes roles pueden
+                    contribuir:</p>
+
+                <div class="step" data-step="1">
+                    <h4>Product Manager</h4>
+                    <ul>
+                        <li>Escribe la <strong>constitution</strong>: visión, objetivos, métricas de éxito</li>
+                        <li>Define las <strong>specifications</strong>: casos de uso, flujos de usuario</li>
+                        <li>Revisa las <strong>tasks</strong> para validar alcance</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Tech Lead / Arquitecto</h4>
+                    <ul>
+                        <li>Revisa y refina el <strong>plan</strong> técnico</li>
+                        <li>Valida decisiones arquitectónicas</li>
+                        <li>Ejecuta <code>/speckit.analyze</code> para verificar consistencia</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Desarrolladores</h4>
+                    <ul>
+                        <li>Ejecutan <code>/speckit.implement</code> para generar código base</li>
+                        <li>Refinan e iteran sobre el código generado</li>
+                        <li>Agregan specs para nuevas features</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h4>Diseñadores</h4>
+                    <ul>
+                        <li>Proporcionan diseños de Figma referenciados en specs</li>
+                        <li>Validan que la UI generada coincida con el diseño</li>
+                        <li>Iteran sobre ajustes visuales</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Versionado de Specs</strong>
+                    La carpeta <code>.spec/</code> debe estar en tu repositorio Git. Así el equipo puede colaborar en
+                    specs como lo hace con código. Pull requests pueden incluir cambios en specs + código resultante.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>⚡ Cuándo Usar vs No Usar Spec-Driven</h3>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4>✅ Cuándo SÍ Usar</h4>
+                        <ul>
+                            <li>Proyectos nuevos desde cero</li>
+                            <li>Features complejas con múltiples componentes</li>
+                            <li>Arquitecturas bien definidas (Laravel, Django, etc.)</li>
+                            <li>Equipos que necesitan alineación clara</li>
+                            <li>Cuando la documentación es crítica</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card">
+                        <h4>❌ Cuándo NO Usar</h4>
+                        <ul>
+                            <li>Hotfixes urgentes (bugs críticos)</li>
+                            <li>Cambios triviales de 1-2 líneas</li>
+                            <li>Experimentación rápida de prototipos</li>
+                            <li>Proyectos muy experimentales sin arquitectura clara</li>
+                            <li>Cuando necesitas control manual absoluto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 7: Resumen -->
+    <section id="resumen">
+        <div class="container">
+            <h2 class="section-title">Resumen y Mejores Prácticas</h2>
+
+            <div class="content-card">
+                <h3>📝 Checklist de Spec-Driven Development</h3>
+                <ul style="list-style: none; margin-left: 0;">
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check1" style="margin-right: 0.5rem;">
+                        <label for="check1">Instalé <code>uv</code> y <code>spec-kit</code></label>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check2" style="margin-right: 0.5rem;">
+                        <label for="check2">Configuré MCPs (Context7, Figma)</label>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check3" style="margin-right: 0.5rem;">
+                        <label for="check3">Conozco todos los comandos de spec-kit</label>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check4" style="margin-right: 0.5rem;">
+                        <label for="check4">Sé cuándo usar spec-driven vs desarrollo tradicional</label>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check5" style="margin-right: 0.5rem;">
+                        <label for="check5">Completé el proyecto práctico de WhatsApp</label>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check6" style="margin-right: 0.5rem;">
+                        <label for="check6">Entiendo cómo integrar spec-driven con hooks/comandos/MCPs</label>
+                    </li>
+                    <li style="margin-bottom: 1rem;">
+                        <input type="checkbox" id="check7" style="margin-right: 0.5rem;">
+                        <label for="check7">Sé cómo iterar y refinar especificaciones</label>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>🌟 Mejores Prácticas</h3>
+
+                <div class="step" data-step="1">
+                    <h4>Especificaciones Claras</h4>
+                    <ul>
+                        <li>Usa lenguaje específico, no ambiguo</li>
+                        <li>Define criterios de aceptación claros</li>
+                        <li>Incluye ejemplos cuando sea posible</li>
+                        <li>Usa <code>/speckit.clarify</code> proactivamente</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>Constitución Estable</h4>
+                    <ul>
+                        <li>Establece principios fundamentales que no cambien frecuentemente</li>
+                        <li>Evita detalles de implementación en la constitución</li>
+                        <li>Revisa la constitución solo cuando cambien objetivos estratégicos</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>Iteración Continua</h4>
+                    <ul>
+                        <li>No temas modificar specs si descubres nuevos requisitos</li>
+                        <li>Regenera plan y tasks después de cambios significativos</li>
+                        <li>Usa <code>/speckit.analyze</code> después de cada iteración</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h4>Versionado y Documentación</h4>
+                    <ul>
+                        <li>Commitea la carpeta <code>.spec/</code> en Git</li>
+                        <li>Incluye cambios de specs en PRs junto con código</li>
+                        <li>Las specs son la fuente de verdad, no el código</li>
+                    </ul>
+                </div>
+
+                <div class="step" data-step="5">
+                    <h4>Uso de MCPs</h4>
+                    <ul>
+                        <li>Referencia diseños de Figma en specs, no en tareas</li>
+                        <li>Confía en Context7 para versiones, no especifiques manualmente</li>
+                        <li>Combina múltiples MCPs para contexto rico</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h4>🚀 Ejercicio Final: Tu Propio Proyecto</h4>
+                <div class="practice-content">
+                    <strong>Crea un proyecto desde cero usando todo lo aprendido:</strong>
+                    <ol>
+                        <li>Elige una idea: puede ser un SaaS, una herramienta interna, o una API</li>
+                        <li>Define la constitución con visión clara</li>
+                        <li>Especifica al menos 3 features complejas</li>
+                        <li>Integra al menos un MCP (Context7 o Figma)</li>
+                        <li>Genera el plan técnico</li>
+                        <li>Crea las tareas y analiza consistencia</li>
+                        <li>Implementa con <code>/speckit.implement</code></li>
+                        <li>Itera sobre mejoras y ajustes</li>
+                    </ol>
+                    <p style="margin-top: 1rem;"><strong>Meta:</strong> Tener una aplicación funcional en menos de 4
+                        horas, solo con especificaciones.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>🔗 Recursos Adicionales</h3>
+                <ul>
+                    <li><strong>Repositorio spec-kit:</strong> <a href="https://github.com/github/spec-kit"
+                            target="_blank">github.com/github/spec-kit</a></li>
+                    <li><strong>Documentación Context7:</strong> <a href="https://upstash.com/context7"
+                            target="_blank">upstash.com/context7</a></li>
+                    <li><strong>Figma MCP:</strong> <a href="https://mcp.figma.com" target="_blank">mcp.figma.com</a>
+                    </li>
+                    <li><strong>Claude Code Docs:</strong> <a href="https://docs.claude.com/en/docs/claude-code"
+                            target="_blank">docs.claude.com/claude-code</a></li>
+                    <li><strong>WhatsApp Cloud API:</strong> <a
+                            href="https://developers.facebook.com/docs/whatsapp/cloud-api"
+                            target="_blank">developers.facebook.com/whatsapp</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="modulo-3-plugins-agentes.html" class="nav-button secondary">
+                    ← Módulo 3: Plugins y Agentes
+                </a>
+                <a href="DOCUMENTACION-PROYECTO.html" class="nav-button">
+                    Volver al Inicio →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h3 style="margin-bottom: 1rem;">🎯 Has completado el Módulo 4</h3>
+            <p>Ahora dominas Spec-Driven Development con Claude Code</p>
+            <p style="margin-top: 1rem; opacity: 0.8;">Spec-Kit + Claude Code + MCPs = Desarrollo a la Velocidad del
+                Pensamiento</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all content cards
+        document.querySelectorAll('.content-card, .command-card, .comparison-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Checkbox persistence
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            const savedState = localStorage.getItem(checkbox.id);
+            if (savedState === 'true') {
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener('change', function () {
+                localStorage.setItem(this.id, this.checked);
+            });
+        });
+    </script>
+</body>
+
+</html>

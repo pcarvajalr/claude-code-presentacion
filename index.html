@@ -296,7 +296,7 @@
         }
 
         .accordion-item.active .accordion-content {
-            max-height: 1000px;
+            max-height: 1090px;
         }
 
         .accordion-body {
@@ -783,39 +783,54 @@
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <span>🔌 Módulo 4: MCPs e Integraciones</span>
+                        <span>📋 Módulo 4: Spec-Driven Development</span>
                         <span class="icon">▼</span>
                     </div>
                     <div class="accordion-content">
                         <div class="accordion-body">
                             <ul>
-                                <li>Integración con Figma para importar diseños</li>
-                                <li>Conexión con herramientas externas y APIs</li>
-                                <li>Casos de uso prácticos con MCPs</li>
+                                <li>Introducción a Spec-Driven Development y especificaciones ejecutables</li>
+                                <li>Instalación y configuración de spec-kit (toolkit de GitHub)</li>
+                                <li>Comandos de spec-kit: constitution, specify, plan, task, implement</li>
+                                <li>Integración de MCPs (Context7, Figma) en especificaciones</li>
+                                <li>Proyecto completo: Plataforma Laravel + WhatsApp Cloud API</li>
                             </ul>
 
                             <div class="code-example">
-                                <span class="comment"># Ejemplo: Añadir integración con Figma</span><br>
-                                <span class="keyword">claude</span> <span class="function">mcp add</span> <span
-                                    class="keyword">--transport</span> http figma https://mcp.figma.com/mcp
-                                <br>
-                                <span class="comment"># Listar MCPs instalados</span>
-                                <br>
-                                <span class="keyword">claude</span> <span class="function">mcp list</span>
+                                <span class="comment"># Instalar spec-kit</span><br>
+                                <span class="keyword">uv</span> <span class="function">tool install</span> specify-cli --from git+https://github.com/github/spec-kit.git
+                                <br><br>
+                                <span class="comment"># Iniciar proyecto con spec-driven</span><br>
+                                <span class="keyword">specify</span> <span class="function">init</span> mi-proyecto --ai claude
+                                <br><br>
+                                <span class="comment"># Usar comandos en Claude Code</span><br>
+                                <span class="keyword">/speckit.constitution</span> <span class="comment"># Definir visión</span><br>
+                                <span class="keyword">/speckit.specify</span> <span class="comment"># Crear especificaciones</span><br>
+                                <span class="keyword">/speckit.implement</span> <span class="comment"># Implementar proyecto</span>
                             </div>
 
                             <div class="use-case">
                                 <h4>💡 Caso de Uso Práctico:</h4>
                                 <div class="use-case-content">
-                                    <p><strong>Escenario:</strong> Importar diseño de Figma para PWA de chat</p>
+                                    <p><strong>Escenario:</strong> Crear plataforma SaaS multiusuario para WhatsApp</p>
                                     <p><strong>Guía para el tutor:</strong></p>
                                     <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                                        <li>Configurar MCP de Figma</li>
-                                        <li>Conectar con un proyecto de Figma real</li>
-                                        <li>Extraer componentes y estilos</li>
-                                        <li>Generar código HTML/CSS a partir del diseño</li>
+                                        <li>Establecer constitución del proyecto (visión, principios, stack)</li>
+                                        <li>Especificar features (autenticación, chat, dashboard)</li>
+                                        <li>Generar plan técnico con arquitectura Laravel + Docker</li>
+                                        <li>Desglosar en tareas y ejecutar implementación completa</li>
+                                        <li>Iterar sobre refinamientos usando MCPs Context7 y Figma</li>
                                     </ol>
                                 </div>
+                            </div>
+
+                            <div style="margin-top: 1.5rem; text-align: center;">
+                                <a href="modulo-4-spec-driven-design.html"
+                                    style="display: inline-block; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 25px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s;"
+                                    onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                    Ver contenido completo del Módulo 4 →
+                                </a>
                             </div>
                         </div>
                     </div>

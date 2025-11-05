@@ -154,10 +154,9 @@ Hooks y Comandos</a></li>
 id="toc-módulo-3-plugins-agentes-especializados-y-skills"><span
 class="toc-section-number">1.4.3</span> Módulo 3: Plugins, Agentes
 Especializados y Skills</a></li>
-<li><a href="#módulo-4-mcps-model-context-protocol-e-integraciones"
-id="toc-módulo-4-mcps-model-context-protocol-e-integraciones"><span
-class="toc-section-number">1.4.4</span> Módulo 4: MCPs (Model Context
-Protocol) e Integraciones</a></li>
+<li><a href="#módulo-4-spec-driven-development"
+id="toc-módulo-4-spec-driven-development"><span
+class="toc-section-number">1.4.4</span> Módulo 4: Spec-Driven Development</a></li>
 <li><a href="#módulo-5-aplicación-a-proyectos-reales"
 id="toc-módulo-5-aplicación-a-proyectos-reales"><span
 class="toc-section-number">1.4.5</span> Módulo 5: Aplicación a Proyectos
@@ -375,7 +374,8 @@ class="header-section-number">1.2</span> 2. Estructura del Proyecto</h2>
 ├── modulo-1-fundamentos.html         # Módulo 1: Fundamentos (80 KB)
 ├── modulo-2-hooks-comandos.html      # Módulo 2: Hooks y Comandos (67 KB)
 ├── modulo-3-plugins-agentes.html     # Módulo 3: Plugins y Agentes (131 KB)
-├── presentacion-claude-code.html     # Presentación general (52 KB)
+├── modulo-4-spec-driven-design.html  # Módulo 4: Spec-Driven Development (85 KB)
+├── index.html     # Presentación general (52 KB)
 ├── plan-capacitacion-claude-code.md  # Plan de capacitación (4.8 KB)
 └── vercel.json                       # Configuración de despliegue</code></pre>
 <h3 data-number="1.2.1" id="archivos-principales"><span
@@ -415,7 +415,12 @@ class="header-section-number">1.2.1</span> Archivos Principales</h3>
 <td>Plugins, agentes especializados y skills</td>
 </tr>
 <tr>
-<td><code>presentacion-claude-code.html</code></td>
+<td><code>modulo-4-spec-driven-design.html</code></td>
+<td>85 KB</td>
+<td>Spec-Driven Development con spec-kit y MCPs</td>
+</tr>
+<tr>
+<td><code>index.html</code></td>
 <td>52 KB</td>
 <td>Presentación general del curso</td>
 </tr>
@@ -561,34 +566,42 @@ de skills personalizados - Estructura de un skill (.claude/skills/)</p>
 proyecto PWA - Crear skill para generación de documentación - Instalar y
 usar plugin code-reviewer en pipeline</p>
 <h3 data-number="1.4.4"
-id="módulo-4-mcps-model-context-protocol-e-integraciones"><span
-class="header-section-number">1.4.4</span> Módulo 4: MCPs (Model Context
-Protocol) e Integraciones</h3>
-<p><strong>Duración:</strong> 2-3 sesiones</p>
-<p><strong>Contenido:</strong> - <strong>¿Qué son los MCPs?</strong> -
-Protocolo para extender capacidades de Claude Code - Conexión con
-servicios externos - Acceso a APIs, bases de datos, herramientas de
-diseño</p>
-<ul>
-<li><p><strong>MCPs Principales:</strong></p>
-<ul>
-<li><strong>Figma MCP</strong>: Importar diseños y componentes</li>
-<li><strong>GitHub MCP</strong>: Integración profunda con
-repositorios</li>
-<li><strong>Database MCPs</strong>: Conexión directa a bases de
-datos</li>
-<li><strong>API MCPs</strong>: Consumo de APIs REST/GraphQL</li>
-</ul></li>
-<li><p><strong>Instalación de MCPs:</strong></p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> mcp add <span class="at">--transport</span> http figma https://mcp.figma.com/mcp</span></code></pre></div></li>
-<li><p><strong>Casos de Uso:</strong></p>
-<ul>
-<li>Convertir diseños de Figma a código React/Vue</li>
-<li>Consultar bases de datos para análisis de esquemas</li>
-<li>Automatizar workflows con APIs externas</li>
-</ul></li>
-</ul>
+id="módulo-4-spec-driven-development"><span
+class="header-section-number">1.4.4</span> Módulo 4: Spec-Driven Development</h3>
+<p><strong>Duración:</strong> 3-4 sesiones <strong>Archivo:</strong>
+<code>modulo-4-spec-driven-design.html</code></p>
+<p><strong>Contenido:</strong></p>
+<p><strong>A. Introducción a Spec-Driven Development:</strong> -
+Filosofía del desarrollo guiado por especificaciones - Especificaciones
+ejecutables vs documentación estática - Comparación: desarrollo tradicional
+vs spec-driven - Ventajas: claridad, velocidad, consistencia, iteración rápida -
+Por qué funciona bien con Claude Code</p>
+<p><strong>B. Configuración del Entorno:</strong> - Instalación de uv/uvx
+(gestor de paquetes Python) - Instalación de spec-kit (toolkit de GitHub) -
+Inicialización de proyectos con <code>specify init</code> - Estructura
+de .spec/ (constitution, specification, plan, tasks) - Configuración de
+MCPs: Context7 y Figma</p>
+<p><strong>C. Comandos de Spec-Kit:</strong> -
+<code>/speckit.constitution</code>: Establecer principios y visión del proyecto -
+<code>/speckit.specify</code>: Definir requisitos y casos de uso -
+<code>/speckit.plan</code>: Crear plan técnico de implementación -
+<code>/speckit.task</code>: Desglosar en tareas accionables -
+<code>/speckit.implement</code>: Ejecutar implementación completa -
+<code>/speckit.clarify</code>: Resolver ambigüedades -
+<code>/speckit.analyze</code>: Validar consistencia</p>
+<p><strong>D. MCPs para Spec-Driven Development:</strong> -
+<strong>Context7 MCP</strong>: Gestión de versiones de tecnologías,
+mejores prácticas actualizadas - <strong>Figma MCP</strong>: Integración
+de diseños en especificaciones, generación de componentes - Uso combinado
+de múltiples MCPs - Instalación y configuración</p>
+<p><strong>E. Proyecto Práctico Completo:</strong> - Caso de estudio:
+Plataforma de gestión de WhatsApp Cloud API - Laravel 11 + Vue 3 + Docker -
+Flujo completo desde constitution hasta implementación - Iteración y
+refinamiento de specs - Testing y deployment</p>
+<p><strong>F. Flujo de Trabajo y Mejores Prácticas:</strong> - Ciclo de
+desarrollo spec-driven - Integración con hooks, comandos y agentes -
+Workflow en equipo (Product Manager, Tech Lead, Desarrolladores) -
+Cuándo usar vs no usar spec-driven - Versionado de especificaciones en Git</p>
 <h3 data-number="1.4.5"
 id="módulo-5-aplicación-a-proyectos-reales"><span
 class="header-section-number">1.4.5</span> Módulo 5: Aplicación a
@@ -1059,9 +1072,10 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb23-1"><a href=
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/index.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-1&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-1-fundamentos.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-2&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-2-hooks-comandos.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-3&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-3-plugins-agentes.html&quot;</span> <span class="fu">}</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-3&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-3-plugins-agentes.html&quot;</span> <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span> <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-4&quot;</span><span class="fu">,</span> <span class="dt">&quot;dest&quot;</span><span class="fu">:</span> <span class="st">&quot;/modulo-4-spec-driven-design.html&quot;</span> <span class="fu">}</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p><strong>Comandos de Despliegue:</strong></p>
 <div class="sourceCode" id="cb24"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar Vercel CLI</span></span>
@@ -1115,7 +1129,7 @@ class="header-section-number">1.9.2</span> 9.2 Para Participantes</h3>
 <p><strong>Antes del Curso:</strong> 1. Instalar Claude Code:
 https://claude.com/claude-code 2. Configurar cuenta de Anthropic 3.
 Clonar el repositorio del proyecto 4. Revisar la presentación general:
-<code>presentacion-claude-code.html</code></p>
+<code>index.html</code></p>
 <p><strong>Durante el Curso:</strong> 1. Seguir las presentaciones en
 los archivos HTML 2. Practicar con los ejercicios propuestos 3.
 Implementar los proyectos prácticos 4. Crear agentes y hooks
